@@ -209,6 +209,41 @@ export const projects: Project[] = [
     tags: ["Immobilier", "Prestige", "Next.js", "Côte d'Azur"],
     alt: "Site MAISON RIVIERA : hero « L'exception a une adresse » avec villa de prestige face à la Méditerranée",
   },
+  {
+    slug: "volt-fitness-club",
+    name: "VOLT FITNESS CLUB",
+    category: "fitness",
+    categoryLabel: "Site web club de fitness",
+    filterLabel: "Fitness",
+    demo: true,
+    images: {
+      cover: "/projects/volt-cover.webp",
+      desktop: { src: "/projects/volt-desktop.webp", width: 1100, height: 6500 },
+      mobile: { src: "/projects/volt-mobile.webp", width: 390, height: 11000 },
+    },
+    summary:
+      "Un site athlétique et immersif pour un club de fitness fictif à Saint-Raphaël : planning interactif, formules d'abonnement et programmes.",
+    context:
+      "VOLT FITNESS CLUB est un club fictif installé à Saint-Raphaël, imaginé par NEXWORKS AGENCY pour illustrer un site de sport premium : typographie massive, photographie sombre et cinématographique, accents vert électrique, planning de cours interactif et formulaires en mode démonstration.",
+    goals: [
+      "Installer une identité athlétique, sombre et premium",
+      "Rendre le planning et les cours faciles à parcourir sur mobile",
+      "Présenter clairement les formules d'abonnement",
+      "Rester honnête : aucun faux avis, aucune promesse de résultat, aucune coordonnée inventée",
+    ],
+    pages: ["Accueil", "Club", "Programmes", "Planning", "Abonnements", "Contact", "Mentions légales", "Confidentialité"],
+    features: [
+      "Hero parallaxe, compteurs animés et barre de progression de lecture",
+      "Planning interactif : sélecteur de jour, filtre par niveau, réservation en démonstration",
+      "Formules START / PERFORMANCE / ELITE avec tableau comparatif",
+      "Formulaire de contact validé, honeypot et mode démonstration",
+      "Bandeau de transparence : démonstration pour club fictif",
+    ],
+    highlights: ["Typographie massive", "Planning interactif", "Formules claires"],
+    demoUrl: "/volt-fitness",
+    tags: ["Fitness", "Sport", "Next.js", "Saint-Raphaël"],
+    alt: "Site VOLT FITNESS CLUB : hero « BUILT TO BE STRONGER. » avec athlète dans une salle de sport sombre et accents vert électrique",
+  },
 ];
 
 export const projectCategories = [

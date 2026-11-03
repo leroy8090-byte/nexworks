@@ -202,6 +202,10 @@ function BackToTop() {
 export function SierraShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === sierra.basePath;
+  const isGate = pathname.startsWith(`${sierra.basePath}/acces`);
+  if (isGate) {
+    return <>{children}</>;
+  }
   return (
     <SierraExtrasProvider>
       <div className="min-h-dvh bg-[#FBFAF8] font-[family-name:var(--font-sierra-sans)] text-[#231F31] antialiased">

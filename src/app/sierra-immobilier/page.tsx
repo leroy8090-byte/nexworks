@@ -15,8 +15,8 @@ import { listPublished } from "@/lib/sierra-cms";
 
 export const dynamic = "force-dynamic";
 
-export default function SierraHome() {
-  const properties = listPublished();
+export default async function SierraHome() {
+  const properties = await listPublished();
   return (
     <>
       <Hero />

@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { PropertyType, SierraProperty } from "@/data/sierra";
 import { sierraProperties as seedProperties } from "@/data/sierra";
+import { readRemoteFile, remoteConfigured, remoteInfo, writeRemoteFile } from "@/lib/sierra-remote";
 
 export type CmsProperty = Omit<SierraProperty, "realListing"> & {
   realListing?: boolean;
@@ -19,6 +20,18 @@ export type SierraCmsDb = {
 
 const SEED_PATH = join(process.cwd(), "data", "sierra-cms.json");
 const TMP_PATH = join("/tmp", "sierra-cms.json");
+const REMOTE_FILE = "sierra-cms.json";
+
+type GlobalCms = {
+  cache: SierraCmsDb | null;
+  cacheAt: number;
+};
+
+const g = globalThis as typeof globalThis & { __sierraCms?: GlobalCms };
+function mem(): GlobalCms {
+  if (!g.__sierraCms) g.__sierraCms = { cache: null, cacheAt: 0 };
+  return g.__sierraCms;
+}
 
 function withIds(list: SierraProperty[]): CmsProperty[] {
   const now = new Date().toISOString();
@@ -40,73 +53,134 @@ function emptyDb(): SierraCmsDb {
   };
 }
 
-function readJson(path: string): SierraCmsDb | null {
+function normalizeDb(raw: unknown): SierraCmsDb | null {
+  if (!raw || typeof raw !== "object") return null;
+  const obj = raw as { properties?: unknown; updatedAt?: string; version?: number };
+  if (!Array.isArray(obj.properties)) return null;
+  const now = new Date().toISOString();
+  const properties: CmsProperty[] = obj.properties.map((item, i) => {
+    const p = item as Partial<CmsProperty> & SierraProperty;
+    const slug = p.slug || `prop-${i + 1}`;
+    return {
+      ...p,
+      slug,
+      id: p.id || slug,
+      title: p.title || "Sans titre",
+      city: p.city || "Saint-Raphaël",
+      price: Number(p.price) || 0,
+      surface: Number(p.surface) || 0,
+      rooms: Number(p.rooms) || 0,
+      bedrooms: Number(p.bedrooms ?? 0),
+      type: (p.type || "appartement") as PropertyType,
+      transaction: p.transaction === "location" ? "location" : "achat",
+      tagline: p.tagline || "",
+      features: Array.isArray(p.features) ? p.features : [],
+      description: Array.isArray(p.description) ? p.description : [],
+      images: Array.isArray(p.images) && p.images.length ? p.images : ["/sierra-immobilier/agency.webp"],
+      officialUrl: p.officialUrl || "",
+      exclusif: !!p.exclusif,
+      coupDeCoeur: !!p.coupDeCoeur,
+      realListing: p.realListing,
+      createdAt: p.createdAt || now,
+      updatedAt: p.updatedAt || now,
+      published: p.published !== false,
+    };
+  });
+  return {
+    version: 1,
+    updatedAt: obj.updatedAt || now,
+    properties,
+  };
+}
+
+function readJsonFile(path: string): SierraCmsDb | null {
   try {
     if (!existsSync(path)) return null;
-    const raw = JSON.parse(readFileSync(path, "utf8")) as SierraCmsDb;
-    if (!Array.isArray(raw.properties)) return null;
-    return raw;
+    return normalizeDb(JSON.parse(readFileSync(path, "utf8")));
   } catch {
     return null;
   }
 }
 
-function canWrite(path: string) {
+function writeLocal(db: SierraCmsDb) {
+  const json = JSON.stringify(db, null, 2);
+  let where = "none";
   try {
-    mkdirSync(join(path, ".."), { recursive: true });
-    writeFileSync(path, readFileSync(path, "utf8"));
-    return true;
+    mkdirSync(join(process.cwd(), "data"), { recursive: true });
+    writeFileSync(SEED_PATH, json, "utf8");
+    where = "data/sierra-cms.json";
   } catch {
-    return false;
+    /* ignore */
   }
+  try {
+    writeFileSync(TMP_PATH, json, "utf8");
+    if (where === "none") where = "/tmp/sierra-cms.json";
+  } catch {
+    /* ignore */
+  }
+  return where;
 }
 
-/** Lecture : /tmp (Vercel runtime) > data/sierra-cms.json > seed code */
-export function readCms(): SierraCmsDb {
-  return readJson(TMP_PATH) || readJson(SEED_PATH) || emptyDb();
+function setCache(db: SierraCmsDb) {
+  const m = mem();
+  m.cache = db;
+  m.cacheAt = Date.now();
 }
 
-export function writeCms(db: SierraCmsDb): { ok: boolean; where: string } {
+export async function readCms(): Promise<SierraCmsDb> {
+  const m = mem();
+  // Cache très court pour éviter de spammer l'API Gist pendant une même requête
+  if (m.cache && Date.now() - m.cacheAt < 1500) return m.cache;
+
+  {
+    const remote = await readRemoteFile(REMOTE_FILE);
+    if (remote) {
+      try {
+        const parsed = normalizeDb(JSON.parse(remote));
+        if (parsed) {
+          setCache(parsed);
+          writeLocal(parsed);
+          return parsed;
+        }
+      } catch {
+        /* ignore bad remote */
+      }
+    }
+  }
+
+  const local = readJsonFile(TMP_PATH) || readJsonFile(SEED_PATH) || emptyDb();
+  setCache(local);
+  return local;
+}
+
+export async function writeCms(db: SierraCmsDb): Promise<{ ok: boolean; where: string }> {
   const payload: SierraCmsDb = {
     ...db,
     version: 1,
     updatedAt: new Date().toISOString(),
   };
+  setCache(payload);
   const json = JSON.stringify(payload, null, 2);
+  const localWhere = writeLocal(payload);
 
-  // Prefer project data file (local / persistent Node host)
-  try {
-    mkdirSync(join(process.cwd(), "data"), { recursive: true });
-    writeFileSync(SEED_PATH, json, "utf8");
-    // mirror to tmp for serverless warm instances
-    try {
-      writeFileSync(TMP_PATH, json, "utf8");
-    } catch {
-      /* ignore */
-    }
-    return { ok: true, where: "data/sierra-cms.json" };
-  } catch {
-    /* fall through */
+  if (remoteConfigured()) {
+    const ok = await writeRemoteFile(REMOTE_FILE, json);
+    if (ok) return { ok: true, where: "gist+local" };
   }
 
-  try {
-    writeFileSync(TMP_PATH, json, "utf8");
-    return { ok: true, where: "/tmp/sierra-cms.json" };
-  } catch {
-    return { ok: false, where: "none" };
-  }
+  return { ok: localWhere !== "none", where: localWhere };
 }
 
-export function listPublished(): CmsProperty[] {
-  return readCms().properties.filter((p) => p.published !== false);
+export async function listPublished(): Promise<CmsProperty[]> {
+  return (await readCms()).properties.filter((p) => p.published !== false);
 }
 
-export function listAll(): CmsProperty[] {
-  return readCms().properties;
+export async function listAll(): Promise<CmsProperty[]> {
+  return (await readCms()).properties;
 }
 
-export function getBySlug(slug: string): CmsProperty | undefined {
-  return listPublished().find((p) => p.slug === slug);
+export async function getBySlug(slug: string): Promise<CmsProperty | undefined> {
+  return (await listPublished()).find((p) => p.slug === slug);
 }
 
 export function slugify(input: string) {
@@ -139,8 +213,8 @@ export type PropertyInput = {
   slug?: string;
 };
 
-export function createProperty(input: PropertyInput): CmsProperty {
-  const db = readCms();
+export async function createProperty(input: PropertyInput): Promise<CmsProperty> {
+  const db = await readCms();
   const now = new Date().toISOString();
   let slug = input.slug?.trim() || slugify(input.title);
   if (!slug) slug = `bien-${Date.now()}`;
@@ -173,12 +247,12 @@ export function createProperty(input: PropertyInput): CmsProperty {
   };
 
   db.properties.unshift(prop);
-  writeCms(db);
+  await writeCms(db);
   return prop;
 }
 
-export function updateProperty(id: string, input: Partial<PropertyInput>): CmsProperty | null {
-  const db = readCms();
+export async function updateProperty(id: string, input: Partial<PropertyInput>): Promise<CmsProperty | null> {
+  const db = await readCms();
   const idx = db.properties.findIndex((p) => p.id === id || p.slug === id);
   if (idx < 0) return null;
   const prev = db.properties[idx];
@@ -210,45 +284,43 @@ export function updateProperty(id: string, input: Partial<PropertyInput>): CmsPr
     }
   }
   db.properties[idx] = next;
-  writeCms(db);
+  await writeCms(db);
   return next;
 }
 
-export function deleteProperty(id: string): boolean {
-  const db = readCms();
+export async function deleteProperty(id: string): Promise<boolean> {
+  const db = await readCms();
   const before = db.properties.length;
   db.properties = db.properties.filter((p) => p.id !== id && p.slug !== id);
   if (db.properties.length === before) return false;
-  writeCms(db);
+  await writeCms(db);
   return true;
 }
 
-export function replaceAll(properties: CmsProperty[]): SierraCmsDb {
+export async function replaceAll(properties: CmsProperty[]): Promise<SierraCmsDb> {
   const db: SierraCmsDb = {
     version: 1,
     updatedAt: new Date().toISOString(),
-    properties,
+    properties: normalizeDb({ properties })?.properties || [],
   };
-  writeCms(db);
+  await writeCms(db);
   return db;
 }
 
-export function storageInfo() {
+export async function storageInfo() {
+  let writableSeed = false;
+  try {
+    mkdirSync(join(process.cwd(), "data"), { recursive: true });
+    writeFileSync(join(process.cwd(), "data", ".write-probe"), "ok");
+    writableSeed = true;
+  } catch {
+    writableSeed = false;
+  }
   return {
     seedExists: existsSync(SEED_PATH),
     tmpExists: existsSync(TMP_PATH),
-    writableSeed: (() => {
-      try {
-        mkdirSync(join(process.cwd(), "data"), { recursive: true });
-        const probe = join(process.cwd(), "data", ".write-probe");
-        writeFileSync(probe, "ok");
-        return true;
-      } catch {
-        return false;
-      }
-    })(),
+    writableSeed,
+    remote: remoteInfo(),
+    persistent: remoteConfigured(),
   };
 }
-
-// silence unused in some builds
-void canWrite;

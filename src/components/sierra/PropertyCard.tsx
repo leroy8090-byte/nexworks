@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { formatPrice, propertyTypeLabel, sierra, type SierraProperty } from "@/data/sierra";
+import { trackPropertyClick } from "./Analytics";
 import { CompareButton, FavButton } from "./Extras";
 
 export function PropertyCard({ property }: { property: SierraProperty }) {
@@ -15,7 +16,11 @@ export function PropertyCard({ property }: { property: SierraProperty }) {
       transition={{ duration: 0.35 }}
       className="group overflow-hidden border border-[#E8E4DE] bg-white shadow-[0_10px_30px_-24px_rgba(35,31,49,.45)]"
     >
-      <Link href={href} className="block">
+      <Link
+        href={href}
+        className="block"
+        onClick={() => trackPropertyClick(property.slug, property.title)}
+      >
         <div className="relative aspect-[4/3] overflow-hidden bg-[#231F31]">
           <Image
             src={property.images[0]}

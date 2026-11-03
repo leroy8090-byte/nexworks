@@ -13,11 +13,12 @@ export async function GET(req: NextRequest) {
   if (all && !isAuthed(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const properties = all ? listAll() : listPublished();
+  const properties = all ? await listAll() : await listPublished();
+  const cms = await readCms();
   return NextResponse.json({
-    updatedAt: readCms().updatedAt,
+    updatedAt: cms.updatedAt,
     count: properties.length,
-    storage: storageInfo(),
+    storage: await storageInfo(),
     properties,
   });
 }
@@ -29,10 +30,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "JSON invalide" }, { status: 400 });
   }
 
-  // Import bulk
   if (Array.isArray((body as { properties?: unknown }).properties)) {
     const props = (body as { properties: CmsProperty[] }).properties;
-    const db = replaceAll(props);
+    const db = await replaceAll(props);
     return NextResponse.json({ ok: true, imported: db.properties.length, updatedAt: db.updatedAt });
   }
 
@@ -40,6 +40,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Le titre est obligatoire." }, { status: 400 });
   }
 
-  const created = createProperty(body as Parameters<typeof createProperty>[0]);
+  const created = await createProperty(body as Parameters<typeof createProperty>[0]);
   return NextResponse.json({ ok: true, property: created }, { status: 201 });
 }

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { PropertyType } from "@/data/sierra";
 import { formatPrice, sierra } from "@/data/sierra";
+import { mergeSummaries, readLocalStats, summarizeLocal } from "@/lib/sierra-client-stats";
+import { writeLocalCms } from "@/lib/sierra-client-store";
 import type { CmsProperty } from "@/lib/sierra-cms";
 
 type FormState = {
@@ -100,27 +102,75 @@ const field =
   "mt-1.5 w-full border border-[#E8E4DE] bg-white px-3 py-2.5 text-[14px] text-[#231F31] outline-none focus:border-[#A68936]";
 const label = "block text-[11px] font-bold uppercase tracking-[0.16em] text-[#7A7684]";
 
+type DayBucket = { pageViews: number; propertyViews: number; propertyClicks: number };
+type StatsSummary = {
+  today: DayBucket;
+  yesterday: DayBucket;
+  last7: DayBucket;
+  last30: DayBucket;
+  month: DayBucket;
+  totals: DayBucket;
+  topProperties: Array<{ slug: string; title: string; views: number; clicks: number }>;
+  daily: Array<{ date: string } & DayBucket>;
+  updatedAt: string;
+};
+
+function StatCard({ label: l, value, hint }: { label: string; value: number; hint?: string }) {
+  return (
+    <div className="border border-[#E8E4DE] bg-white p-5">
+      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7A7684]">{l}</p>
+      <p className="mt-2 text-[2rem] font-semibold tabular-nums text-[#231F31]">{value.toLocaleString("fr-FR")}</p>
+      {hint ? <p className="mt-1 text-[12px] text-[#7A7684]">{hint}</p> : null}
+    </div>
+  );
+}
+
 export function AdminApp() {
   const [items, setItems] = useState<CmsProperty[]>([]);
-  const [storage, setStorage] = useState<{ writableSeed?: boolean; tmpExists?: boolean } | null>(null);
+  const [storage, setStorage] = useState<{
+    writableSeed?: boolean;
+    tmpExists?: boolean;
+    persistent?: boolean;
+    remote?: { hasToken?: boolean };
+  } | null>(null);
   const [q, setQ] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
-  const [tab, setTab] = useState<"list" | "form">("list");
+  const [tab, setTab] = useState<"list" | "form" | "stats">("list");
+  const [stats, setStats] = useState<StatsSummary | null>(null);
 
   const load = useCallback(async () => {
     const res = await fetch("/api/sierra-cms?all=1", { cache: "no-store" });
     if (!res.ok) throw new Error("Chargement impossible");
     const data = await res.json();
-    setItems(data.properties || []);
+    const props = (data.properties || []) as CmsProperty[];
+    setItems(props);
     setStorage(data.storage || null);
+    writeLocalCms(props, data.updatedAt || new Date().toISOString());
+  }, []);
+
+  const loadStats = useCallback(async () => {
+    let api: StatsSummary | null = null;
+    try {
+      const res = await fetch("/api/sierra-stats", { cache: "no-store" });
+      if (res.ok) api = await res.json();
+    } catch {
+      /* ignore */
+    }
+    const local = summarizeLocal(readLocalStats());
+    setStats(mergeSummaries(api, local) as StatsSummary);
   }, []);
 
   useEffect(() => {
     load().catch(() => setMsg("Impossible de charger les annonces."));
   }, [load]);
+
+  useEffect(() => {
+    if (tab !== "stats") return;
+    loadStats().catch(() => setMsg("Impossible de charger les statistiques."));
+  }, [tab, loadStats]);
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -278,7 +328,7 @@ export function AdminApp() {
 
       <div className="mx-auto max-w-6xl px-5 py-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setTab("list")}
@@ -288,8 +338,15 @@ export function AdminApp() {
             </button>
             <button
               type="button"
+              onClick={() => setTab("stats")}
+              className={`px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] ${tab === "stats" ? "bg-[#231F31] text-white" : "bg-white text-[#231F31]"}`}
+            >
+              Stats
+            </button>
+            <button
+              type="button"
               onClick={startCreate}
-              className={`px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] ${tab === "form" && !editingId ? "bg-[#A68936] text-white" : "bg-[#A68936]/90 text-white"}`}
+              className={`px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] ${tab === "form" && !editingId ? "bg-[#A68936] text-white" : "bg-[#A68936] text-white"}`}
             >
               + Ajouter un bien
             </button>
@@ -302,6 +359,15 @@ export function AdminApp() {
               className="w-full max-w-xs border border-[#E8E4DE] bg-white px-3 py-2 text-[14px] outline-none focus:border-[#A68936] sm:w-64"
             />
           )}
+          {tab === "stats" && (
+            <button
+              type="button"
+              onClick={() => void loadStats()}
+              className="border border-[#E8E4DE] bg-white px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em]"
+            >
+              Rafraîchir
+            </button>
+          )}
         </div>
 
         {msg && (
@@ -310,14 +376,91 @@ export function AdminApp() {
           </p>
         )}
 
-        {storage && !storage.writableSeed && (
-          <p className="mb-4 border border-amber-300 bg-amber-50 px-4 py-3 text-[13px] text-amber-900">
-            Hébergement serverless : les changements peuvent être temporaires. Utilise <strong>Exporter</strong> pour
-            sauvegarder, puis <strong>Importer</strong> pour restaurer.
-          </p>
-        )}
+        <p className="mb-4 border border-emerald-200 bg-emerald-50 px-4 py-3 text-[13px] text-emerald-900">
+          Site et back-office liés : après ajout / suppression, recharge le site — le catalogue se met à jour tout de suite
+          (même navigateur).
+          {storage?.persistent ? " Sauvegarde distante active." : ""}
+        </p>
 
-        {tab === "list" ? (
+        {tab === "stats" ? (
+          <div className="space-y-8">
+            {!stats ? (
+              <p className="text-[14px] text-[#7A7684]">Chargement des statistiques…</p>
+            ) : (
+              <>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <StatCard label="Vues site · aujourd'hui" value={stats.today.pageViews} hint={`Hier : ${stats.yesterday.pageViews}`} />
+                  <StatCard label="Vues site · 7 jours" value={stats.last7.pageViews} hint={`30 j : ${stats.last30.pageViews}`} />
+                  <StatCard label="Vues fiches · aujourd'hui" value={stats.today.propertyViews} hint={`7 j : ${stats.last7.propertyViews}`} />
+                  <StatCard label="Clics biens · aujourd'hui" value={stats.today.propertyClicks} hint={`7 j : ${stats.last7.propertyClicks}`} />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <StatCard label="Total vues site" value={stats.totals.pageViews} />
+                  <StatCard label="Total vues fiches" value={stats.totals.propertyViews} />
+                  <StatCard label="Total clics" value={stats.totals.propertyClicks} hint={`Mois en cours : ${stats.month.pageViews} vues`} />
+                </div>
+
+                <div className="border border-[#E8E4DE] bg-white p-5">
+                  <h2 className="text-[1.15rem] font-semibold">14 derniers jours</h2>
+                  <div className="mt-5 space-y-2">
+                    {stats.daily.map((d) => {
+                      const max = Math.max(1, ...stats.daily.map((x) => x.pageViews));
+                      const w = Math.round((d.pageViews / max) * 100);
+                      return (
+                        <div key={d.date} className="grid grid-cols-[88px_1fr_auto] items-center gap-3 text-[13px]">
+                          <span className="tabular-nums text-[#7A7684]">{d.date.slice(5)}</span>
+                          <div className="h-2 bg-[#F4F2F0]">
+                            <div className="h-2 bg-[#A68936]" style={{ width: `${w}%` }} />
+                          </div>
+                          <span className="w-28 text-right tabular-nums text-[#231F31]">
+                            {d.pageViews} vues · {d.propertyClicks} clics
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="overflow-hidden border border-[#E8E4DE] bg-white">
+                  <div className="border-b border-[#E8E4DE] px-4 py-3">
+                    <h2 className="text-[1.15rem] font-semibold">Biens les plus consultés</h2>
+                    <p className="mt-1 text-[13px] text-[#7A7684]">Classement par intérêt (vues fiche + clics catalogue).</p>
+                  </div>
+                  <table className="w-full text-left text-[13.5px]">
+                    <thead className="bg-[#F4F2F0] text-[11px] uppercase tracking-[0.12em] text-[#7A7684]">
+                      <tr>
+                        <th className="px-4 py-3">Bien</th>
+                        <th className="px-4 py-3">Vues fiche</th>
+                        <th className="px-4 py-3">Clics</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stats.topProperties.length === 0 ? (
+                        <tr>
+                          <td colSpan={3} className="px-4 py-8 text-center text-[#7A7684]">
+                            Pas encore de données — navigue sur le site pour alimenter les stats.
+                          </td>
+                        </tr>
+                      ) : (
+                        stats.topProperties.map((p) => (
+                          <tr key={p.slug} className="border-t border-[#E8E4DE]">
+                            <td className="px-4 py-3">
+                              <Link href={`${sierra.basePath}/biens/${p.slug}`} className="font-semibold text-[#231F31] hover:text-[#A68936]">
+                                {p.title}
+                              </Link>
+                            </td>
+                            <td className="px-4 py-3 tabular-nums">{p.views}</td>
+                            <td className="px-4 py-3 tabular-nums">{p.clicks}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+          </div>
+        ) : tab === "list" ? (
           <div className="overflow-hidden border border-[#E8E4DE] bg-white">
             <table className="w-full text-left text-[13.5px]">
               <thead className="bg-[#F4F2F0] text-[11px] uppercase tracking-[0.12em] text-[#7A7684]">

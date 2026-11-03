@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { sierra, sierraNav } from "@/data/sierra";
+import { SierraPageTracker } from "./Analytics";
 import { FavoritesBar, ScrollProgress, SierraExtrasProvider } from "./Extras";
 import { ContactHint, DemoBanner, SierraButton, Wrap } from "./ui";
 
@@ -214,6 +215,7 @@ export function SierraShell({ children }: { children: ReactNode }) {
   return (
     <SierraExtrasProvider>
       <div className="min-h-dvh bg-[#FBFAF8] font-[family-name:var(--font-sierra-sans)] text-[#231F31] antialiased">
+        <SierraPageTracker />
         <ScrollProgress />
         <Header isHome={isHome} />
         <main id="contenu" className={isHome ? "" : "pt-[114px]"}>

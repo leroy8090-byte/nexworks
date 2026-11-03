@@ -15,7 +15,7 @@ export async function PUT(req: NextRequest, ctx: Ctx) {
   const { id } = await ctx.params;
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "JSON invalide" }, { status: 400 });
-  const updated = updateProperty(decodeURIComponent(id), body);
+  const updated = await updateProperty(decodeURIComponent(id), body);
   if (!updated) return NextResponse.json({ error: "Bien introuvable" }, { status: 404 });
   return NextResponse.json({ ok: true, property: updated });
 }
@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest, ctx: Ctx) {
 export async function DELETE(req: NextRequest, ctx: Ctx) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await ctx.params;
-  const ok = deleteProperty(decodeURIComponent(id));
+  const ok = await deleteProperty(decodeURIComponent(id));
   if (!ok) return NextResponse.json({ error: "Bien introuvable" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

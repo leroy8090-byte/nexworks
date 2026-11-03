@@ -5,6 +5,7 @@ import { ContactForm } from "@/components/sierra/Forms";
 import { PropertyCard } from "@/components/sierra/PropertyCard";
 import { PropertyGallery } from "@/components/sierra/PropertyGallery";
 import { Wrap } from "@/components/sierra/ui";
+import { SierraPropertyViewTracker } from "@/components/sierra/Analytics";
 import { formatPrice, propertyTypeLabel, sierra } from "@/data/sierra";
 import { getBySlug, listPublished } from "@/lib/sierra-cms";
 
@@ -14,7 +15,7 @@ type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const p = getBySlug(slug);
+  const p = await getBySlug(slug);
   if (!p) return { title: "Bien introuvable" };
   return {
     title: `${p.title} — ${p.city} (démonstration)`,
@@ -24,14 +25,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function BienDetailPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const p = getBySlug(slug);
+  const p = await getBySlug(slug);
   if (!p) notFound();
-  const similar = listPublished()
-    .filter((x) => x.slug !== p.slug && x.city === p.city)
-    .slice(0, 3);
+  const similar = (await listPublished()).filter((x) => x.slug !== p.slug && x.city === p.city).slice(0, 3);
 
   return (
     <Wrap className="py-10 sm:py-14">
+      <SierraPropertyViewTracker slug={p.slug} title={p.title} />
       <nav aria-label="Fil d'Ariane" className="mb-8 text-[12.5px] text-[#77766F]">
         <Link href={sierra.basePath} className="hover:text-[#222421]">
           Accueil

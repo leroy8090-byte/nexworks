@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { sierra, sierraFaq, sierraReviews, sierraSectors, sierraServices, sierraTeam, type SierraProperty } from "@/data/sierra";
+import { FeaturedLive } from "./CatalogLive";
 import { HoursCard } from "./Extras";
-import { PropertyCard } from "./PropertyCard";
 import { PropertySearch } from "./PropertySearch";
 import { Reveal, SectionHead, SierraButton, Wrap } from "./ui";
 
@@ -109,7 +109,6 @@ export function History() {
 }
 
 export function Featured({ properties }: { properties: SierraProperty[] }) {
-  const list = properties.filter((p) => p.transaction === "achat").slice(0, 6);
   return (
     <section className="border-y border-[#E8E4DE] bg-white py-20 sm:py-28">
       <Wrap>
@@ -125,13 +124,7 @@ export function Featured({ properties }: { properties: SierraProperty[] }) {
             </Link>
           </Reveal>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 3) * 0.06}>
-              <PropertyCard property={p} />
-            </Reveal>
-          ))}
-        </div>
+        <FeaturedLive initial={properties} />
         <Reveal className="mt-10 text-center">
           <a href={sierra.officialVentes} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#7A7684] underline underline-offset-4 hover:text-[#A68936]">
             Voir le catalogue complet sur sierra-immo.fr

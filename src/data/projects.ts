@@ -244,6 +244,53 @@ export const projects: Project[] = [
     tags: ["Fitness", "Sport", "Next.js", "Saint-Raphaël"],
     alt: "Site VOLT FITNESS CLUB : hero « BUILT TO BE STRONGER. » avec athlète dans une salle de sport sombre et accents vert électrique",
   },
+  {
+    slug: "sierra-immobilier",
+    name: "SIERRA IMMOBILIER",
+    category: "immobilier",
+    categoryLabel: "Refonte site immobilier",
+    filterLabel: "Immobilier",
+    demo: true,
+    images: {
+      cover: "/projects/sierra-cover.webp",
+      desktop: { src: "/projects/sierra-desktop.webp", width: 1100, height: 9316 },
+      mobile: { src: "/projects/sierra-mobile.webp", width: 390, height: 15995 },
+    },
+    summary:
+      "Proposition de refonte premium pour une agence immobilière familiale à Saint-Raphaël : recherche, estimation et pages locales.",
+    context:
+      "SIERRA IMMOBILIER est une agence réelle fondée en 1973 à Saint-Raphaël. Cette réalisation est une proposition de refonte non officielle conçue par NEXWORKS AGENCY : identité éditoriale ivoire et bleu profond, moteur de recherche, parcours d'estimation multi-étapes et catalogue clairement marqué comme démonstration.",
+    goals: [
+      "Moderniser l'image digitale sans se faire passer pour le site officiel",
+      "Offrir une recherche immobilière et un parcours d'estimation fluides",
+      "Renforcer le SEO local Saint-Raphaël / Fréjus / Puget-sur-Argens",
+      "Rester factuel : pas de faux avis, pas d'annonces présentées comme disponibles",
+    ],
+    pages: [
+      "Accueil",
+      "Biens",
+      "Fiches biens",
+      "Acheter",
+      "Vendre",
+      "Louer",
+      "Gestion locative",
+      "Estimation",
+      "Agence",
+      "Secteurs",
+      "Contact",
+      "Pages légales",
+    ],
+    features: [
+      "Hero immersif, recherche filtrée et fiches avec lightbox",
+      "Estimation en 5 étapes sans prix automatique inventé",
+      "Pages locales différenciées et FAQ pour le GEO",
+      "Bandeau de transparence + lien vers le catalogue officiel",
+    ],
+    highlights: ["Refonte premium", "SEO local", "Estimation guidée"],
+    demoUrl: "/sierra-immobilier",
+    tags: ["Immobilier", "Refonte", "Next.js", "Saint-Raphaël"],
+    alt: "Proposition Sierra Immobilier : hero « Votre histoire commence ici » avec architecture méditerranéenne",
+  },
 ];
 
 export const projectCategories = [

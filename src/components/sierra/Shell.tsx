@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { sierra, sierraNav } from "@/data/sierra";
+import { sierra, sierraNav, sierraProperties } from "@/data/sierra";
+import { FavoritesBar, ScrollProgress, SierraExtrasProvider } from "./Extras";
 import { ContactHint, DemoBanner, SierraButton, Wrap } from "./ui";
 
 function Logo({ compact = false }: { compact?: boolean }) {
@@ -202,13 +203,17 @@ export function SierraShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === sierra.basePath;
   return (
-    <div className="min-h-dvh bg-[#FBFAF8] font-[family-name:var(--font-sierra-sans)] text-[#231F31] antialiased">
-      <Header isHome={isHome} />
-      <main id="contenu" className={isHome ? "" : "pt-[114px]"}>
-        {children}
-      </main>
-      <Footer />
-      <BackToTop />
-    </div>
+    <SierraExtrasProvider>
+      <div className="min-h-dvh bg-[#FBFAF8] font-[family-name:var(--font-sierra-sans)] text-[#231F31] antialiased">
+        <ScrollProgress />
+        <Header isHome={isHome} />
+        <main id="contenu" className={isHome ? "" : "pt-[114px]"}>
+          {children}
+        </main>
+        <Footer />
+        <FavoritesBar properties={sierraProperties} />
+        <BackToTop />
+      </div>
+    </SierraExtrasProvider>
   );
 }

@@ -38,6 +38,15 @@ export const sierra = {
   },
   aboutImage: "/sierra-immobilier/agency.webp",
   googleReviewsUrl: "https://www.google.com/maps/search/?api=1&query=Sierra+Immobilier+Saint-Rapha%C3%ABl",
+  hours: [
+    { day: "Lundi", slots: "09:00–12:00 · 14:00–18:00" },
+    { day: "Mardi", slots: "09:00–12:00 · 14:00–18:00" },
+    { day: "Mercredi", slots: "09:00–12:00 · 14:00–18:00" },
+    { day: "Jeudi", slots: "09:00–12:00 · 14:00–18:00" },
+    { day: "Vendredi", slots: "09:00–12:00 · 14:00–18:00" },
+    { day: "Samedi", slots: "Fermé" },
+    { day: "Dimanche", slots: "Fermé" },
+  ] as const,
   brand: {
     navy: "#231F31",
     navy2: "#2D2640",
@@ -49,6 +58,42 @@ export const sierra = {
     mute: "#7A7684",
   },
 } as const;
+
+/** Avis Google communiqués pour la proposition — citations exactes, source Google. */
+export const sierraReviews = [
+  {
+    author: "Matt Hieu",
+    rating: 5,
+    when: "il y a 3 semaines",
+    visited: "Visité en juin",
+    text: "M. Maltese aime son travail et ça se voit ! Disponible, bienveillant, chaleureux et perspicace...il mériterait d'avoir un plus grand bureau 😅 dans l'agence Sierra pour travailler et recevoir ses clients. Un grand merci à lui, et en lui souhaitant bonne continuation. Ne changez rien !",
+    source: "Google",
+  },
+  {
+    author: "Maïlys Corré",
+    rating: 5,
+    when: "il y a 3 semaines",
+    visited: "Visité en mai",
+    text: "Un grand merci à Frédéric pour son accompagnement et son écoute ! 😄 C'est tellement agréable d'avoir affaire à quelqu'un d'aussi humain, disponible et plein d'énergie 🌞 Vous pouvez y aller les yeux fermés !",
+    source: "Google",
+  },
+  {
+    author: "Robert",
+    rating: 5,
+    when: "il y a 3 semaines",
+    visited: "Visité en février",
+    text: "La perfection comme agence, et surtout un grand merci à Frédéric Maltese qui s'est engagé à nous trouver notre petit coin de paradis ! Du début à la fin, tout à été parfait !!!",
+    source: "Google",
+  },
+  {
+    author: "Ivan M.",
+    rating: 5,
+    when: "il y a 3 semaines",
+    visited: "",
+    text: "Bon, j'ai trouvé ma maison grâce à Frédéric, donc pas besoin d'écrire d'autres choses. Très professionnel, il nous a aidé avec toutes les démarches auprès du notaire. Je le recommande.",
+    source: "Google",
+  },
+] as const;
 
 export const sierraNav = [
   { label: "Accueil", href: "/sierra-immobilier" },
@@ -105,24 +150,27 @@ export const sierraServices = [
 
 export const sierraSectors = [
   {
-    slug: "saint-raphael",
-    name: "Saint-Raphaël",
-    text: "Vieux port, centre-ville et quartiers résidentiels.",
-    image: "/sierra-immobilier/sector-saint-raphael.webp",
-    href: "/sierra-immobilier/secteurs/saint-raphael",
-  },
-  {
     slug: "frejus",
     name: "Fréjus",
-    text: "Patrimoine, littoral et secteurs résidentiels.",
+    text: "Port Fréjus, canaux et cadre de vie méditerranéen.",
     image: "/sierra-immobilier/sector-frejus.webp",
+    wide: "/sierra-immobilier/sector-frejus-wide.webp",
     href: "/sierra-immobilier/secteurs/frejus",
+  },
+  {
+    slug: "saint-raphael",
+    name: "Saint-Raphaël",
+    text: "Vieux port, basilique et front de mer.",
+    image: "/sierra-immobilier/sector-saint-raphael.webp",
+    wide: "/sierra-immobilier/sector-saint-raphael-wide.webp",
+    href: "/sierra-immobilier/secteurs/saint-raphael",
   },
   {
     slug: "puget-sur-argens",
     name: "Puget-sur-Argens",
-    text: "Cadre résidentiel proche du littoral varois.",
+    text: "Village provençal face au Rocher de Roquebrune.",
     image: "/sierra-immobilier/sector-puget.webp",
+    wide: "/sierra-immobilier/sector-puget-wide.webp",
     href: "/sierra-immobilier/secteurs/puget-sur-argens",
   },
 ] as const;

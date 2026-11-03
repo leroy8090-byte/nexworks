@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HoursCard } from "@/components/sierra/Extras";
 import { ContactForm } from "@/components/sierra/Forms";
 import { ContactHint, PageIntro, Wrap } from "@/components/sierra/ui";
 import { sierra } from "@/data/sierra";
@@ -39,7 +40,10 @@ export default function ContactPage() {
             </a>
           </div>
           <ContactHint className="mt-6" />
-          <div className="mt-8 overflow-hidden border border-[#D8C9B5]">
+          <div className="mt-8">
+            <HoursCard />
+          </div>
+          <div className="mt-8 overflow-hidden border border-[#E8E4DE]">
             <iframe
               title="Carte — Sierra Immobilier"
               src="https://maps.google.com/maps?q=6%20avenue%20du%20Commandant%20Guilbaud%2083700%20Saint-Raphael&t=&z=15&ie=UTF8&iwloc=&output=embed"

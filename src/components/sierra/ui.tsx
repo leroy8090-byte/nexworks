@@ -102,9 +102,9 @@ export function SectionHead({
 export function DemoBanner() {
   return (
     <div className="bg-[#A68936] px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-      Proposition de refonte NEXWORKS · non officielle ·{" "}
+      Accès privé client · proposition de refonte non officielle ·{" "}
       <a href={sierra.officialSite} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
-        catalogue officiel
+        sierra-immo.fr
       </a>
     </div>
   );

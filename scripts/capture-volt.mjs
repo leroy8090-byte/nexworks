@@ -87,7 +87,7 @@ async function preparePage(p) {
 }
 
 async function full(name, vp) {
-  const ctx = await b.newContext({ viewport: vp, deviceScaleFactor: 1, isMobile: vp.width < 600, hasTouch: vp.width < 600 });
+  const ctx = await b.newContext({ viewport: vp, isMobile: vp.width < 600, hasTouch: vp.width < 600 });
   const p = await ctx.newPage();
   p.on("console", (m) => m.type() === "error" && errs.push(`${name}: ${m.text()}`));
   p.on("pageerror", (e) => errs.push(`${name}: ${e.message}`));

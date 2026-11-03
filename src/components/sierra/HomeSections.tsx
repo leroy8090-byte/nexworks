@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { sierra, sierraFaq, sierraProperties, sierraSectors, sierraServices, sierraTeam } from "@/data/sierra";
+import { sierra, sierraFaq, sierraProperties, sierraReviews, sierraSectors, sierraServices, sierraTeam } from "@/data/sierra";
+import { HoursCard } from "./Extras";
 import { PropertyCard } from "./PropertyCard";
 import { PropertySearch } from "./PropertySearch";
 import { Reveal, SectionHead, SierraButton, Wrap } from "./ui";
@@ -186,16 +187,31 @@ export function Territory() {
   return (
     <section className="py-20 sm:py-28">
       <Wrap>
-        <SectionHead eyebrow="Territoire" title="Notre terrain de jeu." />
+        <SectionHead
+          eyebrow="Territoire"
+          title="Fréjus · Saint-Raphaël · Puget-sur-Argens."
+          text="Photos réelles des communes — Port Fréjus, vieux port de Saint-Raphaël, village de Puget."
+        />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {sierraSectors.map((d, i) => (
             <Reveal key={d.slug} delay={i * 0.08}>
-              <Link href={d.href} className="group block overflow-hidden border border-[#E8E4DE] bg-white">
-                <div className="relative aspect-[4/5]">
-                  <Image src={d.image} alt={d.name} fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#231F31] to-transparent p-5 pt-20">
-                    <h3 className="text-[1.4rem] font-semibold text-white">{d.name}</h3>
+              <Link href={d.href} className="group relative block overflow-hidden border border-[#E8E4DE] bg-[#231F31]">
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={d.image}
+                    alt={`${d.name} — photographie réelle`}
+                    fill
+                    sizes="(min-width:768px) 33vw, 100vw"
+                    className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.08]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#231F31] via-[#231F31]/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#A68936]">0{i + 1}</p>
+                    <h3 className="mt-1 text-[1.55rem] font-semibold text-white">{d.name}</h3>
                     <p className="mt-1 text-[13px] text-white/75">{d.text}</p>
+                    <span className="mt-4 inline-block text-[11px] font-bold uppercase tracking-[0.16em] text-white underline-offset-4 group-hover:underline">
+                      Explorer
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -236,23 +252,45 @@ export function TeamTeaser() {
 
 export function Reviews() {
   return (
-    <section className="py-20">
-      <Wrap className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
-        <SectionHead
-          eyebrow="Avis"
-          title="La confiance se lit aussi ailleurs."
-          text="Nous n'inventons pas d'avis ici. Consultez les retours Google de l'agence."
-        />
-        <Reveal>
-          <a
-            href={sierra.googleReviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex border border-[#231F31] px-6 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-[#231F31] hover:bg-[#231F31] hover:text-white"
-          >
-            Voir les avis Google
-          </a>
-        </Reveal>
+    <section className="overflow-hidden bg-[#231F31] py-20 sm:py-28">
+      <Wrap>
+        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <SectionHead
+            light
+            eyebrow="Avis Google"
+            title="Ce que disent les clients."
+            text="Citations reprises des avis Google transmis — non réécrits. Focus fréquent : l'accompagnement de Frédéric Maltese."
+          />
+          <Reveal>
+            <a
+              href={sierra.googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex border border-[#A68936] px-6 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-[#A68936] hover:bg-[#A68936] hover:text-white"
+            >
+              Voir sur Google
+            </a>
+          </Reveal>
+        </div>
+        <div className="mt-12 flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory">
+          {sierraReviews.map((r, i) => (
+            <Reveal key={r.author} delay={i * 0.08} className="min-w-[280px] max-w-sm shrink-0 snap-start sm:min-w-[320px]">
+              <article className="h-full border border-white/10 bg-[#2D2640] p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="font-semibold text-white">{r.author}</p>
+                  <p className="text-[#A68936]" aria-label={`${r.rating} étoiles`}>
+                    {"★".repeat(r.rating)}
+                  </p>
+                </div>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/45">
+                  Google · {r.when}
+                  {r.visited ? ` · ${r.visited}` : ""}
+                </p>
+                <p className="mt-4 text-[14.5px] leading-[1.75] text-white/80">“{r.text}”</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </Wrap>
     </section>
   );
@@ -309,13 +347,16 @@ export function ContactCta() {
                 Message
               </SierraButton>
             </div>
+            <div className="mt-8 max-w-md">
+              <HoursCard light />
+            </div>
           </Reveal>
         </div>
         <Reveal>
           <iframe
             title="Localisation Sierra Immobilier"
             src="https://maps.google.com/maps?q=6%20avenue%20du%20Commandant%20Guilbaud%2083700%20Saint-Raphael&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            className="h-[320px] w-full border-0 grayscale"
+            className="h-[320px] w-full border-0 grayscale lg:h-full lg:min-h-[420px]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />

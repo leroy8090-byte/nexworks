@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { sierra } from "@/data/sierra";
 import { SierraShell } from "@/components/sierra/Shell";
 
-const display = Cormorant_Garamond({
+const sans = Montserrat({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sierra-sans",
+  display: "swap",
+});
+
+const display = Montserrat({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
   variable: "--font-sierra-display",
   display: "swap",
 });
-const sans = Manrope({ subsets: ["latin"], variable: "--font-sierra-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: {
-    default: `${sierra.name} — Proposition de refonte (démonstration NEXWORKS)`,
+    default: `${sierra.name} — Proposition de refonte (NEXWORKS)`,
     template: `%s | ${sierra.name}`,
   },
   description: sierra.description,
@@ -41,12 +47,13 @@ export default function SierraLayout({ children }: { children: React.ReactNode }
     },
     telephone: sierra.phone,
     url: sierra.officialSite,
+    image: "https://nexworksagency.vercel.app/sierra-immobilier/logo.png",
     description:
-      "Agence immobilière familiale à Saint-Raphaël depuis 1973. Cette page fait partie d'une proposition de refonte non officielle réalisée pour le portfolio NEXWORKS AGENCY.",
+      "Agence immobilière familiale à Saint-Raphaël depuis 1973. Proposition de refonte non officielle — portfolio NEXWORKS AGENCY.",
   };
 
   return (
-    <div className={`${display.variable} ${sans.variable}`}>
+    <div className={`${sans.variable} ${display.variable}`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SierraShell>{children}</SierraShell>
     </div>

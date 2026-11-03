@@ -47,42 +47,47 @@ export default async function BienDetailPage({ params }: { params: Params }) {
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#263B48]">
-            {p.transaction === "achat" ? "Vente" : "Location"} · Démonstration · {propertyTypeLabel[p.type]}
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#A68936]">
+            {p.transaction === "achat" ? "Vente" : "Location"} · {propertyTypeLabel[p.type]}
+            {p.exclusif ? " · Exclusif" : ""}
           </p>
-          <h1 className="mt-3 font-[family-name:var(--font-sierra-display)] text-[2.8rem] font-light leading-tight text-[#222421] sm:text-[3.4rem]">
+          <h1 className="mt-3 text-[2.2rem] font-semibold leading-tight tracking-[-0.02em] text-[#231F31] sm:text-[3rem]">
             {p.title}
           </h1>
-          <p className="mt-3 text-[16px] text-[#77766F]">
-            {p.city} · {p.surface} m² · {p.rooms} pièces · {p.bedrooms} chambres
+          <p className="mt-3 text-[16px] text-[#7A7684]">
+            {p.city} · {p.surface} m²{p.rooms ? ` · ${p.rooms} pièces` : ""}
           </p>
-          <p className="mt-5 text-[1.5rem] font-semibold text-[#222421]">{formatPrice(p.price, p.transaction)}</p>
-          <p className="mt-6 max-w-2xl text-[16px] leading-[1.85] text-[#77766F]">{p.tagline}</p>
+          <p className="mt-5 text-[1.55rem] font-bold text-[#231F31]">{formatPrice(p.price, p.transaction)}</p>
+          <p className="mt-6 max-w-2xl text-[15px] leading-[1.85] text-[#7A7684]">{p.tagline}</p>
           <div className="mt-8 space-y-4">
             {p.description.map((para) => (
-              <p key={para.slice(0, 24)} className="max-w-2xl text-[15.5px] leading-[1.85] text-[#77766F]">
+              <p key={para.slice(0, 24)} className="max-w-2xl text-[15px] leading-[1.85] text-[#7A7684]">
                 {para}
               </p>
             ))}
           </div>
           <ul className="mt-8 flex flex-wrap gap-2">
             {p.features.map((f) => (
-              <li key={f} className="border border-[#D8C9B5] bg-[#FCFBF8] px-3 py-1.5 text-[12.5px] text-[#222421]">
+              <li key={f} className="border border-[#E8E4DE] bg-white px-3 py-1.5 text-[12.5px] text-[#231F31]">
                 {f}
               </li>
             ))}
           </ul>
-          <p className="mt-8 rounded border border-[#D8C9B5] bg-[#FCFBF8] p-4 text-[13.5px] leading-relaxed text-[#77766F]">
-            DPE / informations juridiques : non inventés sur cette démonstration. Pour une fiche réelle, consultez{" "}
-            <a href={sierra.officialSite} target="_blank" rel="noopener noreferrer" className="underline">
-              sierra-immo.fr
-            </a>
-            .
+          <a
+            href={p.officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex bg-[#A68936] px-6 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.16em] text-white hover:bg-[#231F31]"
+          >
+            Voir l&apos;annonce officielle
+          </a>
+          <p className="mt-6 rounded border border-[#E8E4DE] bg-[#F4F2F0] p-4 text-[13px] leading-relaxed text-[#7A7684]">
+            Proposition de refonte : disponibilité et détails juridiques à vérifier sur sierra-immo.fr. DPE non inventé ici.
           </p>
         </div>
-        <aside className="border border-[#D8C9B5] bg-[#FCFBF8] p-6 sm:p-8 lg:sticky lg:top-36 lg:self-start">
-          <h2 className="font-[family-name:var(--font-sierra-display)] text-[1.8rem] font-light text-[#222421]">Demande d&apos;information</h2>
-          <p className="mt-2 text-[13.5px] text-[#77766F]">Formulaire de démonstration — aucun envoi réel.</p>
+        <aside className="border border-[#E8E4DE] bg-white p-6 sm:p-8 lg:sticky lg:top-36 lg:self-start">
+          <h2 className="text-[1.4rem] font-semibold text-[#231F31]">Demande d&apos;information</h2>
+          <p className="mt-2 text-[13.5px] text-[#7A7684]">Formulaire de démonstration — aucun envoi réel. Préférez le téléphone de l&apos;agence pour un contact officiel.</p>
           <div className="mt-6">
             <ContactForm bien={p.title} />
           </div>
@@ -91,7 +96,7 @@ export default async function BienDetailPage({ params }: { params: Params }) {
 
       {similar.length > 0 && (
         <section className="mt-20">
-          <h2 className="font-[family-name:var(--font-sierra-display)] text-[2.2rem] font-light text-[#222421]">Biens similaires (démo)</h2>
+          <h2 className="text-[1.8rem] font-semibold text-[#231F31]">Biens similaires</h2>
           <div className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {similar.map((s) => (
               <PropertyCard key={s.slug} property={s} />

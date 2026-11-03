@@ -4,8 +4,8 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { locations } from "@/data/sierra";
 
 const input =
-  "w-full border-0 border-b border-[#D8C9B5] bg-transparent px-0 py-3 text-[15px] text-[#222421] outline-none transition-colors placeholder:text-[#77766F]/60 focus:border-[#263B48]";
-const labelCls = "block text-[10.5px] font-semibold uppercase tracking-[0.22em] text-[#77766F]";
+  "w-full border-0 border-b border-[#D8D2C8] bg-transparent px-0 py-3 text-[15px] text-[#231F31] outline-none transition-colors placeholder:text-[#7A7684]/60 focus:border-[#A68936]";
+const labelCls = "block text-[10.5px] font-bold uppercase tracking-[0.22em] text-[#7A7684]";
 
 type Errors = Record<string, string>;
 
@@ -38,16 +38,16 @@ function Honeypot() {
 
 const emailOk = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
 const submitCls =
-  "inline-flex items-center justify-center bg-[#222421] px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#FCFBF8] transition-colors hover:bg-[#263B48]";
+  "inline-flex items-center justify-center bg-[#A68936] px-8 py-4 text-[12px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#231F31]";
 
 function Success({ onReset, title }: { onReset: () => void; title: string }) {
   return (
-    <div role="status" className="border border-[#263B48]/35 bg-[#FCFBF8] p-8">
-      <p className="font-[family-name:var(--font-sierra-display)] text-[1.9rem] font-light text-[#222421]">{title}</p>
-      <p className="mt-3 text-[15px] leading-relaxed text-[#77766F]">
-        Formulaire de démonstration : aucune donnée n&apos;a été envoyée ni enregistrée. Pour contacter l&apos;agence, utilisez le 04 98 11 04 04 ou sierra-immo.fr.
+    <div role="status" className="border border-[#A68936]/40 bg-white p-8">
+      <p className="text-[1.5rem] font-semibold text-[#231F31]">{title}</p>
+      <p className="mt-3 text-[15px] leading-relaxed text-[#7A7684]">
+        Formulaire de démonstration : aucune donnée n&apos;a été envoyée. Contact officiel : 04 98 11 04 04 ou sierra-immo.fr.
       </p>
-      <button type="button" onClick={onReset} className="mt-6 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#263B48] underline underline-offset-4">
+      <button type="button" onClick={onReset} className="mt-6 text-[12px] font-bold uppercase tracking-[0.18em] text-[#A68936] underline underline-offset-4">
         Remplir à nouveau
       </button>
     </div>
@@ -104,8 +104,8 @@ export function ContactForm({ bien }: { bien?: string }) {
         <textarea id="c-message" name="message" rows={5} className={input} aria-invalid={!!f.errors.message} />
       </Field>
       <div>
-        <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#77766F]">
-          <input type="checkbox" name="consent" className="mt-1 size-4 accent-[#263B48]" />
+        <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#7A7684]">
+          <input type="checkbox" name="consent" className="mt-1 size-4 accent-[#A68936]" />
           Je comprends qu&apos;il s&apos;agit d&apos;une démonstration : mon message ne sera pas envoyé.
         </label>
         {f.errors.consent && (
@@ -170,16 +170,16 @@ export function EstimationWizard() {
   }
 
   return (
-    <div className="border border-[#D8C9B5] bg-[#FCFBF8] p-6 sm:p-10">
-      <p className="text-[12.5px] leading-relaxed text-[#77766F]">
+    <div className="border border-[#E8E4DE] bg-white p-6 sm:p-10">
+      <p className="text-[12.5px] leading-relaxed text-[#7A7684]">
         Demande d&apos;estimation à étudier par l&apos;agence — aucune estimation automatique de prix n&apos;est fournie.
       </p>
       <ol className="mt-8 flex flex-wrap gap-2" aria-label="Progression">
         {steps.map((s, i) => (
           <li
             key={s}
-            className={`px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
-              i === step ? "bg-[#263B48] text-[#FCFBF8]" : i < step ? "bg-[#E8DFD2] text-[#222421]" : "bg-[#F5F2EC] text-[#77766F]"
+            className={`px-3 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.16em] ${
+              i === step ? "bg-[#A68936] text-white" : i < step ? "bg-[#231F31] text-white" : "bg-[#F4F2F0] text-[#7A7684]"
             }`}
           >
             {i + 1}. {s}

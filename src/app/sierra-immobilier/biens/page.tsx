@@ -44,7 +44,7 @@ export default async function BiensPage({ searchParams }: { searchParams: Sp }) 
       <PageIntro
         eyebrow="Catalogue"
         title="Nos biens à découvrir."
-        text="Exemples de démonstration uniquement. Pour les annonces réellement commercialisées, consultez le site officiel."
+        text="Sélection d'annonces publiques Sierra Immobilier. Disponibilités à confirmer sur le site officiel."
       />
       <Wrap className="py-12 sm:py-16">
         <PropertySearch initial={initial} />

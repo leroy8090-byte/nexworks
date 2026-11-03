@@ -23,8 +23,8 @@ export const emptySearch: SearchValues = {
 };
 
 const field =
-  "w-full border-0 border-b border-[#D8C9B5] bg-transparent px-0 py-2.5 text-[15px] text-[#222421] outline-none transition-colors focus:border-[#263B48]";
-const label = "block text-[10.5px] font-semibold uppercase tracking-[0.22em] text-[#77766F]";
+  "w-full border-0 border-b border-[#D8D2C8] bg-transparent px-0 py-2.5 text-[15px] text-[#231F31] outline-none transition-colors focus:border-[#A68936]";
+const label = "block text-[10.5px] font-bold uppercase tracking-[0.22em] text-[#7A7684]";
 
 export function PropertySearch({ initial = emptySearch, variant = "page" }: { initial?: SearchValues; variant?: "page" | "home" }) {
   const router = useRouter();
@@ -50,21 +50,21 @@ export function PropertySearch({ initial = emptySearch, variant = "page" }: { in
     <form
       onSubmit={onSubmit}
       aria-label="Recherche immobilière"
-      className={`border border-[#D8C9B5] bg-[#FCFBF8] p-6 sm:p-8 ${variant === "home" ? "shadow-[0_30px_60px_-40px_rgba(34,36,33,.35)]" : ""}`}
+      className={`border border-[#E8E4DE] bg-white p-6 sm:p-8 ${variant === "home" ? "shadow-[0_30px_60px_-40px_rgba(35,31,49,.4)]" : ""}`}
     >
       <div className="mb-6 flex flex-wrap gap-6" role="radiogroup" aria-label="Type d'offre">
         {[
           { v: "achat", l: "Acheter" },
           { v: "location", l: "Louer" },
         ].map((t) => (
-          <label key={t.v} className="flex cursor-pointer items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#222421]">
+          <label key={t.v} className="flex cursor-pointer items-center gap-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#231F31]">
             <input
               type="radio"
               name="transaction"
               value={t.v}
               checked={v.transaction === t.v}
               onChange={set("transaction")}
-              className="size-4 accent-[#263B48]"
+              className="size-4 accent-[#A68936]"
             />
             {t.l}
           </label>
@@ -145,22 +145,22 @@ export function PropertySearch({ initial = emptySearch, variant = "page" }: { in
         <div className="flex items-end gap-3">
           <button
             type="submit"
-            className="inline-flex flex-1 items-center justify-center bg-[#222421] px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#FCFBF8] transition-colors hover:bg-[#263B48]"
+            className="inline-flex flex-1 items-center justify-center bg-[#A68936] px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#231F31]"
           >
             Rechercher un bien
           </button>
           <button
             type="button"
             onClick={reset}
-            className="px-3 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-[#77766F] underline-offset-4 hover:text-[#222421] hover:underline"
+            className="px-3 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#7A7684] underline-offset-4 hover:text-[#231F31] hover:underline"
           >
             Reset
           </button>
         </div>
       </div>
       {variant === "home" && (
-        <p className="mt-5 text-[12.5px] leading-relaxed text-[#77766F]">
-          Recherche sur un catalogue de démonstration. Pour les annonces réelles :{" "}
+        <p className="mt-5 text-[12.5px] leading-relaxed text-[#7A7684]">
+          Sélection d&apos;annonces publiques Sierra Immobilier. Catalogue complet :{" "}
           <a href={sierra.officialSite} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
             sierra-immo.fr
           </a>

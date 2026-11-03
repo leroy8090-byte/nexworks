@@ -7,39 +7,43 @@ import { formatPrice, propertyTypeLabel, sierra, type SierraProperty } from "@/d
 export function PropertyCard({ property }: { property: SierraProperty }) {
   const href = `${sierra.basePath}/biens/${property.slug}`;
   return (
-    <article className="group">
+    <article className="group overflow-hidden border border-[#E8E4DE] bg-white shadow-[0_10px_30px_-24px_rgba(35,31,49,.45)] transition-shadow hover:shadow-[0_18px_40px_-20px_rgba(35,31,49,.5)]">
       <Link href={href} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#D8C9B5]">
+        <div className="relative aspect-[4/3] overflow-hidden bg-[#231F31]">
           <Image
             src={property.images[0]}
-            alt={`${property.title} — ${property.city} (démonstration)`}
+            alt={`${property.title} — ${property.city}`}
             fill
             sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+            className="object-cover transition-transform duration-[900ms] group-hover:scale-[1.04]"
           />
-          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-            <span className="bg-[#FCFBF8]/95 px-3 py-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#222421]">
+          <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+            <span className="bg-[#231F31] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               {property.transaction === "achat" ? "Vente" : "Location"}
             </span>
-            <span className="bg-[#263B48]/90 px-3 py-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#FCFBF8]">
-              Démo
-            </span>
+            {property.exclusif && (
+              <span className="bg-[#A68936] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">Exclusif</span>
+            )}
+            {property.coupDeCoeur && (
+              <span className="bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#231F31]">Coup de cœur</span>
+            )}
           </div>
         </div>
-        <div className="mt-5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#263B48]">
+        <div className="p-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#A68936]">
             {property.city} · {propertyTypeLabel[property.type]}
           </p>
-          <h3 className="mt-2 font-[family-name:var(--font-sierra-display)] text-[1.75rem] font-light leading-tight text-[#222421] transition-colors group-hover:text-[#263B48]">
+          <h3 className="mt-2 line-clamp-2 text-[1.05rem] font-semibold leading-snug text-[#231F31] group-hover:text-[#A68936]">
             {property.title}
           </h3>
-          <p className="mt-2 text-[14px] text-[#77766F]">
-            {property.surface} m² · {property.rooms} pièces · {property.bedrooms} ch.
+          <p className="mt-2 text-[13.5px] text-[#7A7684]">
+            {property.surface} m²
+            {property.rooms ? ` · ${property.rooms} pièces` : ""}
           </p>
-          <p className="mt-3 text-[15px] font-semibold tracking-wide text-[#222421]">{formatPrice(property.price, property.transaction)}</p>
-          <span className="mt-4 inline-block text-[11.5px] font-semibold uppercase tracking-[0.18em] text-[#263B48] underline-offset-8 group-hover:underline">
-            Découvrir
-          </span>
+          <div className="mt-4 flex items-end justify-between gap-3 border-t border-[#E8E4DE] pt-4">
+            <p className="text-[1.05rem] font-bold text-[#231F31]">{formatPrice(property.price, property.transaction)}</p>
+            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A68936]">Voir →</span>
+          </div>
         </div>
       </Link>
     </article>

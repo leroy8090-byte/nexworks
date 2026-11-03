@@ -218,8 +218,8 @@ export const projects: Project[] = [
     demo: true,
     images: {
       cover: "/projects/volt-cover.webp",
-      desktop: { src: "/projects/volt-desktop.webp", width: 1100, height: 6500 },
-      mobile: { src: "/projects/volt-mobile.webp", width: 390, height: 11000 },
+      desktop: { src: "/projects/volt-desktop.webp", width: 1100, height: 9436 },
+      mobile: { src: "/projects/volt-mobile.webp", width: 390, height: 8633 },
     },
     summary:
       "Un site athlétique et immersif pour un club de fitness fictif à Saint-Raphaël : planning interactif, formules d'abonnement et programmes.",

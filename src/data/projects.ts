@@ -253,8 +253,8 @@ export const projects: Project[] = [
     demo: true,
     images: {
       cover: "/projects/sierra-cover.webp",
-      desktop: { src: "/projects/sierra-desktop.webp", width: 1100, height: 4886 },
-      mobile: { src: "/projects/sierra-mobile.webp", width: 390, height: 5489 },
+      desktop: { src: "/projects/sierra-desktop.webp", width: 1100, height: 7803 },
+      mobile: { src: "/projects/sierra-mobile.webp", width: 390, height: 13958 },
     },
     summary:
       "Proposition de refonte premium pour une agence immobilière familiale à Saint-Raphaël : recherche, estimation et pages locales.",

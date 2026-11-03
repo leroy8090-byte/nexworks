@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { sierra, sierraFaq, sierraProperties, sierraReviews, sierraSectors, sierraServices, sierraTeam } from "@/data/sierra";
+import { sierra, sierraFaq, sierraReviews, sierraSectors, sierraServices, sierraTeam, type SierraProperty } from "@/data/sierra";
 import { HoursCard } from "./Extras";
 import { PropertyCard } from "./PropertyCard";
 import { PropertySearch } from "./PropertySearch";
@@ -108,8 +108,8 @@ export function History() {
   );
 }
 
-export function Featured() {
-  const list = sierraProperties.filter((p) => p.transaction === "achat").slice(0, 6);
+export function Featured({ properties }: { properties: SierraProperty[] }) {
+  const list = properties.filter((p) => p.transaction === "achat").slice(0, 6);
   return (
     <section className="border-y border-[#E8E4DE] bg-white py-20 sm:py-28">
       <Wrap>
@@ -117,7 +117,7 @@ export function Featured() {
           <SectionHead
             eyebrow="Catalogue"
             title="Biens actuellement en vente."
-            text="Sélection reprise du catalogue public Sierra Immobilier. Chaque fiche renvoie aussi vers l'annonce officielle."
+            text="Sélection gérée depuis le back-office. Ajoutez ou retirez des annonces en quelques clics."
           />
           <Reveal>
             <Link href={`${sierra.basePath}/biens`} className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#A68936] underline underline-offset-8">

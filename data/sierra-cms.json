@@ -1,0 +1,368 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-03T20:05:39.962Z",
+  "properties": [
+    {
+      "slug": "2420-bel-appartement-3-pieces-58-m-terrasse-plein-sud-cave-et-parking",
+      "title": "BEL APPARTEMENT 3 PIÈCES – 58 M² – TERRASSE PLEIN SUD – CAVE ET",
+      "city": "Saint-Raphaël",
+      "price": 238500,
+      "surface": 58,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "Coup de cœur",
+        "58 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2420-bel-appartement-3-pieces-58-m-terrasse-plein-sud-cave-et-parking/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/01-2420-bel-appartement-3-pieces-58-m-terra.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2420-bel-appartement-3-pieces-58-m-terrasse-plein-sud-cave-et-parking/",
+      "exclusif": true,
+      "coupDeCoeur": true,
+      "realListing": true
+    },
+    {
+      "slug": "2418-st-raphael-centre-ville-studio-40m",
+      "title": "ST RAPHAEL - Centre ville STUDIO 40m²",
+      "city": "Saint-Raphaël",
+      "price": 120000,
+      "surface": 40,
+      "rooms": 1,
+      "bedrooms": 0,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "40 m²",
+        "1 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t1/2418-st-raphael-centre-ville-studio-40m/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/02-2418-st-raphael-centre-ville-studio-40m.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t1/2418-st-raphael-centre-ville-studio-40m/",
+      "exclusif": true,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2417-studio-triangle-d-or-saint-raphael-83700",
+      "title": "Studio Triangle d'or Saint-Raphael 83700",
+      "city": "Saint-Raphaël",
+      "price": 191000,
+      "surface": 31,
+      "rooms": 1,
+      "bedrooms": 0,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Annonce Sierra Immobilier",
+      "features": [
+        "31 m²",
+        "1 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15884-st-raphael/2-appartement/t1/2417-studio-triangle-d-or-saint-raphael-83700/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/03-2417-studio-triangle-d-or-saint-raphael-.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15884-st-raphael/2-appartement/t1/2417-studio-triangle-d-or-saint-raphael-83700/",
+      "exclusif": false,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2413-frejus-exclusivite-t2-30m-renove-au-calme",
+      "title": "FRÉJUS – EXCLUSIVITÉ – T2 30m² RÉNOVÉ AU CALME",
+      "city": "Fréjus",
+      "price": 129900,
+      "surface": 30,
+      "rooms": 2,
+      "bedrooms": 1,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Annonce Sierra Immobilier",
+      "features": [
+        "30 m²",
+        "2 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15885-frejus/2-appartement/t2/2413-frejus-exclusivite-t2-30m-renove-au-calme/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/04-2413-frejus-exclusivite-t2-30m-renove-au.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15885-frejus/2-appartement/t2/2413-frejus-exclusivite-t2-30m-renove-au-calme/",
+      "exclusif": false,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2410-saint-raphael-t2-47m-parking-prive-et-cave",
+      "title": "SAINT-RAPHAEL - T2 47m² + Parking privé et cave",
+      "city": "Saint-Raphaël",
+      "price": 179900,
+      "surface": 47,
+      "rooms": 2,
+      "bedrooms": 1,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "Coup de cœur",
+        "47 m²",
+        "2 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t2/2410-saint-raphael-t2-47m-parking-prive-et-cave/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/05-2410-saint-raphael-t2-47m-parking-prive-.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t2/2410-saint-raphael-t2-47m-parking-prive-et-cave/",
+      "exclusif": true,
+      "coupDeCoeur": true,
+      "realListing": true
+    },
+    {
+      "slug": "2408-saint-raphael-t3-75m-garage-proche-centre-ville",
+      "title": "SAINT-RAPHAEL - T3 75m² + GARAGE Proche Centre ville",
+      "city": "Saint-Raphaël",
+      "price": 290000,
+      "surface": 75,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "Coup de cœur",
+        "75 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2408-saint-raphael-t3-75m-garage-proche-centre-ville/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/06-2408-saint-raphael-t3-75m-garage-proche-.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2408-saint-raphael-t3-75m-garage-proche-centre-ville/",
+      "exclusif": true,
+      "coupDeCoeur": true,
+      "realListing": true
+    },
+    {
+      "slug": "2406-studio-mezzanine-vue-mer-vieux-port",
+      "title": "STUDIO MEZZANINE VUE MER - VIEUX PORT",
+      "city": "Saint-Raphaël",
+      "price": 169000,
+      "surface": 35.46,
+      "rooms": 1,
+      "bedrooms": 0,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "35.46 m²",
+        "1 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t1/2406-studio-mezzanine-vue-mer-vieux-port/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/07-2406-studio-mezzanine-vue-mer-vieux-port.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t1/2406-studio-mezzanine-vue-mer-vieux-port/",
+      "exclusif": true,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2401-3-pieces-90m-sur-le-vieux-port-de-saint-raphael-83700",
+      "title": "3 pièces 90m² sur le vieux port de Saint-Raphaël 83700",
+      "city": "Saint-Raphaël",
+      "price": 580000,
+      "surface": 90,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "90 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2401-3-pieces-90m-sur-le-vieux-port-de-saint-raphael-83700/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/08-2401-3-pieces-90m-sur-le-vieux-port-de-s.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2401-3-pieces-90m-sur-le-vieux-port-de-saint-raphael-83700/",
+      "exclusif": true,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2400-st-raphael-centre-ville-t2-54m-garage-et-cave",
+      "title": "ST RAPHAEL CENTRE VILLE - T2 54m² + GARAGE ET CAVE",
+      "city": "Saint-Raphaël",
+      "price": 286000,
+      "surface": 54,
+      "rooms": 2,
+      "bedrooms": 1,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Exclusivité Sierra Immobilier",
+      "features": [
+        "Exclusif",
+        "54 m²",
+        "2 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t2/2400-st-raphael-centre-ville-t2-54m-garage-et-cave/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/09-2400-st-raphael-centre-ville-t2-54m-gara.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t2/2400-st-raphael-centre-ville-t2-54m-garage-et-cave/",
+      "exclusif": true,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2396-st-raphael-t3-75m-rdjardin-garage",
+      "title": "ST RAPHAEL - T3 75m² RDJardin + GARAGE",
+      "city": "Saint-Raphaël",
+      "price": 499900,
+      "surface": 75,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "achat",
+      "tagline": "Coup de cœur",
+      "features": [
+        "Coup de cœur",
+        "75 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2396-st-raphael-t3-75m-rdjardin-garage/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/10-2396-st-raphael-t3-75m-rdjardin-garage.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/vente/83-var/15906-saint-raphael/2-appartement/t3/2396-st-raphael-t3-75m-rdjardin-garage/",
+      "exclusif": false,
+      "coupDeCoeur": true,
+      "realListing": true
+    },
+    {
+      "slug": "2421-grand-3-pieces-77-13-m",
+      "title": "Grand 3 PIECES 77.13 M²",
+      "city": "Fréjus",
+      "price": 800,
+      "surface": 77.13,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "location",
+      "tagline": "Annonce Sierra Immobilier",
+      "features": [
+        "77.13 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/location/83-var/15885-frejus/2-appartement/t3/2421-grand-3-pieces-77-13-m/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/11-2421-grand-3-pieces-77-13-m.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/location/83-var/15885-frejus/2-appartement/t3/2421-grand-3-pieces-77-13-m/",
+      "exclusif": false,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2419-3-pieces",
+      "title": "3 PIECES",
+      "city": "Saint-Raphaël",
+      "price": 890,
+      "surface": 68.12,
+      "rooms": 3,
+      "bedrooms": 2,
+      "type": "appartement",
+      "transaction": "location",
+      "tagline": "Annonce Sierra Immobilier",
+      "features": [
+        "68.12 m²",
+        "3 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/location/83-var/15884-st-raphael/2-appartement/t3/2419-3-pieces/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/12-2419-3-pieces.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/location/83-var/15884-st-raphael/2-appartement/t3/2419-3-pieces/",
+      "exclusif": false,
+      "coupDeCoeur": false,
+      "realListing": true
+    },
+    {
+      "slug": "2414-a-louer-2-pieces-en-centre-ville-de-saint-raphael",
+      "title": "A LOUER 2 PIECES EN CENTRE VILLE DE SAINT-RAPHAEL",
+      "city": "Saint-Raphaël",
+      "price": 730,
+      "surface": 42.65,
+      "rooms": 2,
+      "bedrooms": 1,
+      "type": "appartement",
+      "transaction": "location",
+      "tagline": "Annonce Sierra Immobilier",
+      "features": [
+        "42.65 m²",
+        "2 pièces"
+      ],
+      "description": [
+        "Annonce issue du catalogue public de Sierra Immobilier. Les informations affichées ici sont une sélection pour cette proposition de refonte.",
+        "Consultez la fiche complète et les disponibilités sur le site officiel : https://www.sierra-immo.fr/location/83-var/15884-st-raphael/2-appartement/t2/2414-a-louer-2-pieces-en-centre-ville-de-saint-raphael/"
+      ],
+      "images": [
+        "/sierra-immobilier/biens/13-2414-a-louer-2-pieces-en-centre-ville-de.webp"
+      ],
+      "officialUrl": "https://www.sierra-immo.fr/location/83-var/15884-st-raphael/2-appartement/t2/2414-a-louer-2-pieces-en-centre-ville-de-saint-raphael/",
+      "exclusif": false,
+      "coupDeCoeur": false,
+      "realListing": true
+    }
+  ]
+}

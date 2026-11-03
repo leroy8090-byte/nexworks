@@ -221,7 +221,7 @@ export type SierraProperty = {
   officialUrl: string;
   exclusif?: boolean;
   coupDeCoeur?: boolean;
-  realListing: true;
+  realListing?: boolean;
 };
 
 export const sierraProperties: SierraProperty[] = [
@@ -621,8 +621,8 @@ export type PropertyFilters = {
 
 const norm = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-export function filterSierraProperties(f: PropertyFilters): SierraProperty[] {
-  return sierraProperties.filter((p) => {
+export function filterSierraProperties(f: PropertyFilters, list: SierraProperty[] = sierraProperties): SierraProperty[] {
+  return list.filter((p) => {
     if (f.location && norm(p.city) !== norm(f.location) && !norm(p.city).includes(norm(f.location))) return false;
     if (f.type && p.type !== f.type) return false;
     if (f.budgetMin && p.price < f.budgetMin) return false;

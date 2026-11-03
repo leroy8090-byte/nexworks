@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { sierra, sierraNav, sierraProperties } from "@/data/sierra";
+import { sierra, sierraNav } from "@/data/sierra";
 import { FavoritesBar, ScrollProgress, SierraExtrasProvider } from "./Extras";
 import { ContactHint, DemoBanner, SierraButton, Wrap } from "./ui";
 
@@ -142,6 +142,11 @@ function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href={`${sierra.basePath}/admin`} className="text-[#A68936] hover:text-white">
+                Back-office
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
@@ -202,7 +207,7 @@ function BackToTop() {
 export function SierraShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === sierra.basePath;
-  const isGate = pathname.startsWith(`${sierra.basePath}/acces`);
+  const isGate = pathname.startsWith(`${sierra.basePath}/acces`) || pathname.startsWith(`${sierra.basePath}/admin`);
   if (isGate) {
     return <>{children}</>;
   }
@@ -215,7 +220,7 @@ export function SierraShell({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
-        <FavoritesBar properties={sierraProperties} />
+        <FavoritesBar />
         <BackToTop />
       </div>
     </SierraExtrasProvider>

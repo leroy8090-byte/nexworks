@@ -113,8 +113,25 @@ export function CompareButton({ slug }: { slug: string }) {
   );
 }
 
-export function FavoritesBar({ properties }: { properties: SierraProperty[] }) {
+export function FavoritesBar({ properties: initial }: { properties?: SierraProperty[] }) {
   const { favs, compare, clearCompare } = useSierraExtras();
+  const [properties, setProperties] = useState<SierraProperty[]>(initial ?? []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/sierra-cms", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.properties) setProperties(data.properties);
+      })
+      .catch(() => {
+        /* keep seed / initial */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const favProps = properties.filter((p) => favs.includes(p.slug));
   const cmpProps = properties.filter((p) => compare.includes(p.slug));
 

@@ -5,17 +5,16 @@ import { ContactForm } from "@/components/sierra/Forms";
 import { PropertyCard } from "@/components/sierra/PropertyCard";
 import { PropertyGallery } from "@/components/sierra/PropertyGallery";
 import { Wrap } from "@/components/sierra/ui";
-import { formatPrice, getSierraProperty, propertyTypeLabel, sierra, sierraProperties } from "@/data/sierra";
+import { formatPrice, propertyTypeLabel, sierra } from "@/data/sierra";
+import { getBySlug, listPublished } from "@/lib/sierra-cms";
+
+export const dynamic = "force-dynamic";
 
 type Params = Promise<{ slug: string }>;
 
-export function generateStaticParams() {
-  return sierraProperties.map((p) => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const p = getSierraProperty(slug);
+  const p = getBySlug(slug);
   if (!p) return { title: "Bien introuvable" };
   return {
     title: `${p.title} — ${p.city} (démonstration)`,
@@ -25,9 +24,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function BienDetailPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const p = getSierraProperty(slug);
+  const p = getBySlug(slug);
   if (!p) notFound();
-  const similar = sierraProperties.filter((x) => x.slug !== p.slug && x.city === p.city).slice(0, 3);
+  const similar = listPublished()
+    .filter((x) => x.slug !== p.slug && x.city === p.city)
+    .slice(0, 3);
 
   return (
     <Wrap className="py-10 sm:py-14">
@@ -73,21 +74,25 @@ export default async function BienDetailPage({ params }: { params: Params }) {
               </li>
             ))}
           </ul>
-          <a
-            href={p.officialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex bg-[#A68936] px-6 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.16em] text-white hover:bg-[#231F31]"
-          >
-            Voir l&apos;annonce officielle
-          </a>
+          {p.officialUrl ? (
+            <a
+              href={p.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex bg-[#A68936] px-6 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.16em] text-white hover:bg-[#231F31]"
+            >
+              Voir l&apos;annonce officielle
+            </a>
+          ) : null}
           <p className="mt-6 rounded border border-[#E8E4DE] bg-[#F4F2F0] p-4 text-[13px] leading-relaxed text-[#7A7684]">
             Proposition de refonte : disponibilité et détails juridiques à vérifier sur sierra-immo.fr. DPE non inventé ici.
           </p>
         </div>
         <aside className="border border-[#E8E4DE] bg-white p-6 sm:p-8 lg:sticky lg:top-36 lg:self-start">
           <h2 className="text-[1.4rem] font-semibold text-[#231F31]">Demande d&apos;information</h2>
-          <p className="mt-2 text-[13.5px] text-[#7A7684]">Formulaire de démonstration — aucun envoi réel. Préférez le téléphone de l&apos;agence pour un contact officiel.</p>
+          <p className="mt-2 text-[13.5px] text-[#7A7684]">
+            Formulaire de démonstration — aucun envoi réel. Préférez le téléphone de l&apos;agence pour un contact officiel.
+          </p>
           <div className="mt-6">
             <ContactForm bien={p.title} />
           </div>

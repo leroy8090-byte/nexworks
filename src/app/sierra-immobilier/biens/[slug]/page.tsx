@@ -6,6 +6,7 @@ import { PropertyCard } from "@/components/sierra/PropertyCard";
 import { PropertyGallery } from "@/components/sierra/PropertyGallery";
 import { Wrap } from "@/components/sierra/ui";
 import { SierraPropertyViewTracker } from "@/components/sierra/Analytics";
+import { JsonLd, breadcrumbLd } from "@/components/sierra/JsonLd";
 import { formatPrice, propertyTypeLabel, sierra } from "@/data/sierra";
 import { getBySlug, listPublished } from "@/lib/sierra-cms";
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: `${p.title} — ${p.city} (démonstration)`,
     description: `${p.tagline} Fiche de démonstration — non commerciale.`,
+    alternates: { canonical: `/sierra-immobilier/biens/${p.slug}` },
   };
 }
 
@@ -32,6 +34,13 @@ export default async function BienDetailPage({ params }: { params: Params }) {
   return (
     <Wrap className="py-10 sm:py-14">
       <SierraPropertyViewTracker slug={p.slug} title={p.title} />
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Accueil", path: sierra.basePath },
+          { name: "Biens", path: `${sierra.basePath}/biens` },
+          { name: p.title, path: `${sierra.basePath}/biens/${p.slug}` },
+        ])}
+      />
       <nav aria-label="Fil d'Ariane" className="mb-8 text-[12.5px] text-[#77766F]">
         <Link href={sierra.basePath} className="hover:text-[#222421]">
           Accueil

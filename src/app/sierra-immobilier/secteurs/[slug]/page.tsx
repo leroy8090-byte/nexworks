@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { JsonLd, breadcrumbLd } from "@/components/sierra/JsonLd";
 import { PageIntro, SierraButton, Wrap } from "@/components/sierra/ui";
 import { sierra, sierraSectors } from "@/data/sierra";
 
@@ -20,7 +21,7 @@ const copy: Record<string, { title: string; paragraphs: string[]; seo: string }>
     seo: "Agence immobilière Fréjus — patrimoine, littoral et quartiers résidentiels.",
     paragraphs: [
       "Fréjus combine patrimoine historique, littoral et quartiers résidentiels. Un marché complémentaire de Saint-Raphaël pour les projets d'achat ou de location.",
-      "Les biens affichés dans cette démonstration restent fictifs et clairement identifiés comme tels.",
+      "Les annonces affichées sur cette proposition proviennent du catalogue public de l'agence ou du back-office ; leur disponibilité est à confirmer auprès de l'agence.",
     ],
   },
   "puget-sur-argens": {
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params;
   const c = copy[slug];
   if (!c) return { title: "Secteur" };
-  return { title: c.title, description: c.seo };
+  return { title: c.title, description: c.seo, alternates: { canonical: `/sierra-immobilier/secteurs/${slug}` } };
 }
 
 export default async function SectorPage({ params }: { params: Params }) {
@@ -52,6 +53,13 @@ export default async function SectorPage({ params }: { params: Params }) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Accueil", path: sierra.basePath },
+          { name: "Secteurs", path: sierra.basePath },
+          { name: c.title, path: `${sierra.basePath}/secteurs/${slug}` },
+        ])}
+      />
       <PageIntro eyebrow="Territoire" title={c.title} text={sector.text} />
       <Wrap className="grid gap-12 py-16 lg:grid-cols-2 lg:items-start">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#D8C9B5]">

@@ -3,7 +3,7 @@ import { capitalMeta } from "@/components/capital/seo";
 import { PageIntro } from "@/components/capital/ui";
 import { capital } from "@/data/capital";
 
-export const metadata = capitalMeta("Louer à Saint-Raphaël et alentour", "Rechercher une location autour de Saint-Raphaël : appartements, studios et maisons. Annonces de démonstration.", "/louer");
+export const metadata = capitalMeta("Louer à Saint-Raphaël et alentour", "Rechercher une location autour de Saint-Raphaël : appartements, studios et maisons.", "/louer");
 
 export default async function Louer({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;

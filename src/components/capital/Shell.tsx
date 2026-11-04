@@ -1,23 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { capital, capitalNav, communes } from "@/data/capital";
+import { SocialIcon, SOCIALS, type SocialLinks } from "@/lib/social-icons";
 import { CapButton, DemoBanner, serif, Wrap } from "./ui";
 
 function Logo({ light }: { light: boolean }) {
   return (
-    <Link href={capital.basePath} aria-label={`${capital.name} — Accueil`} className={`flex items-center gap-3 leading-none transition-colors ${light ? "text-[#F8F7F3]" : "text-[#183B50]"}`}>
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden>
-        <rect x="1" y="1" width="28" height="28" stroke="currentColor" strokeWidth="1.2" />
-        <path d="M8 22V12l7-5 7 5v10M12 22v-6h6v6" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-      </svg>
-      <span className="flex flex-col">
-        <span className={`${serif} text-[21px] font-medium tracking-[0.2em]`}>CAPITAL</span>
-        <span className="mt-[3px] text-[9.5px] font-semibold tracking-[0.5em]">IMMOBILIER</span>
-      </span>
+    <Link href={capital.basePath} aria-label={`${capital.name} — Accueil`} className="relative block h-[43px] w-[200px] shrink-0 min-[375px]:h-[50px] min-[375px]:w-[234px] sm:h-[58px] sm:w-[271px]">
+      {/* Les deux versions restent montées pour un fondu sans rechargement au scroll. */}
+      <Image src="/capital-immobilier/logo-light.png" alt="" fill sizes="271px" loading="eager" className={`object-contain object-left transition-opacity duration-500 ${light ? "opacity-100" : "opacity-0"}`} />
+      <Image src="/capital-immobilier/logo-dark.png" alt="" fill sizes="271px" loading="eager" className={`object-contain object-left transition-opacity duration-500 ${light ? "opacity-0" : "opacity-100"}`} />
     </Link>
   );
 }
@@ -119,14 +116,13 @@ function Header({ isHome }: { isHome: boolean }) {
   );
 }
 
-function Footer() {
+function Footer({ socials }: { socials: SocialLinks }) {
   const b = capital.basePath;
   return (
     <footer className="bg-[#183B50] text-[#E8E0D4]">
       <Wrap className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className={`${serif} text-[26px] tracking-[0.2em] text-[#F8F7F3]`}>CAPITAL</p>
-          <p className="mt-1 text-[10px] font-semibold tracking-[0.5em] text-[#F8F7F3]">IMMOBILIER</p>
+          <Image src="/capital-immobilier/logo-stacked-light.png" alt={capital.name} width={969} height={718} sizes="190px" className="h-auto w-[190px]" />
           <address className="mt-6 text-[14px] not-italic leading-relaxed">
             {capital.address.street}
             <br />
@@ -144,6 +140,17 @@ function Footer() {
               </a>
             </li>
           </ul>
+          {SOCIALS.some((n) => socials[n.key]) && (
+            <ul className="mt-6 flex flex-wrap gap-2.5" aria-label="Réseaux sociaux">
+              {SOCIALS.filter((n) => socials[n.key]).map((n) => (
+                <li key={n.key}>
+                  <a href={socials[n.key]} target="_blank" rel="noopener noreferrer" aria-label={n.label} title={n.label} className="grid size-10 place-items-center rounded-full border border-[#F8F7F3]/25 text-[#F8F7F3] transition-colors hover:bg-[#F8F7F3] hover:text-[#183B50]">
+                    <SocialIcon path={n.path} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div>
           <h2 className="cap-label text-[12px] font-semibold uppercase tracking-[0.24em] text-[#F8F7F3]">Navigation</h2>
@@ -172,7 +179,7 @@ function Footer() {
         <div>
           <h2 className="cap-label text-[12px] font-semibold uppercase tracking-[0.24em] text-[#F8F7F3]">À savoir</h2>
           <p className="mt-5 text-[13.5px] leading-relaxed text-[#E8E0D4]/80">
-            Ce site est un concept de refonte réalisé par NEXWORKS AGENCY. Les biens et photographies sont des exemples de démonstration. Le site officiel de l&apos;agence reste{" "}
+            Ce site est un concept de refonte réalisé par NEXWORKS AGENCY. Les annonces sont des biens de test et les photographies sont des illustrations. Le site officiel de l&apos;agence reste{" "}
             <a href={capital.publicSite} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
               capitalimmobilier.fr
             </a>
@@ -203,7 +210,7 @@ function Footer() {
   );
 }
 
-export function CapitalShell({ children }: { children: ReactNode }) {
+export function CapitalShell({ children, socials }: { children: ReactNode; socials: SocialLinks }) {
   const pathname = usePathname();
   const isHome = pathname === capital.basePath;
   return (
@@ -215,7 +222,7 @@ export function CapitalShell({ children }: { children: ReactNode }) {
       <main id="contenu" className={isHome ? "" : "pt-[112px]"}>
         {children}
       </main>
-      <Footer />
+      <Footer socials={socials} />
     </div>
   );
 }

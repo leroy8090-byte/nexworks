@@ -3,7 +3,7 @@ import { capitalMeta } from "@/components/capital/seo";
 import { PageIntro } from "@/components/capital/ui";
 import { capital } from "@/data/capital";
 
-export const metadata = capitalMeta("Acheter à Saint-Raphaël et alentour", "Rechercher un bien à acheter autour de Saint-Raphaël : type de bien, commune, budget, pièces, surface. Biens de démonstration.", "/acheter");
+export const metadata = capitalMeta("Acheter à Saint-Raphaël et alentour", "Rechercher un bien à acheter autour de Saint-Raphaël : type de bien, commune, budget, pièces, surface.", "/acheter");
 
 export default async function Acheter({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;

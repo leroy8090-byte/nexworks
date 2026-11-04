@@ -11,12 +11,12 @@ export default function Confidentialite() {
       <section className="py-14 sm:py-20">
         <Wrap className="max-w-3xl space-y-8 text-[16px] leading-[1.85] text-[#252A2D]/75">
           <div>
-            <h2 className="font-[family-name:var(--font-cap-serif)] text-[1.8rem] text-[#252A2D]">Formulaires de démonstration</h2>
-            <p className="mt-3">Les formulaires de ce concept (contact, visite, estimation) ne transmettent et n&apos;enregistrent aucune donnée : la saisie est validée dans votre navigateur puis oubliée. Aucun message n&apos;est envoyé à l&apos;agence.</p>
+            <h2 className="font-[family-name:var(--font-cap-serif)] text-[1.8rem] text-[#252A2D]">Formulaires</h2>
+            <p className="mt-3">Les formulaires de ce concept (contact, visite, estimation) enregistrent votre nom, vos coordonnées et votre message dans le logiciel de test NEXWORKS ESTATE. Ils ne sont pas transmis à l&apos;agence et ne servent qu&apos;à vérifier le parcours.</p>
           </div>
           <div>
             <h2 className="font-[family-name:var(--font-cap-serif)] text-[1.8rem] text-[#252A2D]">Cookies et mesure d&apos;audience</h2>
-            <p className="mt-3">Ce concept ne dépose pas de cookie de suivi et ne contient aucun outil de mesure d&apos;audience.</p>
+            <p className="mt-3">Ce concept ne dépose pas de cookie de suivi. La mesure d&apos;audience de NEXWORKS ESTATE compte les visites sans cookie et sans conserver votre adresse IP. Les fiches de biens intègrent des cartes Google Maps et des vidéos YouTube ou Vimeo : ces services tiers reçoivent votre visite et peuvent déposer leurs propres cookies.</p>
           </div>
           <div>
             <h2 className="font-[family-name:var(--font-cap-serif)] text-[1.8rem] text-[#252A2D]">Version définitive</h2>

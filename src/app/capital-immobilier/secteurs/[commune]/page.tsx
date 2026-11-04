@@ -6,7 +6,8 @@ import { PropertyCard } from "@/components/capital/PropertyCard";
 import { CtaBand } from "@/components/capital/Blocks";
 import { breadcrumbLd, capitalMeta } from "@/components/capital/seo";
 import { Eyebrow, JsonLdScript, Reveal, Wrap, serif } from "@/components/capital/ui";
-import { capital, communes, getCommune, properties } from "@/data/capital";
+import { capital, communes, getCommune, isSameCommune } from "@/data/capital";
+import { getProperties } from "@/lib/capital-properties";
 
 export function generateStaticParams() {
   return communes.map((c) => ({ commune: c.slug }));
@@ -23,7 +24,7 @@ export default async function CommunePage({ params }: { params: Promise<{ commun
   const { commune } = await params;
   const c = getCommune(commune);
   if (!c) notFound();
-  const here = properties.filter((p) => p.commune === c.name);
+  const here = (await getProperties()).filter((p) => isSameCommune(p.commune, c.name));
   const others = communes.filter((x) => x.slug !== c.slug);
   const b = capital.basePath;
 
@@ -68,7 +69,7 @@ export default async function CommunePage({ params }: { params: Promise<{ commun
 
       <section className="bg-[#E8E0D4]/55 py-20 sm:py-24">
         <Wrap>
-          <h2 className={`${serif} text-[2.2rem] sm:text-[2.8rem]`}>Biens de démonstration à {c.name}</h2>
+          <h2 className={`${serif} text-[2.2rem] sm:text-[2.8rem]`}>Biens à {c.name}</h2>
           {here.length > 0 ? (
             <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {here.map((p) => (
@@ -76,9 +77,8 @@ export default async function CommunePage({ params }: { params: Promise<{ commun
               ))}
             </div>
           ) : (
-            <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-[#252A2D]/70">Aucun bien de démonstration n&apos;est associé à cette commune.</p>
+            <p className="mt-6 max-w-xl text-[16px] leading-relaxed text-[#252A2D]/70">Aucun bien n&apos;est en ligne dans cette commune pour le moment.</p>
           )}
-          <p className="mt-8 text-[13px] text-[#252A2D]/60">Biens fictifs, présentés à titre d&apos;exemple de fiche.</p>
         </Wrap>
       </section>
 

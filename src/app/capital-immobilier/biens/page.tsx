@@ -3,7 +3,7 @@ import { capitalMeta } from "@/components/capital/seo";
 import { PageIntro } from "@/components/capital/ui";
 import { capital } from "@/data/capital";
 
-export const metadata = capitalMeta("Nos biens", "Tous les biens de démonstration, à vendre et à louer, autour de Saint-Raphaël.", "/biens");
+export const metadata = capitalMeta("Nos biens", "Tous les biens à vendre et à louer autour de Saint-Raphaël.", "/biens");
 
 export default async function Biens({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;

@@ -8,7 +8,7 @@ const selectCls =
   "w-full appearance-none rounded-none border-0 border-b border-[#183B50]/25 bg-transparent px-0 py-2.5 text-[15px] text-[#252A2D] outline-none transition-colors focus:border-[#183B50] focus-visible:border-[#183B50]";
 const labelCls = "block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#183B50]/70";
 
-/** Moteur de recherche du hero : redirige vers /acheter ou /louer avec les critères dans l'URL (résultats calculés sur le jeu de données). */
+/** Moteur de recherche du hero : redirige vers /acheter ou /louer avec les critères dans l'URL (résultats calculés sur les biens du logiciel). */
 export function HeroSearch() {
   const router = useRouter();
   const [pending, start] = useTransition();

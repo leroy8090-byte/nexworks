@@ -2,8 +2,7 @@
  * CAPITAL IMMOBILIER — concept de refonte réalisé par NEXWORKS AGENCY (démonstration).
  *
  * Coordonnées et services : repris du site public https://www.capitalimmobilier.fr/ (vérifié le 04/11/2026).
- * Biens : TOUS les biens ci-dessous sont des biens de DÉMONSTRATION fictifs. Ils ne sont pas commercialisés par
- * l'agence et leurs photographies sont des images d'illustration libres de droits (voir /capital-immobilier/credits-photos).
+ * Biens : ils ne sont plus ici. Ils sont saisis dans le logiciel NEXWORKS ESTATE et lus par src/lib/capital-properties.ts.
  * Aucun avis, chiffre, date, récompense, carte professionnelle ou nom d'équipe n'est affiché : rien n'est inventé.
  */
 export const capital = {
@@ -140,15 +139,20 @@ export const communes: Commune[] = [
 export const getCommune = (slug: string) => communes.find((c) => c.slug === slug);
 export const communeNames = communes.map((c) => c.name);
 
-/* ------------------------------------------------------------------ Biens (DÉMONSTRATION) */
+/* ------------------------------------------------------------------ Biens (saisis dans NEXWORKS ESTATE) */
 
-export type PropertyType = "appartement" | "maison" | "villa";
 export type Transaction = "vente" | "location";
 
-export const propertyTypeLabel: Record<PropertyType, string> = {
+/** Mêmes types que le formulaire du logiciel. */
+export const propertyTypeLabel: Record<string, string> = {
   appartement: "Appartement",
   maison: "Maison",
   villa: "Villa",
+  studio: "Studio",
+  terrain: "Terrain",
+  "local commercial": "Local commercial",
+  immeuble: "Immeuble",
+  parking: "Parking",
 };
 
 export type Property = {
@@ -156,250 +160,71 @@ export type Property = {
   ref: string;
   title: string;
   transaction: Transaction;
-  type: PropertyType;
+  /** En minuscules, pour les filtres ; typeLabel est le libellé affiché. */
+  type: string;
+  typeLabel: string;
   commune: string;
+  /** Adresse exacte : null si l'agence a choisi de ne pas l'afficher sur ce bien. */
+  address: string | null;
   /** Prix de vente (€) ou loyer mensuel hors charges (€) */
-  price: number;
-  surface: number;
-  rooms: number;
-  bedrooms: number;
-  bathrooms: number;
-  tagline: string;
+  price: number | null;
+  fees: number | null;
+  feesNote: string | null;
+  surface: number | null;
+  landSurface: number | null;
+  rooms: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
   description: string[];
   features: string[];
+  dpe: string | null;
+  ges: string | null;
   images: { src: string; alt: string }[];
+  videos: string[];
 };
 
-const img = (name: string, alt: string) => ({ src: `/capital-immobilier/${name}.webp`, alt });
+export const slugify = (s: string) =>
+  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
-export const properties: Property[] = [
-  {
-    slug: "villa-contemporaine-saint-raphael",
-    ref: "DEMO-001",
-    title: "Villa contemporaine avec piscine",
-    transaction: "vente",
-    type: "villa",
-    commune: "Saint-Raphaël",
-    price: 1650000,
-    surface: 210,
-    rooms: 6,
-    bedrooms: 4,
-    bathrooms: 3,
-    tagline: "Lignes pures, grandes baies et piscine face au jardin.",
-    description: [
-      "Cette villa de démonstration illustre la façon dont nous présentons une maison d'architecte : grande façade vitrée, séjour ouvert sur l'extérieur et piscine dans le prolongement des pièces de vie.",
-      "La fiche regroupe l'essentiel : surface, nombre de pièces, prestations et secteur. Pour un vrai bien, s'ajouteraient le diagnostic énergétique et les éléments de copropriété ou de terrain.",
-    ],
-    features: ["Piscine", "Grandes baies vitrées", "Cuisine ouverte", "Terrasse", "Jardin"],
-    images: [
-      img("villa-pool", "Façade contemporaine blanche et bois face à une piscine (photographie d'illustration)"),
-      img("pool-garden", "Piscine rectangulaire entourée d'un jardin méditerranéen (photographie d'illustration)"),
-      img("kitchen-open", "Cuisine ouverte et séjour lumineux (photographie d'illustration)"),
-      img("window-sea", "Baie vitrée ouverte sur une terrasse et la mer (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "villa-vue-mer-antheor",
-    ref: "DEMO-002",
-    title: "Villa en surplomb, vue mer",
-    transaction: "vente",
-    type: "villa",
-    commune: "Anthéor",
-    price: 2490000,
-    surface: 260,
-    rooms: 7,
-    bedrooms: 5,
-    bathrooms: 4,
-    tagline: "Piscine suspendue au-dessus de la baie, pins parasols et horizon bleu.",
-    description: [
-      "Un bien de démonstration pensé pour montrer une fiche « signature » : position dominante, vue dégagée et espaces extérieurs pensés comme des pièces à vivre.",
-      "Les informations de localisation restent volontairement à l'échelle du secteur : une adresse exacte n'est communiquée qu'en rendez-vous, comme le ferait l'agence pour un bien réel.",
-    ],
-    features: ["Vue mer", "Piscine", "Terrasses étagées", "Pins parasols", "Séjour lumineux"],
-    images: [
-      img("pool-sea", "Piscine en surplomb de la mer bordée de pins (photographie d'illustration)"),
-      img("balcony-hills", "Balcon donnant sur les collines boisées et la mer (photographie d'illustration)"),
-      img("window-sea", "Baie vitrée donnant sur la mer et une ville côtière (photographie d'illustration)"),
-      img("living-sun", "Salon baigné de soleil devant un rideau de lin (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "mas-provencal-bagnols-en-foret",
-    ref: "DEMO-003",
-    title: "Villa provençale et son bassin",
-    transaction: "vente",
-    type: "maison",
-    commune: "Bagnols-en-Forêt",
-    price: 890000,
-    surface: 175,
-    rooms: 6,
-    bedrooms: 4,
-    bathrooms: 2,
-    tagline: "Tuiles rondes, arcades et soirées autour de la piscine.",
-    description: [
-      "Bien de démonstration inspiré des maisons provençales de l'arrière-pays : arcades, tuiles canal, patio et bassin pour les longues soirées d'été.",
-      "Cette fiche permet de tester la recherche par type de bien « maison » et par commune de l'arrière-pays.",
-    ],
-    features: ["Piscine", "Arcades", "Patio", "Cuisine d'été", "Mobilier de jardin"],
-    images: [
-      img("villa-night", "Maison provençale à arcades éclairée au crépuscule devant sa piscine (photographie d'illustration)"),
-      img("pool-white", "Piscine bleue et terrasse blanche fleurie (photographie d'illustration)"),
-      img("living-oak", "Séjour clair avec buffet en bois et fauteuil (photographie d'illustration)"),
-      img("room-bright", "Chambre claire aux portes-fenêtres et parquet (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "appartement-lumineux-frejus",
-    ref: "DEMO-004",
-    title: "Appartement traversant, 4 pièces",
-    transaction: "vente",
-    type: "appartement",
-    commune: "Fréjus",
-    price: 345000,
-    surface: 78,
-    rooms: 4,
-    bedrooms: 2,
-    bathrooms: 1,
-    tagline: "Grands volumes, lumière du matin et balcon filant.",
-    description: [
-      "Appartement de démonstration en étage élevé : séjour avec balcon, cuisine séparée, deux chambres sur le côté calme.",
-      "Il illustre une fiche d'appartement classique, avec les informations qui comptent pour comparer : surface, pièces, chambres, étage et prestations.",
-    ],
-    features: ["Balcon", "Séjour lumineux", "Cuisine équipée", "Parquet", "Étage élevé"],
-    images: [
-      img("living-sun", "Salon lumineux et son balcon (photographie d'illustration)"),
-      img("kitchen-blue", "Cuisine moderne blanche aux touches bleues (photographie d'illustration)"),
-      img("room-bright", "Chambre claire aux grandes fenêtres (photographie d'illustration)"),
-      img("window-sea", "Vue depuis la fenêtre sur la mer et la ville (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "appartement-t2-saint-raphael",
-    ref: "DEMO-005",
-    title: "Appartement 2 pièces rénové",
-    transaction: "vente",
-    type: "appartement",
-    commune: "Saint-Raphaël",
-    price: 235000,
-    surface: 48,
-    rooms: 2,
-    bedrooms: 1,
-    bathrooms: 1,
-    tagline: "Un deux-pièces clair, pensé pour être habité ou loué.",
-    description: [
-      "Bien de démonstration à budget plus accessible : une pièce de vie avec cuisine ouverte, une chambre, des finitions sobres.",
-      "Il permet de vérifier que les filtres de budget et de surface fonctionnent sur toute la gamme du jeu de données.",
-    ],
-    features: ["Cuisine ouverte", "Rénové", "Lumineux", "Rangements intégrés"],
-    images: [
-      img("kitchen-open", "Cuisine ouverte sur le séjour (photographie d'illustration)"),
-      img("living-oak", "Séjour clair avec mobilier en bois (photographie d'illustration)"),
-      img("room-bright", "Chambre claire (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "villa-architecte-callian",
-    ref: "DEMO-006",
-    title: "Villa d'architecte et palmiers",
-    transaction: "vente",
-    type: "villa",
-    commune: "Callian",
-    price: 1180000,
-    surface: 190,
-    rooms: 5,
-    bedrooms: 4,
-    bathrooms: 3,
-    tagline: "Volumes blancs, bois chaud et jardin de palmiers.",
-    description: [
-      "Une villa de démonstration à l'écriture architecturale franche : volumes superposés, bardage bois, longues terrasses.",
-      "Elle permet d'illustrer une fiche haut de gamme dans l'arrière-pays, avec galerie plein écran et formulaire de contact intégré.",
-    ],
-    features: ["Architecture contemporaine", "Terrasses", "Piscine", "Jardin planté de palmiers"],
-    images: [
-      img("villa-palm", "Villa contemporaine blanche et bois, palmiers au premier plan (photographie d'illustration)"),
-      img("white-balcony", "Façade blanche aux longues baies et garde-corps vitré (photographie d'illustration)"),
-      img("pool-garden", "Piscine entourée de verdure (photographie d'illustration)"),
-      img("kitchen-blue", "Cuisine ouverte contemporaine (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "location-appartement-3-pieces-saint-raphael",
-    ref: "DEMO-007",
-    title: "Appartement 3 pièces à louer",
-    transaction: "location",
-    type: "appartement",
-    commune: "Saint-Raphaël",
-    price: 1150,
-    surface: 68,
-    rooms: 3,
-    bedrooms: 2,
-    bathrooms: 1,
-    tagline: "Lumineux, calme et prêt à emménager.",
-    description: [
-      "Annonce de location de démonstration : un trois-pièces lumineux, avec séjour ouvert sur un balcon et deux chambres.",
-      "Le loyer affiché est un loyer mensuel hors charges fictif. Pour une vraie location, la fiche préciserait charges, dépôt de garantie et honoraires, à renseigner par l'agence.",
-    ],
-    features: ["Balcon", "Cuisine équipée", "Deux chambres", "Parquet"],
-    images: [
-      img("living-sun", "Salon clair et son balcon (photographie d'illustration)"),
-      img("room-bright", "Chambre claire et parquet (photographie d'illustration)"),
-      img("kitchen-blue", "Cuisine équipée (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "location-maison-fayence",
-    ref: "DEMO-008",
-    title: "Maison familiale à louer",
-    transaction: "location",
-    type: "maison",
-    commune: "Fayence",
-    price: 1850,
-    surface: 120,
-    rooms: 5,
-    bedrooms: 3,
-    bathrooms: 2,
-    tagline: "Une maison de village avec piscine, à louer à l'année.",
-    description: [
-      "Annonce de location de démonstration : maison de caractère avec piscine et séjour spacieux, dans le pays de Fayence.",
-      "Elle permet de tester la recherche en mode « Louer » sur un type de bien différent des appartements.",
-    ],
-    features: ["Piscine", "Séjour spacieux", "Toit en tuiles", "Trois chambres"],
-    images: [
-      img("roof-house", "Maison à toit de tuiles rouges et mer à l'horizon (photographie d'illustration)"),
-      img("pool-white", "Piscine et terrasse blanche (photographie d'illustration)"),
-      img("living-oak", "Séjour avec buffet en bois (photographie d'illustration)"),
-    ],
-  },
-  {
-    slug: "location-studio-frejus",
-    ref: "DEMO-009",
-    title: "Studio meublé à louer",
-    transaction: "location",
-    type: "appartement",
-    commune: "Fréjus",
-    price: 590,
-    surface: 28,
-    rooms: 1,
-    bedrooms: 0,
-    bathrooms: 1,
-    tagline: "Un studio optimisé, proche du centre.",
-    description: [
-      "Annonce de démonstration : un studio fonctionnel avec cuisine intégrée et pièce principale lumineuse.",
-      "Il illustre l'affichage d'un bien sans chambre séparée (« studio ») dans la fiche et les filtres.",
-    ],
-    features: ["Cuisine intégrée", "Lumineux", "Vue dégagée"],
-    images: [
-      img("kitchen-open", "Cuisine ouverte et pièce de vie (photographie d'illustration)"),
-      img("window-sea", "Fenêtre ouverte sur un balcon et la ville (photographie d'illustration)"),
-    ],
-  },
-];
+/** La ville est saisie à la main dans le logiciel : « ST RAPHAEL » ou « Saint-Raphaël » désignent la même commune. */
+export const isSameCommune = (a: string, b: string) => {
+  const key = (s: string) => slugify(s).replace(/^st-/, "saint-");
+  return key(a) === key(b);
+};
 
-export const getProperty = (slug: string) => properties.find((p) => p.slug === slug);
-
-export const formatEuro = (n: number) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/ /g, " ")} €`;
+export const formatEuro = (n: number) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/\u202f/g, "\u00a0")}\u00a0€`;
 export const formatPrice = (p: Pick<Property, "price" | "transaction">) =>
-  p.transaction === "location" ? `${formatEuro(p.price)} / mois` : formatEuro(p.price);
+  p.price == null ? "Prix sur demande" : p.transaction === "location" ? `${formatEuro(p.price)} / mois` : formatEuro(p.price);
+
+/** Seules les informations renseignées dans le logiciel sont affichées. */
+export const roomsSummary = (p: Pick<Property, "surface" | "rooms" | "bedrooms">) =>
+  [
+    p.surface != null && `${p.surface} m²`,
+    p.rooms != null && `${p.rooms} ${p.rooms > 1 ? "pièces" : "pièce"}`,
+    p.bedrooms != null && p.bedrooms > 0 && `${p.bedrooms} ${p.bedrooms > 1 ? "chambres" : "chambre"}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+/** Lecteur intégré pour YouTube et Vimeo ; null pour un autre lien, affiché alors comme simple lien. */
+export function videoEmbedUrl(raw: string): string | null {
+  let u: URL;
+  try {
+    u = new URL(raw);
+  } catch {
+    return null;
+  }
+  const host = u.hostname.replace(/^(www|m)\./, "");
+  if (host === "youtu.be" || host === "youtube.com" || host === "youtube-nocookie.com") {
+    const id = host === "youtu.be" ? u.pathname.split("/")[1] : (u.searchParams.get("v") ?? u.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1]);
+    return id && /^[\w-]{6,20}$/.test(id) ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+  }
+  if (host === "vimeo.com" || host === "player.vimeo.com") {
+    const id = u.pathname.match(/(\d{6,12})/)?.[1];
+    return id ? `https://player.vimeo.com/video/${id}` : null;
+  }
+  return null;
+}
 
 export type Filters = {
   transaction?: string;
@@ -411,28 +236,29 @@ export type Filters = {
   sort?: string;
 };
 
-export function filterProperties(f: Filters): Property[] {
-  const list = properties.filter(
+export function filterProperties(all: Property[], f: Filters): Property[] {
+  const list = all.filter(
     (p) =>
       (!f.transaction || p.transaction === f.transaction) &&
       (!f.type || p.type === f.type) &&
-      (!f.commune || p.commune === f.commune) &&
-      (!f.budgetMax || p.price <= f.budgetMax) &&
-      (!f.rooms || p.rooms >= f.rooms) &&
-      (!f.surfaceMin || p.surface >= f.surfaceMin),
+      (!f.commune || isSameCommune(p.commune, f.commune)) &&
+      (!f.budgetMax || (p.price != null && p.price <= f.budgetMax)) &&
+      (!f.rooms || (p.rooms != null && p.rooms >= f.rooms)) &&
+      (!f.surfaceMin || (p.surface != null && p.surface >= f.surfaceMin)),
   );
-  if (f.sort === "prix-asc") list.sort((a, b) => a.price - b.price);
-  if (f.sort === "prix-desc") list.sort((a, b) => b.price - a.price);
-  if (f.sort === "surface-desc") list.sort((a, b) => b.surface - a.surface);
+  const price = (p: Property) => p.price ?? 0;
+  if (f.sort === "prix-asc") list.sort((a, b) => price(a) - price(b));
+  if (f.sort === "prix-desc") list.sort((a, b) => price(b) - price(a));
+  if (f.sort === "surface-desc") list.sort((a, b) => (b.surface ?? 0) - (a.surface ?? 0));
   return list;
 }
 
-export function similarProperties(p: Property, n = 3): Property[] {
-  return properties
-    .filter((x) => x.slug !== p.slug && x.transaction === p.transaction)
+export function similarProperties(p: Property, all: Property[], n = 3): Property[] {
+  return all
+    .filter((x) => x.ref !== p.ref && x.transaction === p.transaction)
     .sort((a, b) => {
-      const score = (x: Property) => (x.commune === p.commune ? 2 : 0) + (x.type === p.type ? 1 : 0);
-      return score(b) - score(a) || Math.abs(a.price - p.price) - Math.abs(b.price - p.price);
+      const score = (x: Property) => (isSameCommune(x.commune, p.commune) ? 2 : 0) + (x.type === p.type ? 1 : 0);
+      return score(b) - score(a) || Math.abs((a.price ?? 0) - (p.price ?? 0)) - Math.abs((b.price ?? 0) - (p.price ?? 0));
     })
     .slice(0, n);
 }
@@ -464,10 +290,10 @@ export const faq = [
   },
   {
     q: "Les biens présentés sur ce site sont-ils réels ?",
-    a: "Non. Ce site est un concept de refonte réalisé par NEXWORKS AGENCY : les biens, prix et photographies sont des exemples de démonstration, clairement signalés. Pour les annonces réelles, consultez le site de l'agence ou contactez-la.",
+    a: "Non. Ce site est un concept de refonte réalisé par NEXWORKS AGENCY : les annonces affichées sont des biens de test saisis dans le logiciel NEXWORKS ESTATE. Pour les annonces réelles, consultez le site de l'agence ou contactez-la.",
   },
   {
     q: "Comment contacter l'agence ?",
-    a: "Par téléphone au 04 94 40 86 44 ou par e-mail à contact@capitalimmobilier.fr. Les formulaires de ce concept ne transmettent aucun message : ils servent à démontrer le parcours.",
+    a: "Par téléphone au 04 94 40 86 44 ou par e-mail à contact@capitalimmobilier.fr. Les formulaires de ce concept arrivent dans le logiciel de test NEXWORKS ESTATE : ils ne sont pas transmis à l'agence.",
   },
 ];

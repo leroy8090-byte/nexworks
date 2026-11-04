@@ -3,6 +3,7 @@ import { capital, filterProperties, type Transaction } from "@/data/capital";
 import { PropertyCard } from "./PropertyCard";
 import { FilterBar, type ListFilters } from "./Search";
 import { CapButton, DemoNotice, Reveal, Wrap } from "./ui";
+import { getProperties } from "@/lib/capital-properties";
 
 export type SP = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? "";
@@ -11,8 +12,8 @@ const num = (s: string) => {
   return Number.isFinite(n) && n > 0 ? n : undefined;
 };
 
-/** Liste filtrée : les critères viennent de l'URL, le calcul se fait sur le jeu de données de démonstration. */
-export function Listing({ basePath, sp, transaction }: { basePath: string; sp: SP; transaction?: Transaction }) {
+/** Liste filtrée : les critères viennent de l'URL, les biens du logiciel NEXWORKS ESTATE. */
+export async function Listing({ basePath, sp, transaction }: { basePath: string; sp: SP; transaction?: Transaction }) {
   const values: ListFilters = {
     type: one(sp.type),
     commune: one(sp.commune),
@@ -22,7 +23,7 @@ export function Listing({ basePath, sp, transaction }: { basePath: string; sp: S
     sort: one(sp.sort),
     transaction: transaction ?? one(sp.transaction),
   };
-  const results = filterProperties({
+  const results = filterProperties(await getProperties(), {
     transaction: values.transaction,
     type: values.type,
     commune: values.commune,
@@ -40,7 +41,7 @@ export function Listing({ basePath, sp, transaction }: { basePath: string; sp: S
           <FilterBar key={JSON.stringify(values)} basePath={basePath} initial={values} fixedTransaction={transaction} />
         </Suspense>
         <p className="mt-10 text-[13px] font-semibold uppercase tracking-[0.18em] text-[#183B50]" role="status" aria-live="polite">
-          {results.length} {results.length > 1 ? "biens de démonstration" : "bien de démonstration"}
+          {results.length} {results.length > 1 ? "biens" : "bien"}
         </p>
         {results.length > 0 ? (
           <div className="mt-8 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">

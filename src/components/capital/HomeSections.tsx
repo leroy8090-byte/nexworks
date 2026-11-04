@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { capital, communes, expertises, faq, properties } from "@/data/capital";
+import { capital, communes, expertises, faq, type Property } from "@/data/capital";
 import { ContactForm } from "./Forms";
 import { PropertyCard } from "./PropertyCard";
 import { HeroSearch } from "./Search";
@@ -51,15 +51,15 @@ export function Hero() {
         </motion.div>
         <motion.div {...fade(1.3)} className="mt-12">
           <HeroSearch />
-          <p className="mt-3 text-[12px] text-[#F8F7F3]/75">Recherche sur un jeu de biens de démonstration.</p>
         </motion.div>
       </Wrap>
     </section>
   );
 }
 
-export function Featured() {
-  const featured = [properties[0], properties[1], properties[3], properties[2]];
+/** Les trois derniers biens publiés dans le logiciel. */
+export function Featured({ properties }: { properties: Property[] }) {
+  const featured = properties.slice(0, 3);
   return (
     <section className="py-24 sm:py-32">
       <Wrap>
@@ -72,19 +72,22 @@ export function Featured() {
           </Reveal>
         </div>
         <DemoNotice className="mt-8 max-w-3xl" />
-        <div className="mt-14 grid gap-x-10 gap-y-16 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
-            <PropertyCard property={featured[0]} tall />
-          </Reveal>
-          <div className="grid content-start gap-16 lg:col-span-5 lg:pt-24">
-            <Reveal delay={0.1}>
-              <PropertyCard property={featured[1]} />
+        {featured.length > 0 ? (
+          <div className="mt-14 grid gap-x-10 gap-y-16 lg:grid-cols-12">
+            <Reveal className="lg:col-span-7">
+              <PropertyCard property={featured[0]} tall />
             </Reveal>
-            <Reveal delay={0.15}>
-              <PropertyCard property={featured[2]} />
-            </Reveal>
+            <div className="grid content-start gap-16 lg:col-span-5 lg:pt-24">
+              {featured.slice(1).map((p, i) => (
+                <Reveal key={p.slug} delay={0.1 + i * 0.05}>
+                  <PropertyCard property={p} />
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <p className="mt-14 max-w-xl text-[16px] leading-relaxed text-[#252A2D]/70">Aucun bien n&apos;est en ligne pour le moment. Contactez l&apos;agence pour lui parler de votre projet.</p>
+        )}
       </Wrap>
     </section>
   );

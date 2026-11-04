@@ -91,7 +91,7 @@ export function DemoBanner() {
       <Link href="/" className="underline underline-offset-2 hover:text-white">
         NEXWORKS AGENCY
       </Link>{" "}
-      — biens et photographies de démonstration.{" "}
+      — annonces de test et photographies d&apos;illustration.{" "}
       <Link href="/realisations/capital-immobilier" className="underline underline-offset-2 hover:text-white">
         En savoir plus
       </Link>
@@ -99,11 +99,11 @@ export function DemoBanner() {
   );
 }
 
-/** Mention visible sur toutes les listes et fiches de biens. */
+/** Mention visible sur toutes les listes et fiches de biens : l'agence nommée ici est réelle, ces annonces ne sont pas les siennes. À retirer quand elle saisira ses vrais biens. */
 export function DemoNotice({ className = "" }: { className?: string }) {
   return (
     <p className={`rounded-sm border border-[#B07A52]/40 bg-[#B07A52]/10 px-4 py-3 text-[13px] leading-relaxed text-[#252A2D] ${className}`} role="note">
-      <strong className="font-semibold">Biens de démonstration.</strong> Les biens, prix et photographies de ce site sont fictifs ou d&apos;illustration : ils ne sont pas
+      <strong className="font-semibold">Annonces de test.</strong> Ces biens sont saisis dans le logiciel NEXWORKS ESTATE pour tester le site : ils ne sont pas
       commercialisés par CAPITAL IMMOBILIER. Les annonces réelles sont sur{" "}
       <a href="https://www.capitalimmobilier.fr/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
         capitalimmobilier.fr

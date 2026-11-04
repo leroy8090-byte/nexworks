@@ -3,7 +3,7 @@ import { EstimateForm } from "@/components/capital/Forms";
 import { capitalMeta } from "@/components/capital/seo";
 import { PageIntro, Wrap, serif } from "@/components/capital/ui";
 
-export const metadata = capitalMeta("Demander une estimation de son bien", "Demandez l'estimation de votre appartement, maison ou villa autour de Saint-Raphaël. Formulaire de démonstration.", "/estimation");
+export const metadata = capitalMeta("Demander une estimation de son bien", "Demandez l'estimation de votre appartement, maison ou villa autour de Saint-Raphaël.", "/estimation");
 
 export default function Estimation() {
   return (

@@ -52,7 +52,7 @@ export default function Vendre() {
       </Split>
       <CtaBand
         title="Prêt à en parler ?"
-        text="Une demande d'estimation ne vous engage à rien. Dans ce concept, le formulaire fonctionne en mode démonstration."
+        text="Une demande d'estimation ne vous engage à rien."
         primary={{ label: "Demander une estimation", href: `${b}/estimation` }}
         secondary={{ label: "Contacter l'agence", href: `${b}/contact` }}
       />

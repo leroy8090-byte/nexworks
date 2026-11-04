@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 /** Pages de démonstration autonomes (site complet d'un autre « client ») : on masque l'en-tête, le pied de page et les easter eggs NEXWORKS. */
-export const standalonePrefixes = ["/azur-plomberie", "/maison-riviera", "/volt-fitness"];
+export const standalonePrefixes = ["/azur-plomberie", "/capital-immobilier", "/maison-riviera", "/volt-fitness"];
 
 export function useIsStandalone() {
   const pathname = usePathname() || "";

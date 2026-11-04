@@ -27,6 +27,8 @@ export type Project = {
   filterLabel: string;
   /** true = site de démonstration pour un établissement fictif */
   demo: boolean;
+  /** true = concept de refonte NON commandé d'un site d'une entreprise réelle (non fictive, non cliente) */
+  concept?: boolean;
   images: ProjectImages;
   summary: string;
   context: string;
@@ -243,6 +245,55 @@ export const projects: Project[] = [
     demoUrl: "/volt-fitness",
     tags: ["Fitness", "Sport", "Next.js", "Saint-Raphaël"],
     alt: "Site VOLT FITNESS CLUB : hero « BUILT TO BE STRONGER. » avec athlète dans une salle de sport sombre et accents vert électrique",
+  },
+  {
+    slug: "capital-immobilier",
+    name: "CAPITAL IMMOBILIER",
+    category: "immobilier",
+    categoryLabel: "Concept de refonte — agence immobilière",
+    filterLabel: "Immobilier",
+    demo: true,
+    concept: true,
+    images: {
+      cover: "/projects/capital-immobilier-cover.webp",
+      desktop: { src: "/projects/capital-immobilier-desktop.webp", width: 1100, height: 8298 },
+      mobile: { src: "/projects/capital-immobilier-mobile.webp", width: 390, height: 13379 },
+    },
+    summary:
+      "Un concept de refonte pour une agence immobilière de Saint-Raphaël : recherche de biens fonctionnelle, fiches avec galerie plein écran, pages locales et gestion de copropriété.",
+    context:
+      "CAPITAL IMMOBILIER est une agence réelle de Saint-Raphaël. Ce concept de refonte a été réalisé de notre propre initiative par NEXWORKS AGENCY, à partir des informations publiques de son site (coordonnées, services, zones couvertes), sans commande ni validation de l'agence. Les biens, prix et photographies affichés sont des exemples de démonstration, signalés comme tels sur chaque liste et chaque fiche.",
+    goals: [
+      "Clarifier la navigation et le moteur de recherche, dont les libellés et les filtres sont difficiles à lire sur le site actuel",
+      "Valoriser les biens avec de grandes images et des fiches détaillées",
+      "Présenter tous les métiers de l'agence : transaction, location, gestion, syndic, ASL et ASA",
+      "Structurer des pages locales pour Saint-Raphaël et les communes voisines",
+    ],
+    pages: [
+      "Accueil",
+      "Acheter",
+      "Louer",
+      "Nos biens",
+      "Fiches biens",
+      "Vendre",
+      "Estimation",
+      "Gestion immobilière",
+      "Gestion de copropriété",
+      "L'agence",
+      "Pages locales (6 communes)",
+      "Contact",
+      "Mentions légales, confidentialité, crédits photos",
+    ],
+    features: [
+      "Recherche et filtres synchronisés avec l'URL, calculés sur un jeu de biens de démonstration",
+      "Fiches avec galerie plein écran, biens similaires et formulaire de contact",
+      "Formulaires de contact et d'estimation validés, en mode démonstration (aucun envoi)",
+      "Menu mobile, en-tête transparent puis clair, données structurées d'agence immobilière",
+    ],
+    highlights: ["Recherche fonctionnelle", "Fiches immersives", "Pages locales"],
+    demoUrl: "/capital-immobilier",
+    tags: ["Immobilier", "Concept de refonte", "Next.js", "Saint-Raphaël"],
+    alt: "Concept de refonte CAPITAL IMMOBILIER : hero « L'immobilier mérite une autre perspective. » avec piscine face à la Méditerranée et moteur de recherche de biens",
   },
 ];
 

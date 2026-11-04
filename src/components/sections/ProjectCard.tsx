@@ -16,7 +16,7 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
         </div>
         {project.demo && (
           <span className="absolute left-5 top-5 rounded-full border border-sky/30 bg-ink/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky backdrop-blur sm:left-8 sm:top-8">
-            Projet de démonstration
+            {project.concept ? "Concept de refonte" : "Projet de démonstration"}
           </span>
         )}
       </div>
@@ -35,7 +35,9 @@ export function ProjectCard({ project, large }: { project: Project; large?: bool
           ))}
         </ul>
         <p className="mt-5 text-xs leading-relaxed text-mist/70">
-          Site de démonstration réalisé par NEXWORKS AGENCY pour un établissement ou une entreprise fictifs, et non pour un client réel.
+          {project.concept
+            ? "Concept de refonte réalisé de notre initiative par NEXWORKS AGENCY, sans commande ni validation de l'entreprise concernée : ce n'est pas un client."
+            : "Site de démonstration réalisé par NEXWORKS AGENCY pour un établissement ou une entreprise fictifs, et non pour un client réel."}
         </p>
         <div className="mt-auto flex items-center justify-between pt-7">
           <Button href={`/realisations/${project.slug}`} variant="secondary" arrow className="after:absolute after:inset-0 after:content-['']">

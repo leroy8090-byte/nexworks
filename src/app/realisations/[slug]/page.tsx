@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = getProject(slug);
   if (!p) return {};
   return buildMetadata({
-    title: `${p.name} : ${p.demo ? "projet de démonstration" : p.categoryLabel.toLowerCase()}`,
-    description: `${p.summary} ${p.demo ? "Site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif." : ""}`.trim(),
+    title: `${p.name} : ${p.concept ? "concept de refonte" : p.demo ? "projet de démonstration" : p.categoryLabel.toLowerCase()}`,
+    description: `${p.summary} ${p.concept ? "Concept de refonte réalisé par NEXWORKS AGENCY, sans commande de l'entreprise concernée." : p.demo ? "Site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif." : ""}`.trim(),
     path: `/realisations/${p.slug}`,
   });
 }
@@ -39,7 +39,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: `${p.name}${p.demo ? " (projet de démonstration)" : ""}`,
+    name: `${p.name}${p.concept ? " (concept de refonte)" : p.demo ? " (projet de démonstration)" : ""}`,
     description: p.summary,
     url: `${siteConfig.url}/realisations/${p.slug}`,
     creator: { "@id": organizationId },
@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             <Eyebrow>{p.categoryLabel}</Eyebrow>
             {p.demo && (
               <span className="rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky">
-                Projet de démonstration
+                {p.concept ? "Concept de refonte" : "Projet de démonstration"}
               </span>
             )}
           </div>
@@ -109,8 +109,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             <p className="mt-4 text-[15px] leading-relaxed text-mist">{p.context}</p>
             {p.demo && (
               <p className="mt-5 rounded-xl border border-sky/20 bg-sky/[0.06] px-4 py-3 text-[13px] leading-relaxed text-sky/90">
-                {p.name} est un site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif. Il ne s&apos;agit pas d&apos;un client réel, et les contenus
-                affichés sont des exemples.
+                {p.concept
+                  ? `${p.name} est un concept de refonte réalisé de notre propre initiative par NEXWORKS AGENCY, à partir des informations publiques de l'entreprise. Il n'a pas été commandé ni validé par elle : ce n'est pas un client, et les biens et photographies affichés sont des exemples.`
+                  : `${p.name} est un site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif. Il ne s'agit pas d'un client réel, et les contenus affichés sont des exemples.`}
               </p>
             )}
 

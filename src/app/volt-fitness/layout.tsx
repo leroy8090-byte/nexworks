@@ -1,3 +1,4 @@
+import { VoltLanguage } from "@/components/demo-i18n/sites";
 import type { Metadata } from "next";
 import { Bebas_Neue, Manrope } from "next/font/google";
 import { volt } from "@/data/volt";
@@ -30,6 +31,7 @@ export default function VoltLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className={`${display.variable} ${sans.variable}`}>
       <VoltShell>{children}</VoltShell>
+      <VoltLanguage />
     </div>
   );
 }

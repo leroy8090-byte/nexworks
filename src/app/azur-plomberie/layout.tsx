@@ -1,3 +1,4 @@
+import { AzurLanguage } from "@/components/demo-i18n/sites";
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { azur } from "@/data/azur";
@@ -25,6 +26,7 @@ export default function AzurLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className={`${manrope.variable} ${inter.variable}`}>
       <AzurShell>{children}</AzurShell>
+      <AzurLanguage />
     </div>
   );
 }

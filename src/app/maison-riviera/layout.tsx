@@ -1,3 +1,4 @@
+import { RivieraLanguage } from "@/components/demo-i18n/sites";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { riviera } from "@/data/riviera";
@@ -30,6 +31,7 @@ export default function RivieraLayout({ children }: { children: React.ReactNode 
   return (
     <div className={`${display.variable} ${sans.variable}`}>
       <RivieraShell>{children}</RivieraShell>
+      <RivieraLanguage />
     </div>
   );
 }

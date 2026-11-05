@@ -1,0 +1,1 @@
+Crédits détaillés : page /orea-drive/credits-photos (données dans src/data/orea-credits.ts).

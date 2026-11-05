@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import { useRef } from "react";
 import { Container } from "@/components/ui/Section";
 
@@ -18,7 +19,7 @@ function Word({ word, range, progress, accent }: { word: string; range: [number,
 /** La phrase s'éclaire mot à mot au défilement : on la lit au rythme de la page. */
 export function Statement() {
   const ref = useRef<HTMLParagraphElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
   const words = TEXT.split(" ");
   const accentFrom = words.indexOf("Notre");

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import { riviera } from "@/data/riviera";
 
 export function Wrap({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -50,7 +51,7 @@ export function Reveal({
   className?: string;
   y?: number;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (
     <motion.div

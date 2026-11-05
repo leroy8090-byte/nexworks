@@ -1,244 +1,141 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { azur, azurNav, azurServices } from "@/data/azur";
-import { AzurButton, ContactHint, DemoBanner, Wrap } from "./ui";
-import { AzurIcons } from "./Icons";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
+import { azur, azurNav, azurServices, azurZones, DEMO_NOTICE } from "@/data/azur";
+import { cn, ease } from "@/lib/utils";
+import { Arrow, btnCls, Mark, PhoneLine, Wrap } from "./ui";
 
-function Logo({ compact }: { compact?: boolean }) {
-  return (
-    <Link href={azur.basePath} className="inline-flex shrink-0 items-center" aria-label={`${azur.name} — Accueil`}>
-      <Image
-        src="/azur/logo.webp"
-        alt={azur.name}
-        width={compact ? 140 : 168}
-        height={compact ? 140 : 168}
-        priority
-        className={compact ? "h-11 w-auto" : "h-12 w-auto sm:h-14"}
-      />
-    </Link>
-  );
-}
+const Logo = () => (
+  <Link href={azur.basePath} aria-label="AZUR PLOMBERIE, accueil" className="flex items-center gap-2.5 text-white">
+    <Mark />
+    <span className="az-display text-[1.65rem]">Azur Plomberie</span>
+  </Link>
+);
 
-export function AzurHeader() {
+export function AzurShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
+  useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
+  const onContact = pathname.startsWith(`${azur.basePath}/contact`);
 
   return (
-    <header className={`sticky top-0 z-50 border-b bg-white/95 backdrop-blur transition-shadow ${scrolled ? "shadow-[0_8px_30px_-18px_rgba(16,42,67,.35)]" : ""} border-[#E4EBF1]`}>
-      <Wrap className="flex h-[72px] items-center justify-between gap-4">
-        <Logo />
-        <nav aria-label="Navigation principale" className="hidden items-center gap-5 text-[14px] font-semibold text-[#002D72] lg:flex">
-          {azurNav.map((n) => (
-            <Link key={n.href} href={n.href} className="transition hover:text-[#0077C2]">
-              {n.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <AzurButton href="/azur-plomberie/contact" className="hidden px-5 py-2.5 text-[14px] sm:inline-flex">
-            Demander un devis
-          </AzurButton>
-          <button
-            type="button"
-            className="inline-flex size-11 items-center justify-center rounded-full border border-[#E4EBF1] text-[#002D72] lg:hidden"
-            aria-expanded={open}
-            aria-controls="azur-menu"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <AzurIcons.close className="size-5" /> : <AzurIcons.menu className="size-5" />}
-          </button>
-        </div>
-      </Wrap>
+    <div className="azur min-h-dvh">
+      <p className="relative z-[60] bg-az-ink px-4 py-1.5 text-center text-[13px] font-semibold leading-snug text-white">
+        {DEMO_NOTICE}{" "}
+        <Link href="/realisations" className="font-bold underline underline-offset-2">Projet NEXWORKS AGENCY</Link>
+      </p>
+      <a href="#azur-contenu" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-14 focus:z-[70] focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-az-ink">
+        Aller au contenu
+      </a>
+
+      <header className={cn("sticky top-0 z-50 -mb-[76px] transition-colors duration-300", solid || open ? "bg-az-deep/95 shadow-[0_10px_30px_-20px_rgba(0,0,0,.6)] backdrop-blur-md" : "bg-transparent")}>
+        <Wrap className="flex h-[76px] items-center justify-between gap-5">
+          <Logo />
+          <nav aria-label="Navigation principale" className="hidden items-center gap-8 lg:flex">
+            {azurNav.map((n) => {
+              const active = pathname.startsWith(n.href);
+              return (
+                <Link key={n.href} href={n.href} aria-current={active ? "page" : undefined} className={cn("relative py-2 text-base font-semibold transition-colors", active ? "text-white" : "text-white/80 hover:text-white")}>
+                  {n.label}
+                  {active && <motion.span layoutId="azur-nav" className="absolute inset-x-0 bottom-0 h-0.5 bg-az-brass" />}
+                </Link>
+              );
+            })}
+          </nav>
+          <div className="flex items-center gap-2">
+            <Link href={`${azur.basePath}/contact?urgence=1`} className={btnCls("hot", "min-h-11 px-4 text-[15px] max-lg:!hidden")}>C&apos;est urgent</Link>
+            <Link href={`${azur.basePath}/contact`} className={btnCls("white", "min-h-11 px-4 text-[15px] max-sm:!hidden")}>Demander un devis</Link>
+            <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="azur-menu" aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} className="flex size-11 flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-white/30 lg:hidden">
+              <span className={cn("h-0.5 w-5 bg-white transition-transform", open && "translate-y-1 rotate-45")} />
+              <span className={cn("h-0.5 w-5 bg-white transition-transform", open && "-translate-y-1 -rotate-45")} />
+            </button>
+          </div>
+        </Wrap>
+      </header>
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            id="azur-menu"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-[#E4EBF1] bg-white lg:hidden"
-          >
-            <nav className="flex flex-col gap-1 px-5 py-4" aria-label="Menu mobile">
-              {azurNav.map((n) => (
-                <Link
-                  key={n.href}
-                  href={n.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-[16px] font-semibold text-[#002D72] hover:bg-[#F3F6F8]"
-                >
-                  {n.label}
-                </Link>
+          <motion.div id="azur-menu" initial={{ clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} exit={{ clipPath: "inset(0 0 100% 0)" }} transition={{ duration: 0.45, ease }} className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-az-deep px-5 pb-10 pt-32 lg:hidden">
+            <nav aria-label="Navigation mobile" className="flex flex-col">
+              {azurNav.map((n, i) => (
+                <motion.div key={n.href} initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.12 + i * 0.05, duration: 0.5, ease }}>
+                  <Link href={n.href} onClick={() => setOpen(false)} className="az-display block border-b border-white/15 py-4 text-[2.6rem] text-white">{n.label}</Link>
+                </motion.div>
               ))}
-              <AzurButton href="/azur-plomberie/contact" className="mt-2 w-full" onClick={() => setOpen(false)}>
-                Demander un devis
-              </AzurButton>
             </nav>
+            <div className="mt-8 grid gap-3">
+              <Link href={`${azur.basePath}/contact?urgence=1`} onClick={() => setOpen(false)} className={btnCls("hot", "w-full")}>C&apos;est urgent<Arrow /></Link>
+              <Link href={`${azur.basePath}/contact`} onClick={() => setOpen(false)} className={btnCls("white", "w-full")}>Demander un devis<Arrow /></Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
-  );
-}
 
-export function AzurFooter() {
-  return (
-    <footer className="bg-[#002D72] text-[#A8B8C8]">
-      <Wrap className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2 lg:col-span-1">
-          <div className="inline-flex rounded-2xl bg-white p-1.5 shadow-sm">
-            <Image src="/azur/logo.webp" alt={azur.name} width={168} height={168} className="h-16 w-auto" />
+      <div id="azur-contenu">{children}</div>
+
+      {/* Sur téléphone, les deux actions utiles restent à portée de pouce. */}
+      {!onContact && (
+        <div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 gap-2 border-t border-white/15 bg-az-ink/95 p-2 backdrop-blur sm:hidden">
+          <Link href={`${azur.basePath}/contact?urgence=1`} className={btnCls("hot", "min-h-12 px-2 text-[15px]")}>C&apos;est urgent</Link>
+          <Link href={`${azur.basePath}/contact`} className={btnCls("white", "min-h-12 px-2 text-[15px]")}>Devis</Link>
+        </div>
+      )}
+
+      <footer className="bg-az-ink pb-20 text-white sm:pb-0">
+        <Wrap className="grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+          <div>
+            <Logo />
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-white/75">Un artisan plombier imaginaire à Saint-Raphaël, créé par NEXWORKS AGENCY pour présenter son savoir-faire.</p>
+            <p className="mt-4 text-[15px] text-white/75">{azur.hours}</p>
+            <PhoneLine className="mt-1 block text-lg font-bold" />
           </div>
-          <p className="mt-4 max-w-xs text-[14px] leading-relaxed">{azur.promise}</p>
-          <p className="mt-3 text-[13px] leading-relaxed text-[#7f93a8]">
-            Concept fictif situé à {azur.location}, sur la {azur.region}.
-          </p>
-        </div>
-        <div>
-          <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-white">Navigation</h2>
-          <ul className="mt-4 space-y-2 text-[14px]">
-            {azurNav.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} className="hover:text-[#4FC3F7]">
-                  {n.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-white">Services</h2>
-          <ul className="mt-4 space-y-2 text-[14px]">
-            {azurServices.map((s) => (
-              <li key={s.slug}>
-                <Link href={s.href ?? `/azur-plomberie/services/${s.slug}`} className="hover:text-[#4FC3F7]">
-                  {s.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-white">Contact</h2>
-          <ul className="mt-4 space-y-2 text-[14px]">
-            {azur.phone ? (
-              <li>
-                <a href={`tel:${azur.phone.replace(/\s/g, "")}`} className="hover:text-[#4FC3F7]">
-                  {azur.phone}
-                </a>
-              </li>
-            ) : (
-              <li>Téléphone non configuré</li>
-            )}
-            {azur.email ? (
-              <li>
-                <a href={`mailto:${azur.email}`} className="hover:text-[#4FC3F7]">
-                  {azur.email}
-                </a>
-              </li>
-            ) : (
-              <li>E-mail non configuré</li>
-            )}
-            <li>
-              <Link href="/azur-plomberie/zone-d-intervention" className="hover:text-[#4FC3F7]">
-                Zone d&apos;intervention indicative
-              </Link>
-            </li>
-          </ul>
-          <div className="mt-4">
-            <ContactHint />
+          <nav aria-label="Services">
+            <h2 className="text-2xl">Services</h2>
+            <ul className="mt-3 space-y-2.5 text-[15px] text-white/75">
+              {azurServices.map((s) => (
+                <li key={s.slug}><Link href={s.href ?? `${azur.basePath}/services/${s.slug}`} className="transition-colors hover:text-white">{s.title}</Link></li>
+              ))}
+            </ul>
+          </nav>
+          <div>
+            <h2 className="text-2xl">Secteur</h2>
+            <ul className="mt-3 space-y-2.5 text-[15px] text-white/75">
+              {azurZones.map((z) => <li key={z.key}>{z.name}</li>)}
+            </ul>
           </div>
-        </div>
-      </Wrap>
-      <div className="border-t border-white/10">
-        <Wrap className="flex flex-col gap-3 py-5 text-[12.5px] sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {azur.name}. Projet de démonstration fictif réalisé pour le portfolio NEXWORKS AGENCY.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/azur-plomberie/mentions-legales" className="hover:text-white">
-              Mentions légales
-            </Link>
-            <Link href="/azur-plomberie/confidentialite" className="hover:text-white">
-              Confidentialité
-            </Link>
+          <div>
+            <h2 className="text-2xl">Informations</h2>
+            <ul className="mt-3 space-y-2.5 text-[15px] text-white/75">
+              <li><Link href={`${azur.basePath}/a-propos`} className="transition-colors hover:text-white">L&apos;artisan</Link></li>
+              <li><Link href={`${azur.basePath}/mentions-legales`} className="transition-colors hover:text-white">Mentions légales</Link></li>
+              <li><Link href={`${azur.basePath}/confidentialite`} className="transition-colors hover:text-white">Confidentialité</Link></li>
+              <li><Link href="/realisations" className="transition-colors hover:text-white">Créé par NEXWORKS AGENCY</Link></li>
+            </ul>
           </div>
         </Wrap>
-      </div>
-    </footer>
-  );
-}
-
-export function AzurShell({ children }: { children: ReactNode }) {
-  return (
-    <div className="min-h-dvh bg-white font-[family-name:var(--font-azur-sans)] text-[#002D72] antialiased">
-      <DemoBanner />
-      <AzurHeader />
-      <main id="contenu">{children}</main>
-      <AzurFooter />
-      {/* Barre mobile */}
-      <div className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 gap-2 border-t border-[#E4EBF1] bg-white/95 p-2.5 backdrop-blur sm:hidden">
-        {azur.phone ? (
-          <a href={`tel:${azur.phone.replace(/\s/g, "")}`} className="flex items-center justify-center gap-2 rounded-full bg-[#4FC3F7] py-3 text-[14px] font-bold text-[#002D72]">
-            <AzurIcons.phone className="size-4" />
-            Appeler
-          </a>
-        ) : (
-          <Link href="/azur-plomberie/contact" className="flex items-center justify-center rounded-full bg-[#E3F6FD] py-3 text-[14px] font-bold text-[#002D72]">
-            Contact
-          </Link>
-        )}
-        <Link href="/azur-plomberie/contact" className="flex items-center justify-center rounded-full bg-[#FFC107] py-3 text-[14px] font-bold text-[#002D72]">
-          Demander un devis
-        </Link>
-      </div>
-      <div className="h-16 sm:hidden" aria-hidden />
+      </footer>
     </div>
-  );
-}
-
-export function PageHero({
-  eyebrow,
-  title,
-  text,
-  image,
-  alt,
-}: {
-  eyebrow: string;
-  title: string;
-  text: string;
-  image: string;
-  alt: string;
-}) {
-  return (
-    <section className="relative overflow-hidden bg-[#002D72]">
-      <Image src={image} alt="" fill priority className="object-cover opacity-35" sizes="100vw" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#002D72] via-[#002D72]/85 to-[#002D72]/35" />
-      <Wrap className="relative py-16 sm:py-24">
-        <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#4FC3F7]">{eyebrow}</p>
-        <h1 className="mt-3 max-w-3xl font-[family-name:var(--font-azur-display)] text-[2.4rem] font-bold leading-[1.08] tracking-tight text-white sm:text-[3.2rem]">
-          {title}
-        </h1>
-        <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/75">{text}</p>
-        <span className="sr-only">{alt}</span>
-      </Wrap>
-    </section>
   );
 }

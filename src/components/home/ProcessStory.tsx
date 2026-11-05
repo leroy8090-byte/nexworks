@@ -1,7 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useInView, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, type ReactNode } from "react";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import { processSteps } from "@/data/content";
 import { projects } from "@/data/projects";
 import { Container, SectionHeading } from "@/components/ui/Section";
@@ -96,7 +97,7 @@ function Stacked({ always }: { always?: boolean }) {
 }
 
 export function ProcessStory() {
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   return (
     <section id="methode" className="relative">
       {reduce ? <Stacked always /> : <><Pinned /><Stacked /></>}

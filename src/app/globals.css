@@ -13,6 +13,22 @@
   --color-graphite: #0a1017;
   --color-fog: #47525d;
   --color-sky-deep: #0a6aa8;
+  --color-or-ink: #131518;
+  --color-or-ink2: #1d2024;
+  --color-or-sand: #f3efe6;
+  --color-or-flame: #ff5a1f;
+  --color-or-flame-deep: #b93606;
+  --color-az-cobalt: #1538b5;
+  --color-az-deep: #0d2478;
+  --color-az-ink: #0a1647;
+  --color-az-tile: #f8f6ef;
+  --color-az-grout: #dcd8cb;
+  --color-az-copper: #c2703a;
+  --color-az-copper-deep: #8c4a21;
+  --color-az-water: #4cc9ec;
+  --color-az-hot: #d6322a;
+  --color-az-hot-deep: #b0241d;
+  --color-az-brass: #f2bd3e;
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -127,13 +143,14 @@ h1, h2, h3, h4 {
   color: transparent;
 }
 
-/* Animations d'arrivée en CSS : le contenu s'affiche sans attendre le chargement du JavaScript */
+/* Animations d'arrivée en CSS : le contenu s'affiche sans attendre le chargement du JavaScript.
+   « backwards » et non « both » : une transformation conservée après l'animation casserait les éléments fixes. */
 @keyframes rise {
   from { opacity: 0; transform: translate3d(var(--rise-x, 0), var(--rise-y, 28px), 0); }
   to { opacity: 1; transform: none; }
 }
 .rise {
-  animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 @keyframes word-rise {
   from { opacity: 0; transform: translateY(108%); }
@@ -141,14 +158,14 @@ h1, h2, h3, h4 {
 }
 .word-rise {
   display: inline-block;
-  animation: word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 @keyframes page-enter {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
 }
 .page-enter {
-  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 /* Halo qui dérive lentement derrière le hero */
@@ -159,6 +176,197 @@ h1, h2, h3, h4 {
 .hero-drift {
   animation: drift 16s ease-in-out infinite;
   will-change: transform;
+}
+
+/* ---------- ORÉA DRIVE (site de démonstration) ---------- */
+.orea {
+  background: var(--color-or-ink);
+  color: #fff;
+  font-family: var(--font-orea-sans), ui-sans-serif, system-ui, sans-serif;
+}
+.orea :is(h1, h2, h3) {
+  font-family: var(--font-orea-display), "Arial Narrow", sans-serif;
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.orea :focus-visible {
+  outline: 3px solid var(--color-or-flame);
+  outline-offset: 3px;
+}
+.orea ::selection {
+  background: var(--color-or-flame);
+  color: var(--color-or-ink);
+}
+/* Bande de route : les pointillés défilent */
+@keyframes orea-road {
+  to { background-position-x: -120px; }
+}
+.orea-road {
+  background-image: linear-gradient(90deg, #fff 0 60px, transparent 60px 120px);
+  background-size: 120px 4px;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  animation: orea-road 1.4s linear infinite;
+}
+/* Ouverture de la photo principale */
+@keyframes orea-reveal {
+  from { clip-path: inset(18% 12% 18% 12% round 24px); transform: scale(1.12); }
+  to { clip-path: inset(0 0 0 0 round 0); transform: none; }
+}
+.orea-reveal > * {
+  animation: orea-reveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.orea-range {
+  appearance: none;
+  height: 8px;
+  border-radius: 8px;
+  background: #2c3036;
+  cursor: pointer;
+}
+.orea-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--color-or-flame);
+  border: 3px solid var(--color-or-ink);
+}
+.orea-range::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--color-or-flame);
+  border: 3px solid var(--color-or-ink);
+}
+
+/* ---------- AZUR PLOMBERIE (site de démonstration) : émail, faïence et cuivre ---------- */
+.azur {
+  background: var(--color-az-tile);
+  color: var(--color-az-ink);
+  font-family: var(--font-azur-sans), system-ui, sans-serif;
+}
+.azur :is(h1, h2, h3, .az-display) {
+  font-family: var(--font-azur-display), Georgia, serif;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-wrap: balance;
+}
+.azur :focus-visible {
+  outline: 3px solid var(--color-az-brass);
+  outline-offset: 3px;
+}
+.azur ::selection {
+  background: var(--color-az-brass);
+  color: var(--color-az-ink);
+}
+/* Mur de faïence : le joint entre les carreaux */
+.az-tiles {
+  background-image: linear-gradient(var(--grout) 2px, transparent 2px), linear-gradient(90deg, var(--grout) 2px, transparent 2px);
+  background-size: var(--tile, 96px) var(--tile, 96px);
+  --grout: var(--color-az-grout);
+}
+.az-tiles-dark {
+  --grout: rgb(255 255 255 / 0.09);
+}
+/* Plaque émaillée : le double filet des plaques de rue */
+.az-plaque {
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 3px currentColor, inset 0 0 0 6px var(--plaque-bg, transparent);
+}
+/* Le tuyau se dessine à l'arrivée */
+@keyframes az-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.az-draw {
+  stroke-dasharray: 1;
+  animation: az-draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+/* L'eau qui circule dans un tuyau */
+@keyframes az-flow {
+  to { stroke-dashoffset: -44; }
+}
+.az-flow {
+  stroke-dasharray: 16 28;
+  animation: az-flow 0.9s linear infinite;
+}
+/* La goutte qui tombe du robinet */
+@keyframes az-drip {
+  0%, 35% { transform: translateY(0) scale(0.2); opacity: 0; }
+  50% { transform: translateY(0) scale(1); opacity: 1; }
+  92% { transform: translateY(var(--drip, 300px)) scale(1, 1.2); opacity: 1; }
+  100% { transform: translateY(var(--drip, 300px)) scale(1.6, 0.2); opacity: 0; }
+}
+.az-drip {
+  transform-box: fill-box;
+  transform-origin: center top;
+  animation: az-drip 2.6s cubic-bezier(0.55, 0, 0.9, 0.5) infinite;
+}
+/* Sur téléphone, le choix de la langue passe au-dessus de la barre d'actions */
+@media (max-width: 639px) {
+  body:has(.azur) [data-demo-lang-ui] {
+    bottom: 5rem !important;
+  }
+}
+/* Le point cliquable de la maison */
+@keyframes az-ping {
+  from { transform: scale(0.7); opacity: 0.8; }
+  to { transform: scale(1.7); opacity: 0; }
+}
+.az-ping {
+  animation: az-ping 1.8s ease-out infinite;
+}
+/* La surface de l'eau qui ondule */
+@keyframes az-wave {
+  to { transform: translateX(-50%); }
+}
+.az-wave {
+  animation: az-wave 7s linear infinite;
+}
+.az-wave-slow {
+  animation-duration: 12s;
+}
+/* Arrivée du hero, sans attendre le JavaScript */
+@keyframes az-rise {
+  from { opacity: 0; transform: translateY(26px); }
+}
+.az-rise {
+  animation: az-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+/* Carreau retourné au survol */
+.az-flip {
+  perspective: 1100px;
+}
+.az-flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.az-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.az-flip-back {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) {
+  .az-flip:hover .az-flip-inner,
+  .az-flip:focus-visible .az-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .az-draw, .az-rise { animation: none; }
+  .az-flow, .az-drip, .az-ping, .az-wave { animation: none; }
+  .az-drip { opacity: 0; }
+  .az-flip-inner { transition: none; }
 }
 
 /* ---------- Utilitaires de marque ---------- */

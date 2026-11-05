@@ -3,30 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import { destinations, faq, properties, riviera } from "@/data/riviera";
 import { PropertyCard } from "./PropertyCard";
 import { PropertySearch } from "./PropertySearch";
 import { Reveal, RivieraButton, SectionHead, Wrap } from "./ui";
 
 export function Hero() {
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   const h = riviera.hero;
-  const fade = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 22 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] as const },
-        };
+  const fade = (delay: number) => ({
+    initial: { opacity: 0, y: 22 },
+    animate: { opacity: 1, y: 0 },
+    transition: reduce ? { duration: 0 } : { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] as const },
+  });
   return (
     <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-[#24251F]">
       <motion.div
         className="absolute inset-0"
-        initial={reduce ? false : { scale: 1.12, opacity: 0 }}
+        initial={{ scale: 1.12, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 2.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={reduce ? { duration: 0 } : { duration: 2.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <Image src={h.image} alt="Villa de prestige face à la Méditerranée sur la Côte d'Azur" fill priority sizes="100vw" className="object-cover" />
       </motion.div>

@@ -1,107 +1,74 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { azurGallery, azurSdbItems, azurSteps } from "@/data/azur";
-import { AzurCtaBand, RelatedServices } from "@/components/azur/PageBlocks";
-import { PageHero } from "@/components/azur/Shell";
-import { AzurIcons } from "@/components/azur/Icons";
-import { AzurButton, Reveal, SectionHead, Wrap } from "@/components/azur/ui";
+import { PipeSteps } from "@/components/azur/PipeSteps";
+import { Btn, EndCta, Sign, Wrap } from "@/components/azur/ui";
+import { Reveal } from "@/components/ui/Reveal";
+import { azurGallery, azurSdbItems, getAzurService, quoteHref } from "@/data/azur";
+import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Rénovation de salle de bain",
-  description:
-    "Modernisez votre salle de bain à Saint-Raphaël : douche, robinetterie, réorganisation et réseaux. Concept fictif AZUR PLOMBERIE.",
-};
+export const metadata: Metadata = { title: "Rénovation de salle de bain" };
 
-export default function SalleDeBainPage() {
+export default function BathroomPage() {
+  const steps = getAzurService("renovation-salle-de-bain")?.steps ?? [];
   return (
     <>
-      <PageHero
-        eyebrow="Rénovation"
-        title="Donnez une nouvelle dimension à votre salle de bain."
-        text="Une rénovation pensée pour allier confort, esthétique et fonctionnalité — présentée ici comme un parcours complet de site vitrine."
-        image="/azur/sdb-hero.webp"
-        alt="Salle de bain contemporaine"
-      />
-
-      <section className="bg-white py-16 sm:py-20">
-        <Wrap className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <SectionHead
-              eyebrow="Le projet"
-              title="Plus qu'un simple remplacement d'équipement."
-              text="Changer une baignoire, créer une douche ou reprendre les arrivées d'eau demande une lecture claire de l'existant. Cette page détaille le périmètre présenté par le concept."
-            />
-            <div className="mt-8">
-              <AzurButton href="/azur-plomberie/contact">Parler de mon projet</AzurButton>
-            </div>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem]">
-              <Image src="/azur/service-sdb.webp" alt="Salle de bain lumineuse après rénovation" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
-            </div>
-          </Reveal>
+      <section className="relative isolate flex min-h-[92svh] items-end overflow-hidden bg-az-ink pb-16 pt-32 text-white sm:pb-24">
+        <Image src="/azur/service-chauffe-eau.webp" alt="Salle de bain avec baignoire, WC suspendu et bois clair" fill preload sizes="100vw" className="-z-20 object-cover" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-az-ink/90 via-az-ink/45 to-az-ink/35" />
+        <Wrap>
+          <div className="az-rise"><Sign tone="light">Salle de bain</Sign></div>
+          <h1 className="az-rise mt-5 max-w-5xl text-[clamp(3.2rem,8.5vw,7.8rem)]" style={{ animationDelay: ".08s" }}>La pièce qu&apos;on utilise chaque matin.</h1>
+          <p className="az-rise mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl" style={{ animationDelay: ".16s" }}>On s&apos;occupe de la plomberie de votre rénovation : la douche, le lavabo, les WC et tout ce qui passe derrière les murs.</p>
+          <div className="az-rise mt-8" style={{ animationDelay: ".24s" }}><Btn href={quoteHref("Rénovation salle de bain")} variant="white" arrow>Parler de mon projet</Btn></div>
         </Wrap>
       </section>
 
-      <section className="bg-[#F3F6F8] py-16 sm:py-20">
+      <section className="bg-az-tile py-20 sm:py-28">
         <Wrap>
-          <Reveal>
-            <SectionHead eyebrow="Prestations" title="Ce que peut couvrir une rénovation" />
-          </Reveal>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {azurSdbItems.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.04}>
-                <article className="h-full rounded-2xl border border-[#E4EBF1] bg-white p-6">
-                  <span className="flex size-10 items-center justify-center rounded-xl bg-[#E3F6FD] text-[#0077C2]">
-                    <AzurIcons.bath className="size-5" />
-                  </span>
-                  <h3 className="mt-4 text-lg font-bold text-[#002D72]">{item.title}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-[#536273]">{item.text}</p>
-                </article>
-              </Reveal>
+          <Sign>Ce qu&apos;on peut faire</Sign>
+          <h2 className="mt-4 max-w-4xl text-[clamp(2.7rem,6.5vw,5.8rem)]">Tout, ou seulement ce qui vous gêne.</h2>
+          <ul className="mt-10 grid gap-x-8 md:grid-cols-2">
+            {azurSdbItems.map((x, i) => (
+              <li key={x.title}>
+                <Reveal delay={(i % 2) * 0.06} y={18} className="flex gap-5 border-t-2 border-az-ink py-5">
+                  <span className="az-display text-[2.4rem] text-az-cobalt">{i + 1}</span>
+                  <div>
+                    <h3 className="text-[2rem]">{x.title}</h3>
+                    <p className="mt-1.5 text-lg text-az-ink/80">{x.text}</p>
+                  </div>
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ul>
         </Wrap>
       </section>
 
-      <section className="bg-white py-16 sm:py-20">
+      <section className="bg-white py-20 sm:py-28">
         <Wrap>
-          <Reveal>
-            <SectionHead eyebrow="Ambiances" title="Inspirations visuelles" text="Photographies illustratives — elles ne représentent pas un chantier réel d'AZUR PLOMBERIE." />
-          </Reveal>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="max-w-4xl text-[clamp(2.7rem,6.5vw,5.8rem)]">Des pièces qui donnent envie.</h2>
+          <p className="mt-3 text-[15px] text-az-ink/75">Photos d&apos;illustration : ce ne sont pas des réalisations de l&apos;entreprise, qui est fictive.</p>
+          <ul className="mt-8 grid gap-3 md:grid-cols-3">
             {azurGallery.map((g, i) => (
-              <Reveal key={g.src} delay={i * 0.03}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                  <Image src={g.src} alt={g.alt} fill sizes="(max-width:1024px) 100vw, 33vw" className="object-cover" />
-                </div>
-              </Reveal>
+              <li key={g.src} className={cn(g.wide && "md:col-span-2")}>
+                <Reveal delay={Math.min(i, 2) * 0.06} y={26}>
+                  <div className={cn("group relative overflow-hidden rounded-2xl bg-az-grout", g.wide ? "aspect-[4/3] md:aspect-[16/10]" : "aspect-[4/3] md:aspect-auto md:h-full md:min-h-[300px]")}>
+                    <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "(max-width: 768px) 92vw, 860px" : "(max-width: 768px) 92vw, 430px"} className="object-cover transition-transform duration-1000 group-hover:scale-105" />
+                  </div>
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ul>
         </Wrap>
       </section>
 
-      <section className="bg-[#002D72] py-16 sm:py-20">
+      <section className="bg-az-tile py-20 sm:py-28">
         <Wrap>
-          <Reveal>
-            <SectionHead light eyebrow="Méthode" title="Du premier message à l'intervention" />
-          </Reveal>
-          <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {azurSteps.map((s, i) => (
-              <Reveal key={s.n} delay={i * 0.05}>
-                <li className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                  <span className="font-[family-name:var(--font-azur-display)] text-2xl font-bold text-[#4FC3F7]">{s.n}</span>
-                  <h3 className="mt-3 font-bold text-white">{s.title}</h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/70">{s.text}</p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+          <Sign>Votre projet</Sign>
+          <h2 className="mt-4 text-[clamp(2.7rem,6.5vw,5.8rem)]">De l&apos;idée aux finitions.</h2>
+          <div className="mt-12"><PipeSteps steps={steps.map((text, i) => ({ n: String(i + 1), title: ["L'idée", "L'étude", "Le devis", "Les travaux"][i], text }))} /></div>
         </Wrap>
       </section>
-
-      <RelatedServices exclude="renovation-salle-de-bain" />
-      <AzurCtaBand title="Envie de moderniser votre salle de bain ?" text="Décrivez l'existant et vos priorités : espace, douche, budget indicatif si vous le souhaitez." />
+      <EndCta title="Parlons de votre salle de bain." text="Quelques photos de la pièce et vos envies suffisent pour commencer." />
     </>
   );
 }

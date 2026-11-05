@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
-import { animate, motion, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView } from "framer-motion";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import { volt } from "@/data/volt";
 
 export function Wrap({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -51,7 +52,7 @@ export function Reveal({
   className?: string;
   y?: number;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (
     <motion.div
@@ -134,7 +135,7 @@ export function ContactHint({ className = "" }: { className?: string }) {
 export function Counter({ value, suffix = "", className = "" }: { value: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   const [n, setN] = useState(0);
 
   useEffect(() => {

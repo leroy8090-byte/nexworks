@@ -1,106 +1,66 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { azur, azurSteps, azurValuesLong, azurWhy } from "@/data/azur";
-import { AzurCtaBand } from "@/components/azur/PageBlocks";
-import { PageHero } from "@/components/azur/Shell";
-import { AzurButton, Reveal, SectionHead, Wrap } from "@/components/azur/ui";
+import { PipeSteps } from "@/components/azur/PipeSteps";
+import { EndCta, PageTop, Sign, Wrap } from "@/components/azur/ui";
+import { Reveal } from "@/components/ui/Reveal";
+import { azurPromises, azurSteps, azurValues } from "@/data/azur";
 
-export const metadata: Metadata = {
-  title: "À propos",
-  description: `${azur.name} : concept fictif d'artisan plombier à Saint-Raphaël, réalisé pour le portfolio NEXWORKS AGENCY.`,
-};
+export const metadata: Metadata = { title: "L'artisan" };
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        eyebrow="À propos"
-        title={azur.promise}
-        text="Une entreprise de plomberie moderne, professionnelle et réactive — présentée ici comme un concept de démonstration complet."
-        image="/azur/about.webp"
-        alt="Maison contemporaine illustrant le cadre d'intervention"
-      />
+      <PageTop sign="L'artisan" title="Un plombier qu'on comprend." text="Azur Plomberie, c'est une idée simple : vous dire ce qui se passe chez vous, et ce que ça coûte, avant de toucher à quoi que ce soit." />
 
-      <section className="bg-white py-16 sm:py-20">
-        <Wrap className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <SectionHead
-              eyebrow="Notre approche"
-              title="Un accompagnement clair, du premier message à l'intervention."
-              text="Ce site illustre la façon dont NEXWORKS AGENCY conçoit un site vitrine pour un artisan : message immédiat, pages de services riches, zone locale indicative et formulaire honnête."
-            />
-            <p className="mt-5 text-[15px] leading-relaxed text-[#536273]">
-              Aucune ancienneté, certification, assurance ou taille d&apos;équipe n&apos;est inventée. Les valeurs mises en avant restent des intentions de positionnement.
-            </p>
-            <div className="mt-8">
-              <AzurButton href="/azur-plomberie/contact">Demander un devis</AzurButton>
-            </div>
+      <section className="bg-az-tile py-20 sm:py-28">
+        <Wrap className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <Reveal x={-40} y={0} className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-az-grout">
+            <Image src="/azur/sdb-hero.webp" alt="Lavabo sur colonne près d'une fenêtre, dans une salle de bain blanche" fill sizes="(max-width: 1024px) 92vw, 620px" className="object-cover" />
           </Reveal>
-          <Reveal delay={0.08}>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem]">
-              <Image src="/azur/hero.webp" alt="Intérieur contemporain évoquant le confort du logement" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
-            </div>
-          </Reveal>
-        </Wrap>
-      </section>
-
-      <section className="bg-[#F3F6F8] py-16 sm:py-20">
-        <Wrap>
-          <Reveal>
-            <SectionHead eyebrow="Positionnement" title="Ce que ce concept veut transmettre" />
-          </Reveal>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {azurValuesLong.map((v, i) => (
-              <Reveal key={v.title} delay={i * 0.05}>
-                <article className="h-full rounded-2xl border border-[#E4EBF1] bg-white p-7">
-                  <h3 className="font-[family-name:var(--font-azur-display)] text-xl font-bold text-[#002D72]">{v.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-[#536273]">{v.text}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </Wrap>
-      </section>
-
-      <section className="bg-white py-16 sm:py-20">
-        <Wrap>
-          <Reveal>
-            <SectionHead eyebrow="Valeurs" title="Un service pensé pour votre tranquillité." />
-          </Reveal>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {azurWhy.map((w) => (
-              <Reveal key={w.n}>
-                <article className="h-full rounded-2xl border border-[#E4EBF1] bg-[#F3F6F8] p-6">
-                  <p className="font-[family-name:var(--font-azur-display)] text-3xl font-bold text-[#4FC3F7]">{w.n}</p>
-                  <h2 className="mt-3 text-lg font-bold text-[#002D72]">{w.title}</h2>
-                  <p className="mt-2 text-[14px] leading-relaxed text-[#536273]">{w.text}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </Wrap>
-      </section>
-
-      <section className="bg-[#002D72] py-16 sm:py-20">
-        <Wrap>
-          <Reveal>
-            <SectionHead light eyebrow="Parcours" title="Votre projet, en quatre étapes." />
-          </Reveal>
-          <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {azurSteps.map((s) => (
-              <Reveal key={s.n}>
-                <li className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                  <span className="font-[family-name:var(--font-azur-display)] text-2xl font-bold text-[#4FC3F7]">{s.n}</span>
-                  <h3 className="mt-3 font-bold text-white">{s.title}</h3>
-                  <p className="mt-2 text-[14px] text-white/70">{s.text}</p>
+          <div>
+            <Sign>Notre façon de travailler</Sign>
+            <ol className="mt-6 space-y-7">
+              {azurValues.map((v) => (
+                <li key={v.title}>
+                  <Reveal y={18}>
+                    <h2 className="text-[clamp(2.5rem,4.5vw,3.8rem)]">{v.title}</h2>
+                    <p className="mt-2 text-lg leading-relaxed text-az-ink/80">{v.text}</p>
+                  </Reveal>
                 </li>
-              </Reveal>
-            ))}
-          </ol>
+              ))}
+            </ol>
+          </div>
         </Wrap>
       </section>
 
-      <AzurCtaBand />
+      <section className="bg-az-cobalt py-20 text-white sm:py-28">
+        <Wrap>
+          <h2 className="max-w-4xl text-[clamp(2.7rem,6.5vw,5.8rem)]">Ce sur quoi vous pouvez compter.</h2>
+          <ul className="mt-10 grid gap-x-8 md:grid-cols-2">
+            {azurPromises.map((p) => (
+              <li key={p.title} className="border-t-2 border-white/40 py-5">
+                <h3 className="text-[2.1rem]">{p.title}</h3>
+                <p className="mt-1.5 text-lg text-white/85">{p.text}</p>
+              </li>
+            ))}
+          </ul>
+        </Wrap>
+      </section>
+
+      <section className="bg-white py-20 sm:py-28">
+        <Wrap>
+          <Sign>Comment ça se passe</Sign>
+          <h2 className="mt-4 text-[clamp(2.7rem,6.5vw,5.8rem)]">Quatre étapes, pas une de plus.</h2>
+          <div className="mt-12"><PipeSteps steps={azurSteps} /></div>
+        </Wrap>
+      </section>
+
+      <section className="bg-az-tile py-14">
+        <Wrap>
+          <p className="max-w-3xl text-[15px] leading-relaxed text-az-ink/75">Azur Plomberie est une entreprise fictive. Ce site ne présente volontairement ni avis clients, ni ancienneté, ni certification : rien de tout cela n&apos;existe. Sur un vrai site, ces preuves viendraient de l&apos;artisan.</p>
+        </Wrap>
+      </section>
+      <EndCta />
     </>
   );
 }

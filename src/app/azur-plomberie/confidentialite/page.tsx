@@ -1,32 +1,30 @@
 import type { Metadata } from "next";
-import { Wrap } from "@/components/azur/ui";
+import { PageTop, Wrap } from "@/components/azur/ui";
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialité",
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = { title: "Confidentialité" };
 
-export default function ConfidentialitePage() {
+export default function PrivacyPage() {
   return (
-    <section className="bg-white py-16 sm:py-20">
-      <Wrap className="max-w-3xl">
-        <h1 className="font-[family-name:var(--font-azur-display)] text-3xl font-bold text-[#002D72]">Politique de confidentialité</h1>
-        <p className="mt-4 text-[15px] leading-relaxed text-[#536273]">
-          Sur ce site de démonstration, le formulaire de contact <strong>ne transmet aucune donnée</strong> à un serveur externe. Les informations saisies restent dans votre navigateur le temps de la simulation.
-        </p>
-        <h2 className="mt-8 text-xl font-bold text-[#002D72]">Données concernées (site réel)</h2>
-        <p className="mt-2 text-[15px] leading-relaxed text-[#536273]">
-          Lorsqu&apos;un backend sera branché, les données typiques seront : nom, e-mail, téléphone, commune, type de prestation et message. Elles devront être traitées uniquement pour répondre à la demande, avec une base légale et une durée de conservation définies.
-        </p>
-        <h2 className="mt-8 text-xl font-bold text-[#002D72]">Vos droits</h2>
-        <p className="mt-2 text-[15px] leading-relaxed text-[#536273]">
-          Accès, rectification, effacement, limitation, opposition et portabilité : à préciser avec l&apos;entreprise réelle et le DPO ou le contact RGPD désigné.
-        </p>
-        <h2 className="mt-8 text-xl font-bold text-[#002D72]">Cookies</h2>
-        <p className="mt-2 text-[15px] leading-relaxed text-[#536273]">
-          Ce concept n&apos;installe pas de cookies publicitaires. Un bandeau de consentement pourra être ajouté si des traceurs non essentiels sont introduits.
-        </p>
-      </Wrap>
-    </section>
+    <>
+      <PageTop sign="Informations" title="Confidentialité" />
+      <section className="bg-az-tile py-14 sm:py-20">
+        <Wrap>
+          <div className="max-w-3xl space-y-8 text-lg leading-relaxed">
+            <div>
+              <h2 className="text-[2.3rem]">Vos données</h2>
+              <p className="mt-2">Le formulaire de ce site de démonstration n&apos;envoie rien. Ce que vous saisissez et la photo que vous choisissez restent dans votre navigateur, et disparaissent quand vous quittez la page.</p>
+            </div>
+            <div>
+              <h2 className="text-[2.3rem]">Votre langue</h2>
+              <p className="mt-2">Si vous choisissez l&apos;anglais, ce choix est retenu par votre navigateur. Il n&apos;est transmis à personne.</p>
+            </div>
+            <div>
+              <h2 className="text-[2.3rem]">Sur un vrai site</h2>
+              <p className="mt-2">Un artisan devrait préciser ici quelles données il collecte, pourquoi, combien de temps il les garde et comment exercer vos droits.</p>
+            </div>
+          </div>
+        </Wrap>
+      </section>
+    </>
   );
 }

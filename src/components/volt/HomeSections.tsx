@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { useCalmMotion } from "@/lib/useCalmMotion";
 import {
   volt,
   voltFaq,
@@ -18,7 +19,7 @@ import { Counter, Photo, Reveal, SectionHead, VoltButton, Wrap } from "./ui";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "22%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-12%"]);
@@ -252,7 +253,7 @@ export function PricingPreview() {
 
 export function Philosophy() {
   const [i, setI] = useState(0);
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
@@ -304,7 +305,7 @@ export function Philosophy() {
 
 export function Faq({ title = "Questions fréquentes" }: { title?: string }) {
   const [open, setOpen] = useState<number | null>(0);
-  const reduce = useReducedMotion();
+  const reduce = useCalmMotion();
   return (
     <section className="py-24 sm:py-32">
       <Wrap className="grid gap-12 lg:grid-cols-[0.8fr_1.4fr] lg:gap-20">

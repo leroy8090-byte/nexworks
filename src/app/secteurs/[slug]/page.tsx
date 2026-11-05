@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { siteConfig } from "@/config/site";
@@ -7,7 +8,6 @@ import { projects } from "@/data/projects";
 import { breadcrumbJsonLd, buildMetadata, organizationId } from "@/lib/seo";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { ProjectCard } from "@/components/sections/ProjectCard";
-import { SectorArt } from "@/components/sections/SectorsSection";
 import { Check } from "@/components/ui/Icons";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Container, Eyebrow, Glow, JsonLd } from "@/components/ui/Section";
@@ -83,7 +83,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
           </div>
           <Reveal immediate delay={0.3}>
             <div className="glass relative aspect-[4/3] overflow-hidden rounded-3xl">
-              <SectorArt type={s.icon} className="absolute inset-0 size-full" />
+              <Image src={s.image} alt={s.imageAlt} fill preload sizes="(max-width: 1024px) 92vw, 520px" className="object-cover" />
             </div>
           </Reveal>
         </Container>

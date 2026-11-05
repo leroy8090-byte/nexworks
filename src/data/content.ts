@@ -58,7 +58,9 @@ export const whyItems = [
 
 export type Sector = {
   slug: string;
-  icon: "hotel" | "restaurant" | "business";
+  /** Photo du secteur, dans public/secteurs */
+  image: string;
+  imageAlt: string;
   title: string;
   short: string;
   heading: string;
@@ -71,7 +73,8 @@ export type Sector = {
 export const sectors: Sector[] = [
   {
     slug: "hotellerie",
-    icon: "hotel",
+    image: "/secteurs/hotellerie.webp",
+    imageAlt: "Façade d'un hôtel méditerranéen couverte de bougainvilliers, au soleil couchant",
     title: "Hôtellerie",
     short: "Valoriser votre établissement et faciliter les réservations directes.",
     heading: "Un site d'hôtel qui valorise votre établissement et facilite les réservations directes.",
@@ -94,7 +97,8 @@ export const sectors: Sector[] = [
   },
   {
     slug: "restauration",
-    icon: "restaurant",
+    image: "/secteurs/restauration.webp",
+    imageAlt: "Terrasse de restaurant dressée face à la mer, au coucher du soleil",
     title: "Restauration",
     short: "Présenter votre établissement, votre carte et votre expérience client.",
     heading: "Un site de restaurant qui présente votre carte, votre univers et votre expérience client.",
@@ -117,7 +121,8 @@ export const sectors: Sector[] = [
   },
   {
     slug: "entreprises-independants",
-    icon: "business",
+    image: "/secteurs/entreprises-independants.webp",
+    imageAlt: "Une équipe qui travaille ensemble dans un bureau lumineux",
     title: "Entreprises & indépendants",
     short: "Renforcer votre image et développer votre visibilité.",
     heading: "Un site professionnel pour renforcer votre image et développer votre visibilité.",

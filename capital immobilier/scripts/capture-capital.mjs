@@ -3,7 +3,7 @@ import sharp from "sharp";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const exe = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
-const BASE = process.env.CAPITAL_URL || "http://localhost:3000/capital-immobilier";
+const BASE = process.env.CAPITAL_URL || "http://localhost:3003/capital-immobilier";
 mkdirSync("_shots", { recursive: true });
 mkdirSync("public/projects", { recursive: true });
 const b = await chromium.launch({ executablePath: exe });

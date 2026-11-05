@@ -53,7 +53,7 @@ export function WorkGallery() {
         </div>
         <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl text-sm leading-relaxed text-mist">
-            Ces projets sont des sites de démonstration pour des établissements fictifs, ainsi qu&apos;un concept de refonte réalisé de notre initiative. Ce ne sont pas des clients.
+            Ces projets sont des sites de démonstration pour des établissements fictifs. Ce ne sont pas des clients.
           </p>
           <Button href="/realisations" variant="secondary" arrow className="self-start sm:self-auto">
             Tous les projets

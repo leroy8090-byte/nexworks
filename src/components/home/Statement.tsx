@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { sectors } from "@/data/content";
@@ -45,8 +46,11 @@ export function Statement() {
               <li key={s.slug}>
                 <Link
                   href={`/secteurs/${s.slug}`}
-                  className="group inline-flex items-center gap-2 rounded-full border border-graphite/20 px-5 py-3 text-base font-semibold text-graphite transition-colors hover:border-graphite hover:bg-graphite hover:text-white"
+                  className="group inline-flex items-center gap-3 rounded-full border border-graphite/20 py-2 pl-2 pr-5 text-base font-semibold text-graphite transition-colors hover:border-graphite hover:bg-graphite hover:text-white"
                 >
+                  <span className="relative size-10 shrink-0 overflow-hidden rounded-full">
+                    <Image src={s.image} alt="" fill sizes="40px" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                  </span>
                   {s.title}
                   <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>

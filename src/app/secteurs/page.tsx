@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { sectors } from "@/data/content";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/sections/CtaSection";
-import { SectorArt } from "@/components/sections/SectorsSection";
 import { ArrowRight } from "@/components/ui/Icons";
 import { Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Container, JsonLd, PageHero } from "@/components/ui/Section";
@@ -31,7 +31,7 @@ export default function SecteursPage() {
               <StaggerItem key={s.slug} className="h-full">
                 <Link href={`/secteurs/${s.slug}`} className="group flex h-full flex-col rounded-3xl border border-white/10 bg-ink-2 p-3 transition-colors hover:border-sky/60">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink-3">
-                    <SectorArt type={s.icon} className="absolute inset-0 size-full transition-transform duration-700 group-hover:scale-105" />
+                    <Image src={s.image} alt={s.imageAlt} fill sizes="(max-width: 768px) 92vw, 420px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="flex flex-1 flex-col p-4 sm:p-5">
                     <h2 className="font-display text-3xl font-bold leading-tight text-white">{s.title}</h2>

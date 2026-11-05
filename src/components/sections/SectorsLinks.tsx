@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Sector } from "@/data/content";
 import { ArrowRight } from "@/components/ui/Icons";
@@ -15,13 +16,18 @@ export function SectorsLinks({ sectors }: { sectors: Sector[] }) {
             <Reveal key={s.slug} delay={i * 0.08}>
               <Link
                 href={`/secteurs/${s.slug}`}
-                className="group flex h-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition hover:border-sky/50 hover:bg-white/[0.05]"
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-ink-3 transition-colors hover:border-sky/60"
               >
-                <span>
-                  <span className="block font-display text-lg font-semibold text-white">{s.title}</span>
-                  <span className="mt-1.5 block text-sm leading-relaxed text-mist">{s.short}</span>
+                <span className="relative block aspect-[16/10] overflow-hidden">
+                  <Image src={s.image} alt={s.imageAlt} fill sizes="(max-width: 768px) 92vw, 420px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 </span>
-                <ArrowRight className="size-5 shrink-0 text-sky transition-transform duration-300 group-hover:translate-x-1" />
+                <span className="flex flex-1 items-center justify-between gap-4 p-5">
+                  <span>
+                    <span className="block font-display text-xl font-bold text-white">{s.title}</span>
+                    <span className="mt-1.5 block text-[15px] leading-relaxed text-mist">{s.short}</span>
+                  </span>
+                  <ArrowRight className="size-5 shrink-0 text-sky transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
             </Reveal>
           ))}

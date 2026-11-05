@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/config/site";
 import { capital } from "@/data/capital";
+
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3003").replace(/\/$/, "");
 
 /**
  * Convention des démos du repo : noindex/nofollow posé dans le layout (comme maison-riviera, azur-plomberie, volt-fitness).
  * On ajoute malgré tout un canonical et des Open Graph propres par page, prêts pour une éventuelle mise en ligne.
  */
 export function capitalMeta(title: string, description: string, path = ""): Metadata {
-  const url = `${siteConfig.url}${capital.basePath}${path}`;
+  const url = `${siteUrl}${capital.basePath}${path}`;
   return {
     title,
     description,
@@ -29,7 +30,7 @@ export function agencyJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "@id": `${siteConfig.url}${capital.basePath}#agency`,
+    "@id": `${siteUrl}${capital.basePath}#agency`,
     name: capital.name,
     description: capital.description,
     telephone: `+33${capital.phoneHref.slice(3)}`,
@@ -54,7 +55,7 @@ export function breadcrumbLd(items: { name: string; path: string }[]) {
       "@type": "ListItem",
       position: i + 1,
       name: it.name,
-      item: `${siteConfig.url}${capital.basePath}${it.path}`,
+      item: `${siteUrl}${capital.basePath}${it.path}`,
     })),
   };
 }

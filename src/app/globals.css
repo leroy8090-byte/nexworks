@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../../capital immobilier";
 
 @theme {
   --color-ink: #050505;

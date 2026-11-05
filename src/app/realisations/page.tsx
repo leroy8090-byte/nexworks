@@ -38,7 +38,7 @@ export default function RealisationsPage() {
       <PageHero
         eyebrow="Nos réalisations"
         title="Regardez plutôt *ce que nous construisons.*"
-        text="Chaque projet présenté ici est un site de démonstration ou un concept de refonte réalisé par NEXWORKS AGENCY, pour un établissement fictif ou de notre propre initiative : il illustre notre façon de concevoir, sans être associé à un client réel."
+        text="Chaque projet présenté ici est un site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif : il illustre notre façon de concevoir, sans être associé à un client réel."
       />
       <section className="pb-24 sm:pb-32">
         <Container>

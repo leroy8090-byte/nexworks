@@ -9,23 +9,12 @@ export const projectTypes = [
   "Autre ou je ne sais pas encore",
 ] as const;
 
-export const budgets = [
-  "Moins de 2 000 €",
-  "Entre 2 000 € et 3 500 €",
-  "Entre 3 500 € et 5 000 €",
-  "Entre 5 000 € et 8 000 €",
-  "Plus de 8 000 €",
-  "Je ne sais pas encore",
-  "Je ne sais pas encore",
-] as const;
-
 export type ContactValues = {
   name: string;
   company: string;
   email: string;
   phone: string;
   projectType: string;
-  budget: string;
   message: string;
   consent: boolean;
 };
@@ -66,9 +55,6 @@ export function validateContact(v: ContactValues): ContactErrors {
   else if (!(projectTypes as readonly string[]).includes(v.projectType))
     e.projectType = "Type de projet non reconnu. Choisissez une option de la liste.";
 
-  if (v.budget && !(budgets as readonly string[]).includes(v.budget))
-    e.budget = "Budget non reconnu. Choisissez une option de la liste.";
-
   if (!message) e.message = "Décrivez-nous votre besoin en quelques lignes.";
   else if (message.length < limits.message.min)
     e.message = `Quelques détails de plus nous aideraient (${limits.message.min} caractères minimum, ${message.length} actuellement).`;
@@ -86,7 +72,6 @@ export const emptyContact: ContactValues = {
   email: "",
   phone: "",
   projectType: "",
-  budget: "",
   message: "",
   consent: false,
 };

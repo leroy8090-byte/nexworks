@@ -55,7 +55,7 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
           jsonLd,
           breadcrumbJsonLd([
             { name: "Accueil", path: "/" },
-            { name: "Services", path: "/services" },
+            { name: "Secteurs", path: "/secteurs" },
             { name: s.title, path: `/secteurs/${s.slug}` },
           ]),
         ]}
@@ -66,8 +66,8 @@ export default async function SectorPage({ params }: { params: Promise<Params> }
         <Container className="relative grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <nav aria-label="Fil d'Ariane" className="mb-8 text-sm text-mist">
-              <Link href="/services" className="transition-colors hover:text-white">
-                ← Services
+              <Link href="/secteurs" className="transition-colors hover:text-white">
+                ← Tous les secteurs
               </Link>
             </nav>
             <Eyebrow>Secteur · {s.title}</Eyebrow>

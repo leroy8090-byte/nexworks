@@ -25,10 +25,10 @@ export const siteConfig = {
 } as const;
 
 export const navigation = [
-  { label: "Accueil", href: "/" },
   { label: "Services", href: "/services" },
-  { label: "Nos réalisations", href: "/realisations" },
-  { label: "Notre approche", href: "/notre-approche" },
+  { label: "Réalisations", href: "/realisations" },
+  { label: "Secteurs", href: "/secteurs" },
+  { label: "Méthode", href: "/notre-approche" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

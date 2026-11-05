@@ -4,6 +4,9 @@ export type Service = {
   id: ServiceId;
   /** Libellé court (étiquette) */
   label: string;
+  /** Ce que le service vous apporte, en langage courant */
+  plainTitle: string;
+  plainText: string;
   title: string;
   description: string;
   items: string[];
@@ -19,6 +22,8 @@ export const services: Service[] = [
   {
     id: "creation-web",
     label: "Création web",
+    plainTitle: "Créer votre site",
+    plainText: "Un site clair et rapide, qui explique ce que vous faites et donne envie de vous contacter, sur ordinateur comme sur téléphone.",
     title: "Création de sites web",
     description: "Des sites web modernes, rapides et conçus pour transformer vos visiteurs en clients.",
     items: [
@@ -44,6 +49,8 @@ export const services: Service[] = [
   {
     id: "design-ux",
     label: "Design & UX/UI",
+    plainTitle: "Moderniser votre site actuel",
+    plainText: "Votre site existe, mais il n'est plus dans l'ère du temps et ne vous apporte plus assez de demandes ? On le rend plus clair, plus agréable et plus facile à utiliser.",
     title: "Design & expérience utilisateur",
     description:
       "Une identité digitale soignée qui valorise votre entreprise et renforce la confiance de vos visiteurs.",
@@ -70,6 +77,8 @@ export const services: Service[] = [
   {
     id: "seo",
     label: "Référencement SEO",
+    plainTitle: "Être trouvé sur Google",
+    plainText: "Quand quelqu'un cherche ce que vous proposez près de chez lui, on travaille pour que votre entreprise soit mieux visible dans les résultats.",
     title: "Référencement SEO",
     description:
       "Améliorez votre visibilité sur Google et facilitez la découverte de votre entreprise par vos futurs clients.",
@@ -98,6 +107,8 @@ export const services: Service[] = [
   {
     id: "geo",
     label: "Optimisation GEO",
+    plainTitle: "Être compris par les IA",
+    plainText: "ChatGPT, Gemini ou Perplexity répondent à de plus en plus de questions. On présente votre entreprise pour qu'ils la comprennent et la décrivent correctement.",
     title: "Visibilité dans les IA",
     description:
       "Préparez votre présence digitale aux nouvelles habitudes de recherche et améliorez la compréhension de votre entreprise par les moteurs de réponse IA.",

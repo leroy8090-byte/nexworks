@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { siteConfig } from "@/config/site";
 import {
-  budgets,
   emptyContact,
   limits,
   projectTypes,
@@ -127,7 +126,7 @@ export function ContactForm({
     if (status === "submitting") return;
     const errs = validateContact(values);
     setErrors(errs);
-    setTouched({ name: true, company: true, email: true, phone: true, projectType: true, budget: true, message: true, consent: true });
+    setTouched({ name: true, company: true, email: true, phone: true, projectType: true, message: true, consent: true });
     const first = Object.keys(errs)[0];
     if (first) {
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
@@ -250,6 +249,7 @@ export function ContactForm({
         <Field id="phone" label="Téléphone" optional error={errors.phone}>
           <input type="tel" autoComplete="tel" inputMode="tel" placeholder="Votre numéro" {...bind("phone")} />
         </Field>
+        <div className="sm:col-span-2">
         <Field id="projectType" label="Type de projet" error={errors.projectType}>
           <select {...bind("projectType")} className={cn(bind("projectType").className, "appearance-none bg-[length:16px] bg-[right_1rem_center] bg-no-repeat pr-10")} style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355BDF2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}>
             <option value="" className="bg-ink-2">Sélectionnez…</option>
@@ -260,16 +260,7 @@ export function ContactForm({
             ))}
           </select>
         </Field>
-        <Field id="budget" label="Budget indicatif" optional error={errors.budget}>
-          <select {...bind("budget")} className={cn(bind("budget").className, "appearance-none bg-[length:16px] bg-[right_1rem_center] bg-no-repeat pr-10")} style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355BDF2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}>
-            <option value="" className="bg-ink-2">Je préfère ne pas préciser</option>
-            {budgets.map((b) => (
-              <option key={b} value={b} className="bg-ink-2">
-                {b}
-              </option>
-            ))}
-          </select>
-        </Field>
+        </div>
       </div>
 
       <Field

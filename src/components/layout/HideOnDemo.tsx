@@ -14,3 +14,8 @@ export function useIsStandalone() {
 export function HideOnDemo({ children }: { children: ReactNode }) {
   return useIsStandalone() ? null : <>{children}</>;
 }
+
+/** Applique l'identité NEXWORKS (polices, titres) sans toucher aux sites de démonstration. */
+export function SiteScope({ children }: { children: ReactNode }) {
+  return <div className={useIsStandalone() ? "contents" : "nx-site"}>{children}</div>;
+}

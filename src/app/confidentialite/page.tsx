@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           <h2 className={h2}>Informations collectées</h2>
           <p className={p}>
             Lorsque vous utilisez le formulaire de contact, nous recueillons les informations que vous saisissez : nom,
-            entreprise, adresse e-mail, téléphone (facultatif), type de projet, budget indicatif (facultatif) et
+            entreprise, adresse e-mail, téléphone (facultatif), type de projet et
             description de votre besoin.
           </p>
           <h2 className={h2}>Finalité</h2>

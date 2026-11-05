@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Check } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { ServiceVisual, serviceVisualCaption } from "@/components/visuals/ServiceVisuals";
 
 /**
@@ -18,21 +17,17 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
   const head = (
     <div>
-      <div className="flex items-center gap-4">
-        <span className="font-display text-sm font-semibold text-sky">{n}</span>
-        <span className="h-px w-10 bg-gradient-to-r from-sky/60 to-transparent" />
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-mist">{service.label}</span>
-      </div>
-      <h3 className="mt-5 font-display text-2xl font-semibold leading-tight text-white sm:text-[2rem]">
+      <p className="text-sm font-semibold text-sky">{n} · {service.label}</p>
+      <h3 className="mt-3 font-display text-[clamp(2rem,3.6vw,3rem)] font-bold leading-[1.05] text-white">
         {detailed ? (
           <span id={service.id} className="scroll-mt-32">
-            {service.title}
+            {service.plainTitle}
           </span>
         ) : (
-          service.title
+          service.plainTitle
         )}
       </h3>
-      <p className="mt-4 text-base leading-relaxed text-mist">{service.description}</p>
+      <p className="mt-4 text-lg leading-relaxed text-white/85">{service.plainText}</p>
       {detailed && (
         <div className="mt-5 space-y-3 text-[15px] leading-relaxed text-mist/90">
           {service.intro.map((p) => (
@@ -50,8 +45,8 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
   const lists = (
     <div>
-      <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
-        {detailed ? "Prestations incluses" : "Prestations"}
+      <h4 className="text-base font-bold text-white">
+        {detailed ? "Ce qui est inclus" : "Prestations"}
       </h4>
       <ul className="mt-4 space-y-2.5">
         {service.items.map((item) => (
@@ -66,7 +61,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
       {detailed && (
         <>
-          <h4 className="mt-7 text-xs font-semibold uppercase tracking-[0.18em] text-white/90">Ce que cela vous apporte</h4>
+          <h4 className="mt-7 text-base font-bold text-white">Ce que cela vous apporte</h4>
           <ul className="mt-4 space-y-2.5">
             {service.benefits.map((b) => (
               <li key={b} className="flex items-start gap-3 text-[15px] text-mist">
@@ -98,11 +93,8 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
   const visual = (
     <figure className={cn("relative", flip && "lg:order-1")}>
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-ink/60 p-3 sm:p-6">
-        <div className="bg-dots pointer-events-none absolute inset-0 opacity-40" aria-hidden />
-        <div className="relative">
-          <ServiceVisual id={service.id} />
-        </div>
+      <div className="rounded-3xl bg-ink-2 p-3 sm:p-6">
+        <ServiceVisual id={service.id} />
       </div>
       <figcaption className="mt-3 text-center text-xs text-mist/70">{serviceVisualCaption[service.id]}</figcaption>
     </figure>
@@ -110,7 +102,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
   return (
     <Reveal>
-      <SpotlightCard as="article" className="p-6 sm:p-8 lg:p-12">
+      <article className="border-t border-white/15 pt-10 sm:pt-14">
         {wide ? (
           <div className="space-y-10">
             <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
@@ -128,7 +120,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
             {visual}
           </div>
         )}
-      </SpotlightCard>
+      </article>
     </Reveal>
   );
 }

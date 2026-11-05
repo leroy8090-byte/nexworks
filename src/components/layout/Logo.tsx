@@ -11,7 +11,7 @@ export function Logo({ className, priority }: { className?: string; priority?: b
         alt="NEXWORKS AGENCY"
         width={747}
         height={134}
-        priority={priority}
+        preload={priority}
         sizes="(max-width: 640px) 160px, 210px"
         className="h-full w-auto"
       />

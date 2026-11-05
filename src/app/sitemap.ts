@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/", 1, "weekly"),
     entry("/services", 0.9, "monthly"),
     entry("/realisations", 0.8, "monthly"),
+    entry("/secteurs", 0.7, "monthly"),
     entry("/notre-approche", 0.7, "monthly"),
     entry("/contact", 0.8, "yearly"),
     ...sectors.map((s) => entry(`/secteurs/${s.slug}`, 0.6, "monthly")),

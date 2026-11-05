@@ -99,7 +99,6 @@ export async function POST(req: NextRequest) {
     email: clean(body.email, 300),
     phone: clean(body.phone, 60),
     projectType: clean(body.projectType, 200),
-    budget: clean(body.budget, 200),
     message: String(body.message ?? "").replace(/\r\n/g, "\n").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim().slice(0, 5000),
     consent: body.consent === true,
   };
@@ -120,7 +119,6 @@ export async function POST(req: NextRequest) {
     ["E-mail", values.email],
     ["Téléphone", values.phone || "—"],
     ["Type de projet", values.projectType],
-    ["Budget indicatif", values.budget || "—"],
   ];
   const html = `<div style="font-family:Arial,sans-serif;color:#111;max-width:640px">
 <h2 style="margin:0 0 16px">Nouvelle demande depuis le site ${escapeHtml(siteConfig.name)}</h2>

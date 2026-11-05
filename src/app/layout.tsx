@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Bricolage_Grotesque, Manrope, Sora } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Footer } from "@/components/layout/Footer";
-import { HideOnDemo } from "@/components/layout/HideOnDemo";
+import { HideOnDemo, SiteScope } from "@/components/layout/HideOnDemo";
 import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/layout/Providers";
 import { JsonLd } from "@/components/ui/Section";
@@ -11,6 +11,7 @@ import "./globals.css";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -40,17 +41,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={siteConfig.language} className={`${sora.variable} ${manrope.variable}`}>
+    <html lang={siteConfig.language} className={`${sora.variable} ${manrope.variable} ${bricolage.variable}`}>
       <body className="min-h-dvh bg-ink font-sans text-white antialiased">
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <Providers>
-          <HideOnDemo>
-            <Header />
-          </HideOnDemo>
-          <main id="contenu">{children}</main>
-          <HideOnDemo>
-            <Footer />
-          </HideOnDemo>
+          <SiteScope>
+            <HideOnDemo>
+              <Header />
+            </HideOnDemo>
+            <main id="contenu">{children}</main>
+            <HideOnDemo>
+              <Footer />
+            </HideOnDemo>
+          </SiteScope>
         </Providers>
       </body>
     </html>

@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { projectTypes } from "@/lib/validation";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { Mail, Shield, Spark } from "@/components/ui/Icons";
+import { Mail } from "@/components/ui/Icons";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Container, Eyebrow, Glow, JsonLd } from "@/components/ui/Section";
@@ -39,7 +39,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
         ]}
       />
       <section className="relative overflow-hidden pb-24 pt-36 sm:pt-44 sm:pb-32">
-        <div className="bg-grid absolute inset-0" aria-hidden />
         <Glow className="-top-40 left-1/4 h-[560px] w-[900px] -translate-x-1/2" />
         <Glow className="-right-40 bottom-0 h-[600px] w-[600px]" tone="deep" />
         <Container className="relative grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
@@ -55,13 +54,29 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             />
             <Reveal immediate delay={0.4}>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-mist">
-                Vous souhaitez créer un site, moderniser votre présence en ligne ou améliorer votre visibilité ?
-                Décrivez-nous votre besoin.
+                Un site à créer, un site à moderniser, ou simplement une question ? Dites-nous où vous en êtes. Vous n'avez pas besoin de tout savoir à l'avance.
               </p>
             </Reveal>
 
             <Reveal immediate delay={0.55}>
-              <ul className="mt-10 space-y-5">
+              <h2 className="mt-12 font-display text-2xl font-bold text-white">Ce qui se passe ensuite</h2>
+              <ol className="mt-5 space-y-5">
+                {[
+                  ["Vous nous décrivez votre besoin", "Quelques lignes suffisent : votre activité et ce que vous aimeriez améliorer."],
+                  ["On échange ensemble", "On vous répond pour préciser votre projet et vous dire ce qui est vraiment utile."],
+                  ["Vous recevez un devis", "Un document clair, adapté à votre projet, avant de décider quoi que ce soit."],
+                ].map(([title, text], i) => (
+                  <li key={title} className="flex items-start gap-4">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky font-display text-base font-bold text-ink">{i + 1}</span>
+                    <span>
+                      <span className="block text-base font-bold text-white">{title}</span>
+                      <span className="text-[15px] leading-relaxed text-mist">{text}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-8 text-sm leading-relaxed text-mist">Vos données servent uniquement à répondre à votre demande.</p>
+              <ul className="mt-6 space-y-5">
                 {siteConfig.contactEmail && (
                   <li className="flex items-start gap-4">
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-sky/25 bg-sky/10 text-sky">
@@ -75,28 +90,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
                     </span>
                   </li>
                 )}
-                <li className="flex items-start gap-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-sky/25 bg-sky/10 text-sky">
-                    <Spark className="size-5" />
-                  </span>
-                  <span>
-                    <span className="block text-sm font-semibold text-white">Un échange simple</span>
-                    <span className="text-[15px] leading-relaxed text-mist">
-                      Décrivez votre activité et vos objectifs, nous vous répondons pour échanger sur votre projet.
-                    </span>
-                  </span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-sky/25 bg-sky/10 text-sky">
-                    <Shield className="size-5" />
-                  </span>
-                  <span>
-                    <span className="block text-sm font-semibold text-white">Vos données protégées</span>
-                    <span className="text-[15px] leading-relaxed text-mist">
-                      Elles servent uniquement à répondre à votre demande.
-                    </span>
-                  </span>
-                </li>
               </ul>
             </Reveal>
           </div>

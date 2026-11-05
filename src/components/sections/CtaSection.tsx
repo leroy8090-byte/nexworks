@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Container } from "@/components/ui/Section";
 
+const NEXT_STEPS = ["Vous décrivez votre besoin", "On en parle ensemble", "Vous recevez un devis clair"];
+
 export function CtaSection({
-  title = "Votre prochain projet commence ici.",
-  text = "Parlons de vos objectifs et construisons ensemble une présence digitale à la hauteur de votre ambition.",
+  title = "Parlons de votre projet.",
+  text = "Vous n'avez pas besoin de tout savoir à l'avance. Dites-nous où vous en êtes, on vous dira ce qui est vraiment utile.",
   cta = "Démarrer mon projet",
 }: {
   title?: string;
@@ -13,55 +15,39 @@ export function CtaSection({
   cta?: string;
 }) {
   return (
-    <section className="relative py-20 sm:py-28">
+    <section className="relative isolate z-10 -mt-10 overflow-hidden rounded-t-[2rem] bg-sky py-20 text-ink sm:-mt-14 sm:rounded-t-[3rem] sm:py-28">
+      {/* Filigrane : symbole N (masque sur le fichier logo) */}
+      <div
+        aria-hidden
+        className="absolute -right-16 -top-12 -z-10 h-[520px] w-[470px] animate-float-slow bg-ink opacity-[0.08] sm:right-8"
+        style={{
+          WebkitMaskImage: "url(/brand/nexworks-symbol.png)",
+          maskImage: "url(/brand/nexworks-symbol.png)",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+        }}
+      />
       <Container>
-        <Reveal>
-          <div className="relative isolate overflow-hidden rounded-[2rem] px-6 py-16 text-center text-ink sm:px-12 sm:py-24">
-            {/* Fond bleu ciel légèrement dégradé */}
-            <div
-              aria-hidden
-              className="absolute inset-0 -z-10"
-              style={{
-                background:
-                  "radial-gradient(120% 140% at 15% 0%, #9bdcfb 0%, #55bdf2 45%, #36a9e8 100%)",
-              }}
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 -z-10 opacity-40 mix-blend-overlay"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.5) 1px, transparent 1px)",
-                backgroundSize: "56px 56px",
-                maskImage: "radial-gradient(ellipse at center, #000 20%, transparent 75%)",
-                WebkitMaskImage: "radial-gradient(ellipse at center, #000 20%, transparent 75%)",
-              }}
-            />
-            {/* Filigrane : symbole N (masque sur le fichier logo) */}
-            <div
-              aria-hidden
-              className="absolute -right-10 -top-10 -z-10 h-[420px] w-[380px] bg-ink opacity-[0.07]"
-              style={{
-                WebkitMaskImage: "url(/brand/nexworks-symbol.png)",
-                maskImage: "url(/brand/nexworks-symbol.png)",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-              }}
-            />
-            <AnimatedHeading
-              as="h2"
-              text={title}
-              className="mx-auto max-w-3xl font-display text-[clamp(2.1rem,5vw,3.8rem)] font-semibold leading-[1.06] tracking-tight"
-            />
-            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink/80 sm:text-lg">{text}</p>
-            <div className="mt-10 flex justify-center">
-              <Button href="/contact#formulaire" variant="dark" size="lg" arrow>
-                {cta}
-              </Button>
-            </div>
-          </div>
+        <AnimatedHeading as="h2" text={title} className="max-w-4xl font-display text-[clamp(2.8rem,7.4vw,6.6rem)] font-bold leading-[0.98]" />
+        <Reveal delay={0.15}>
+          <p className="mt-6 max-w-2xl text-lg font-medium leading-relaxed sm:text-xl">{text}</p>
+        </Reveal>
+        <Reveal delay={0.25}>
+          <Button href="/contact#formulaire" variant="dark" size="lg" arrow className="mt-9">
+            {cta}
+          </Button>
+        </Reveal>
+        <Reveal delay={0.35}>
+          <ol className="mt-12 flex flex-col gap-4 border-t border-ink/20 pt-6 sm:flex-row sm:gap-10">
+            {NEXT_STEPS.map((s, i) => (
+              <li key={s} className="flex items-center gap-3 text-base font-bold">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-ink text-sm text-white">{i + 1}</span>
+                {s}
+              </li>
+            ))}
+          </ol>
         </Reveal>
       </Container>
     </section>

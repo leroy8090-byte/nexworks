@@ -16,16 +16,16 @@ type Common = {
 
 const variants: Record<Variant, string> = {
   primary:
-    "btn-shine relative overflow-hidden bg-gradient-to-b from-[#6cc6f6] to-sky-bright text-ink font-semibold shadow-[0_0_0_1px_rgba(255,255,255,0.18)_inset,0_10px_30px_-8px_rgba(54,169,232,0.65)] hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25)_inset,0_14px_40px_-6px_rgba(54,169,232,0.85)] hover:-translate-y-0.5",
+    "btn-shine relative overflow-hidden bg-sky text-ink font-bold hover:bg-[#7dcef7] hover:-translate-y-0.5",
   secondary:
-    "border border-white/15 bg-white/[0.03] text-white backdrop-blur hover:border-sky/60 hover:bg-white/[0.07] hover:-translate-y-0.5",
+    "border border-white/20 text-white font-semibold hover:border-white/50 hover:bg-white/[0.06] hover:-translate-y-0.5",
   ghost: "text-white/80 hover:text-white",
   dark: "bg-ink text-white font-semibold shadow-[0_14px_40px_-12px_rgba(0,0,0,0.6)] hover:bg-black hover:-translate-y-0.5",
 };
 
 const sizes: Record<Size, string> = {
   md: "h-11 px-5 text-sm",
-  lg: "h-[52px] px-7 text-[15px]",
+  lg: "h-14 px-7 text-base",
 };
 
 const baseCls =

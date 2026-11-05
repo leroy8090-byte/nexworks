@@ -52,7 +52,7 @@ export default function ApprochePage() {
       <JsonLd data={breadcrumbJsonLd([{ name: "Accueil", path: "/" }, { name: "Notre approche", path: "/notre-approche" }])} />
       <PageHero
         eyebrow="Notre approche"
-        title="Un site ne suffit pas. Il faut un véritable *outil digital.*"
+        title="Un site n'est pas qu'un catalogue. *Il doit travailler pour vous.*"
         text="Chez NEXWORKS AGENCY, nous ne nous contentons pas de « faire un site ». Nous construisons un outil qui présente votre activité, inspire confiance, se fait trouver et vous aide à avancer."
       />
 
@@ -119,7 +119,7 @@ export default function ApprochePage() {
         <Container>
           <SectionHeading
             eyebrow="Collaboration"
-            title="Quatre étapes, des *livrables clairs* à chaque fois."
+            title="Quatre étapes, et vous savez *toujours où on en est.*"
             text="Voici comment se déroule concrètement un projet avec NEXWORKS AGENCY."
           />
           <ol className="relative mt-14 space-y-5">
@@ -131,8 +131,8 @@ export default function ApprochePage() {
                     {s.n}
                   </div>
                   <SpotlightCard className="p-7 sm:p-8">
-                    <h3 className="font-display text-xl font-semibold uppercase tracking-wide text-white">{s.title}</h3>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-mist">{s.text}</p>
+                    <h3 className="font-display text-2xl font-bold text-white">{s.plainTitle}</h3>
+                    <p className="mt-3 max-w-2xl text-base leading-relaxed text-mist">{s.plainText}</p>
                     <ul className="mt-5 flex flex-wrap gap-2.5">
                       {s.details.map((d) => (
                         <li key={d} className="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[13px] text-white/75">

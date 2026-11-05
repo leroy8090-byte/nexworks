@@ -2,24 +2,32 @@ export const processSteps = [
   {
     n: "01",
     title: "Analyser",
+    plainTitle: "On vous écoute",
+    plainText: "Votre métier, vos clients, ce que votre site doit vous apporter : on commence par comprendre.",
     text: "Nous étudions votre activité, vos objectifs, votre présence digitale et vos besoins.",
     details: ["Échange sur vos objectifs", "Analyse de l'existant", "Définition des priorités"],
   },
   {
     n: "02",
     title: "Concevoir",
+    plainTitle: "On dessine votre site",
+    plainText: "Vous voyez à quoi il va ressembler avant qu'il soit construit, et vous le validez.",
     text: "Nous imaginons une expérience digitale adaptée à votre marque et à vos clients.",
     details: ["Structure et arborescence", "Maquettes et direction visuelle", "Validation avec vous"],
   },
   {
     n: "03",
     title: "Développer",
+    plainTitle: "On le construit",
+    plainText: "On le développe, on le teste sur ordinateur et sur téléphone, puis on le met en ligne avec vous.",
     text: "Nous réalisons votre projet avec une attention particulière portée au design, à la performance et à l'expérience utilisateur.",
     details: ["Développement soigné", "Tests sur mobile et ordinateur", "Mise en ligne accompagnée"],
   },
   {
     n: "04",
     title: "Optimiser",
+    plainTitle: "On vous rend visible",
+    plainText: "On améliore votre présence sur Google et dans les IA, et on vous indique les prochaines pistes.",
     text: "Nous améliorons votre visibilité, analysons les performances et identifions les axes de progression.",
     details: ["Optimisation SEO et GEO", "Suivi des performances", "Pistes d'amélioration"],
   },
@@ -163,6 +171,6 @@ export const faq = [
   },
   {
     q: "Comment obtenir un devis ?",
-    a: "Rendez-vous sur la page Contact, décrivez votre besoin et, si vous le souhaitez, votre budget indicatif. Nous revenons vers vous pour échanger sur votre projet.",
+    a: "Rendez-vous sur la page Contact, décrivez votre besoin en quelques lignes. Nous revenons vers vous pour échanger sur votre projet et vous adresser un devis.",
   },
 ];

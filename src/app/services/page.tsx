@@ -5,15 +5,14 @@ import { services } from "@/data/services";
 import { breadcrumbJsonLd, organizationId } from "@/lib/seo";
 import { buildMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/sections/CtaSection";
-import { PricingSection } from "@/components/sections/PricingSection";
 import { SectorsLinks } from "@/components/sections/SectorsLinks";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { Container, JsonLd, PageHero } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nos services & tarifs : création de site, design, SEO et GEO",
+  title: "Nos services : création de site, design, SEO et GEO",
   description:
-    "Création de sites web, design UX/UI, SEO et GEO : prestations et tarifs indicatifs de NEXWORKS AGENCY.",
+    "Création de sites web, design UX/UI, SEO et GEO : prestations de NEXWORKS AGENCY, sur devis personnalisé.",
   path: "/services",
 });
 
@@ -44,31 +43,30 @@ export default function ServicesPage() {
       />
       <PageHero
         eyebrow="Nos services"
-        title="Quatre expertises pour une présence digitale *complète.*"
-        text="Création web, design, SEO et GEO : chaque service est conçu pour répondre à un besoin concret de votre entreprise, expliqué sans jargon inutile."
+        title="Ce qu'on fait, *dit simplement.*"
+        text="Quatre services, un objectif : que vos futurs clients vous trouvent, vous comprennent et vous contactent. Vous pouvez en prendre un seul ou les combiner."
       >
         <nav aria-label="Aller à un service" className="flex flex-wrap gap-3">
           {services.map((s) => (
             <a
               key={s.id}
               href={`#${s.id}`}
-              className="rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-sm text-white/85 transition hover:border-sky/60 hover:bg-white/[0.07] hover:text-white"
+              className="rounded-full border border-white/20 px-5 py-3 text-[15px] font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-ink"
             >
-              {s.label}
+              {s.plainTitle}
             </a>
           ))}
         </nav>
       </PageHero>
 
       <section className="relative pb-24 sm:pb-32">
-        <Container className="space-y-6 lg:space-y-8">
+        <Container className="space-y-14 lg:space-y-20">
           {services.map((s, i) => (
             <ServiceCard key={s.id} service={s} index={i} detailed />
           ))}
         </Container>
       </section>
 
-      <PricingSection />
       <SectorsLinks sectors={sectors} />
       <CtaSection />
     </>

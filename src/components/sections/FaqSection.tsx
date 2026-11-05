@@ -16,25 +16,21 @@ export const faqJsonLd = {
 /** FAQ : réponses toujours présentes dans le HTML (utile aux moteurs de réponse), repliables pour l'utilisateur. */
 export function FaqSection() {
   return (
-    <section id="faq" className="relative border-t border-white/[0.06] bg-ink-2 py-24 sm:py-32">
+    <section id="faq" className="paper relative z-10 rounded-t-[2rem] pb-28 pt-20 sm:rounded-t-[3rem] sm:pb-40 sm:pt-28">
       <JsonLd data={faqJsonLd} />
-      <Container className="relative grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <SectionHeading
-          eyebrow="Questions fréquentes"
-          title="Les réponses à vos questions *essentielles.*"
-          text="Services, SEO, GEO, déroulement d'un projet : les points que l'on nous demande le plus souvent."
-        />
-        <div className="divide-y divide-white/[0.08] rounded-3xl border border-white/[0.08] bg-white/[0.02]">
+      <Container className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14">
+        <SectionHeading tone="light" eyebrow="Questions fréquentes" title="Ce qu'on nous demande *le plus souvent.*" />
+        <div className="border-t border-graphite/15">
           {faq.map((f, i) => (
             <Reveal key={f.q} delay={Math.min(i, 4) * 0.04} y={14}>
-              <details className="group px-6 py-5 sm:px-8">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-[17px] font-medium text-white marker:content-none [&::-webkit-details-marker]:hidden">
-                  <h3 className="text-[17px] font-medium">{f.q}</h3>
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-sky transition-all duration-300 group-open:rotate-45 group-open:border-sky/50 group-open:bg-sky/10">
+              <details className="group border-b border-graphite/15 py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 marker:content-none [&::-webkit-details-marker]:hidden">
+                  <h3 className="font-display text-xl font-bold leading-snug">{f.q}</h3>
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-graphite/25 transition-all duration-300 group-open:rotate-45 group-open:border-graphite group-open:bg-graphite group-open:text-white">
                     <Plus className="size-4" />
                   </span>
                 </summary>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-mist">{f.a}</p>
+                <p className="mt-3 max-w-2xl pr-12 text-[17px] leading-relaxed text-fog">{f.a}</p>
               </details>
             </Reveal>
           ))}

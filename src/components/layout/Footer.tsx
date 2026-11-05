@@ -6,20 +6,22 @@ import { Container } from "@/components/ui/Section";
 import { Instagram, Linkedin, Mail } from "@/components/ui/Icons";
 import { Logo } from "./Logo";
 
-const linkCls = "text-sm text-mist transition-colors hover:text-white";
+const linkCls = "text-[15px] text-mist transition-colors hover:text-white";
+const titleCls = "text-sm font-bold text-white";
 
 export function Footer() {
   const year = new Date().getFullYear();
   const { contactEmail, social } = siteConfig;
   return (
-    <footer className="relative border-t border-white/[0.07] bg-ink-2">
-      <div className="hairline-b absolute inset-x-0 top-0" aria-hidden />
-      <Container className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="relative overflow-hidden bg-ink">
+      <Container className="pb-8 pt-16 sm:pt-20">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
-            <Logo className="h-10" />
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-mist">{siteConfig.promise}</p>
-            <ul className="mt-6 flex flex-wrap items-center gap-3">
+            <Logo className="h-9" />
+            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-mist">
+              Des sites clairs, faciles à trouver, et un accompagnement qui ne s&apos;arrête pas à la mise en ligne.
+            </p>
+            <ul className="mt-6 flex flex-wrap items-center gap-4">
               {contactEmail && (
                 <li>
                   <a href={`mailto:${contactEmail}`} className={`${linkCls} inline-flex items-center gap-2`}>
@@ -46,12 +48,12 @@ export function Footer() {
           </div>
 
           <nav aria-label="Services">
-            <h2 className="font-display text-sm font-semibold text-white">Services</h2>
-            <ul className="mt-5 space-y-3">
+            <h2 className={titleCls}>Services</h2>
+            <ul className="mt-4 space-y-3">
               {services.map((s) => (
                 <li key={s.id}>
                   <Link href={`/services#${s.id}`} className={linkCls}>
-                    {s.title}
+                    {s.plainTitle}
                   </Link>
                 </li>
               ))}
@@ -59,8 +61,8 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Secteurs">
-            <h2 className="font-display text-sm font-semibold text-white">Secteurs</h2>
-            <ul className="mt-5 space-y-3">
+            <h2 className={titleCls}>Secteurs</h2>
+            <ul className="mt-4 space-y-3">
               {sectors.map((s) => (
                 <li key={s.slug}>
                   <Link href={`/secteurs/${s.slug}`} className={linkCls}>
@@ -72,8 +74,8 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Navigation du site">
-            <h2 className="font-display text-sm font-semibold text-white">NEXWORKS</h2>
-            <ul className="mt-5 space-y-3">
+            <h2 className={titleCls}>NEXWORKS</h2>
+            <ul className="mt-4 space-y-3">
               {navigation.map((n) => (
                 <li key={n.href}>
                   <Link href={n.href} className={linkCls}>
@@ -90,11 +92,12 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/[0.07] pt-6 text-xs text-mist/80 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} {siteConfig.name}. Tous droits réservés.</p>
-          <p>{siteConfig.tagline}</p>
-        </div>
+        <p className="mt-14 border-t border-white/10 pt-6 text-sm text-mist">© {year} {siteConfig.name}. Tous droits réservés.</p>
       </Container>
+
+      <p aria-hidden className="pointer-events-none -mb-[0.2em] select-none whitespace-nowrap text-center font-display text-[18.5vw] font-extrabold leading-[0.9] tracking-[-0.05em] text-white/[0.05]">
+        NEXWORKS
+      </p>
     </footer>
   );
 }

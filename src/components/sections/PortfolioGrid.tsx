@@ -43,7 +43,7 @@ export function PortfolioGrid() {
         {visible.length} projet{visible.length > 1 ? "s" : ""} affiché{visible.length > 1 ? "s" : ""}
       </p>
 
-      <motion.div layout className="mt-8 grid gap-6 lg:grid-cols-3 lg:gap-6">
+      <motion.div layout className="mt-8 grid gap-x-6 gap-y-14 md:grid-cols-2">
         <AnimatePresence mode="popLayout">
           {visible.map((p) => (
             <motion.div

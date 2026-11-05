@@ -311,6 +311,8 @@ h1, h2, h3, h4 {
 @media (max-width: 639px) {
   body:has(.azur) [data-demo-lang-ui] {
     bottom: 5rem !important;
+    left: auto !important;
+    right: 12px;
   }
 }
 /* Le point cliquable de la maison */

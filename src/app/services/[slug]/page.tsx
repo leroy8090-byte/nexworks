@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Check, Plus } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { Container, Eyebrow, Glow, JsonLd, SectionHeading } from "@/components/ui/Section";
-import { ServiceVisual, serviceVisualCaption } from "@/components/visuals/ServiceVisuals";
+import { LiveService } from "@/components/visuals/LiveVisuals";
 
 type Params = { slug: string };
 
@@ -73,10 +73,9 @@ export default async function ServicePageView({ params }: { params: Promise<Para
 
       <section className="pb-20 sm:pb-28">
         <Container>
-          <figure className="mx-auto max-w-5xl rounded-3xl bg-ink-2 p-3 sm:p-6">
-            <ServiceVisual id={page.id} />
-            <figcaption className="mt-3 text-center text-sm text-mist">{serviceVisualCaption[page.id]}</figcaption>
-          </figure>
+          <div className="mx-auto max-w-4xl rounded-3xl bg-ink-2 p-4 sm:p-6">
+            <LiveService id={page.id} />
+          </div>
         </Container>
       </section>
 

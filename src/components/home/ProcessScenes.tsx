@@ -45,47 +45,28 @@ export function SceneBrief({ items }: { items: readonly string[] }) {
   );
 }
 
-const Bone = ({ className }: { className: string }) => <div className={`rounded-md ${className}`} />;
-
-/** Étape 2 : la maquette grise prend ses couleurs sous vos yeux. */
+/** Étape 2 : une vraie page, relue avec vous : une remarque, une correction, une validation. */
 export function SceneDesign() {
   return (
     <Stage>
       <div className="absolute inset-0 flex items-center">
-        <BrowserFrame url="votre-entreprise.fr · maquette" className="w-full">
-          <div className="relative aspect-[16/10]">
-            <div className="absolute inset-0 space-y-3 bg-ink-3 p-5 sm:p-8">
-              <Bone className="h-4 w-1/4 bg-white/15" />
-              <Bone className="mt-6 h-8 w-3/4 bg-white/15" />
-              <Bone className="h-8 w-1/2 bg-white/15" />
-              <Bone className="h-3 w-2/3 bg-white/10" />
-              <div className="grid grid-cols-3 gap-3 pt-5">
-                <Bone className="h-20 bg-white/10" />
-                <Bone className="h-20 bg-white/10" />
-                <Bone className="h-20 bg-white/10" />
-              </div>
-            </div>
-            <motion.div
-              initial={{ clipPath: "inset(0 100% 0 0)" }}
-              animate={{ clipPath: "inset(0 0% 0 0)" }}
-              transition={{ delay: 0.5, duration: 1.5, ease: [0.65, 0, 0.35, 1] }}
-              className="absolute inset-0 space-y-3 p-5 sm:p-8"
-              style={{ background: "linear-gradient(140deg, #0d3550, #0a1017)" }}
-            >
-              <Bone className="h-4 w-1/4 bg-white" />
-              <Bone className="mt-6 h-8 w-3/4 bg-sky" />
-              <Bone className="h-8 w-1/2 bg-sky" />
-              <Bone className="h-3 w-2/3 bg-white/60" />
-              <div className="grid grid-cols-3 gap-3 pt-5">
-                <Bone className="h-20 bg-white/15" />
-                <Bone className="h-20 bg-sky/40" />
-                <Bone className="h-20 bg-white/15" />
-              </div>
-            </motion.div>
+        <BrowserFrame url="azur-plomberie · maquette à valider" className="w-full">
+          <div className="relative aspect-[1400/891] overflow-hidden bg-ink-3">
+            <Image src="/projects/azur-cover.webp" alt="Une page d'artisan en cours de validation" fill sizes="(max-width: 1024px) 90vw, 620px" className="object-cover object-top" />
+            {/* Le bouton dont on parle */}
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0.9] }} transition={{ delay: 0.5, duration: 1.2 }} aria-hidden className="absolute left-[1.8%] top-[72.5%] h-[10.5%] w-[17%] rounded-lg ring-[3px] ring-sky ring-offset-2 ring-offset-transparent" />
+            <motion.p initial={{ opacity: 0, y: 12, scale: 0.92 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.7, duration: 0.45, ease }} className="absolute left-[21%] top-[56%] max-w-[46%] rounded-2xl rounded-bl-sm bg-white px-3 py-2 text-[12px] font-semibold leading-snug text-ink shadow-xl sm:text-sm">
+              <span className="block text-[11px] font-bold text-sky-deep">Vous</span>
+              On peut le rendre plus visible ?
+            </motion.p>
+            <motion.p initial={{ opacity: 0, y: 12, scale: 0.92 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 1.8, duration: 0.45, ease }} className="absolute left-[36%] top-[77%] max-w-[46%] rounded-2xl rounded-bl-sm bg-sky px-3 py-2 text-[12px] font-semibold leading-snug text-ink shadow-xl sm:text-sm">
+              <span className="block text-[11px] font-bold">NEXWORKS</span>
+              C&apos;est fait, il passe en rouge.
+            </motion.p>
           </div>
         </BrowserFrame>
       </div>
-      <motion.div initial={{ opacity: 0, y: 12, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 1.8, duration: 0.5, ease }} className="absolute bottom-2 right-3 sm:bottom-6">
+      <motion.div initial={{ opacity: 0, y: 12, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 2.9, duration: 0.5, ease }} className="absolute bottom-0 right-3 sm:bottom-3">
         <Pill><Check className="size-3.5" strokeWidth={2.6} /> Maquette validée avec vous</Pill>
       </motion.div>
     </Stage>
@@ -118,26 +99,25 @@ export function SceneBuild({ cover, mobile }: { cover: string; mobile: string })
   );
 }
 
-/** Étape 4 : ce qu'on vise, illustré sans promettre de position. */
+/** Étape 4 : ce qu'on vise, illustré sur un exemple, sans promettre de position. */
 export function SceneVisible() {
-  const cards = [
-    { title: "Sur Google", lines: ["Votre entreprise · votre ville", "Horaires, services, avis, itinéraire"] },
-    { title: "Dans une IA", lines: ["« Voici ce que propose cette entreprise… »", "Des informations claires et cohérentes"] },
-  ];
   return (
     <Stage>
-      <div className="absolute inset-0 flex flex-col justify-center gap-4">
-        {cards.map((c, i) => (
-          <motion.div key={c.title} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.3, duration: 0.7, ease }} className="rounded-2xl border border-white/10 bg-ink-3 p-5 sm:p-6">
-            <p className="text-sm font-bold text-sky">{c.title}</p>
-            <p className="mt-2 font-display text-xl font-bold text-white sm:text-2xl">{c.lines[0]}</p>
-            <p className="mt-1 text-[15px] text-mist">{c.lines[1]}</p>
-          </motion.div>
-        ))}
-        <motion.div initial={{ opacity: 0, y: 20, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.9, type: "spring", stiffness: 240, damping: 20 }} className="self-end rounded-2xl bg-sky px-5 py-4 text-ink">
-          <p className="font-display text-lg font-bold">Nouvelle demande de contact</p>
+      <div className="absolute inset-0 flex flex-col justify-center gap-3">
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }} className="rounded-2xl border border-white/10 bg-ink-3 p-4 sm:p-5">
+          <p className="text-xs font-bold text-mist">On cherche sur Google : plombier saint-raphaël</p>
+          <p className="mt-2 text-[15px] font-bold leading-snug text-sky sm:text-lg">Plombier à Saint-Raphaël : dépannage et fuites | Azur Plomberie</p>
+          <p className="mt-1 text-[13px] leading-relaxed text-mist sm:text-sm">Fuite, chauffe-eau, salle de bain. Le prix est annoncé avant les travaux.</p>
         </motion.div>
-        <p className="text-center text-xs text-mist">Illustration. Aucun classement ni aucune citation par une IA ne peut être garanti.</p>
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6, ease }} className="rounded-2xl border border-white/10 bg-ink-3 p-4 sm:p-5">
+          <p className="text-xs font-bold text-mist">On demande à une IA : qui peut réparer une fuite ?</p>
+          <p className="mt-2 text-[15px] leading-snug text-white sm:text-base">« D&apos;après son site, Azur Plomberie intervient à Saint-Raphaël et à Fréjus pour les fuites et le dépannage. »</p>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 1.2, type: "spring", stiffness: 240, damping: 20 }} className="flex items-center gap-3 self-end rounded-2xl bg-sky px-4 py-3 text-ink">
+          <Check className="size-5 shrink-0" strokeWidth={2.6} />
+          <p className="font-bold leading-tight">Nouvelle demande : fuite sous l&apos;évier à Fréjus</p>
+        </motion.div>
+        <p className="text-center text-xs text-mist">Exemple sur un artisan fictif. Aucun classement ni aucune citation par une IA ne peut être garanti.</p>
       </div>
     </Stage>
   );

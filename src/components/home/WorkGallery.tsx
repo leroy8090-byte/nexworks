@@ -23,7 +23,7 @@ export function WorkGallery() {
   return (
     <section id="realisations" className="pb-24 pt-20 sm:pb-32 sm:pt-28">
       <Container className="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="Exemples" title="Regardez plutôt *ce que nous construisons.*" text="Passez la souris sur une fenêtre : la vraie page défile." />
+        <SectionHeading eyebrow="Exemples" title="Regardez plutôt *ce que nous construisons.*" text="Dans chaque fenêtre, c'est la vraie page qui défile." />
         <div className="hidden gap-2 md:flex">
           <button type="button" onClick={() => move(-1)} aria-label="Projets précédents" className={arrow}>
             <ArrowRight className="size-5 rotate-180" />

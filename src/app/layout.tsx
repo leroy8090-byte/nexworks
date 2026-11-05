@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Footer } from "@/components/layout/Footer";
 import { HideOnDemo, SiteScope } from "@/components/layout/HideOnDemo";
+import { MobileQuoteBar } from "@/components/layout/MobileQuoteBar";
 import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/layout/Providers";
 import { JsonLd } from "@/components/ui/Section";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main id="contenu">{children}</main>
             <HideOnDemo>
               <Footer />
+              <MobileQuoteBar />
             </HideOnDemo>
           </SiteScope>
         </Providers>

@@ -136,7 +136,7 @@ export const projects: Project[] = [
       mobile: { src: "/projects/azur-mobile.webp", width: 390, height: 11859 },
     },
     summary:
-      "Un site de plombier fictif à Saint-Raphaël : une maison interactive pour trouver son problème, le bon réflexe en cas de fuite et une demande en trois étapes.",
+      "Site de plombier fictif à Saint-Raphaël : maison interactive pour trouver son problème, bon réflexe en cas de fuite et demande en 3 étapes.",
     context:
       "AZUR PLOMBERIE est une entreprise fictive, conçue par NEXWORKS AGENCY pour montrer ce qu'un site peut apporter à un artisan. Celui qui a une fuite n'a pas le temps de lire : le site l'aide à comprendre son problème et lui dit quoi faire tout de suite, avant de lui proposer de faire sa demande.",
     goals: [

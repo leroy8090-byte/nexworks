@@ -13,6 +13,9 @@ export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640p
       <Link href={`/realisations/${p.slug}`} className="block transition-transform duration-500 group-hover:-translate-y-1.5" aria-label={`Découvrir le projet ${p.name}`}>
         <BrowserFrame url={`${p.name.toLowerCase()} · ${p.concept ? "concept de refonte" : "site de démonstration"}`}>
           <div className="relative aspect-[16/10] overflow-hidden bg-ink-3">
+            <span className="pointer-events-none absolute bottom-3 right-3 z-10 flex translate-y-2 items-center gap-1.5 rounded-full bg-sky px-3.5 py-1.5 text-sm font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              Voir le projet <ArrowUpRight className="size-4" />
+            </span>
             <Image
               src={p.images.desktop.src}
               alt={p.alt}
@@ -20,7 +23,7 @@ export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640p
               height={p.images.desktop.height}
               sizes={sizes}
               loading="lazy"
-              className="block h-auto w-full translate-y-0 transition-transform duration-[9s] ease-linear group-hover:translate-y-[var(--to)]"
+              className="nx-pan-touch block h-auto w-full translate-y-0 transition-transform duration-[9s] ease-linear group-hover:translate-y-[var(--to)]"
               style={{ ["--to" as string]: to }}
             />
           </div>

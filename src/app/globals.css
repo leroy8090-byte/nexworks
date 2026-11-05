@@ -371,6 +371,24 @@ h1, h2, h3, h4 {
   .az-flip-inner { transition: none; }
 }
 
+/* Une page entière qui défile lentement dans sa fenêtre (valeur --to fournie en ligne) */
+@keyframes nx-pan {
+  0%, 6% { transform: translateY(0); }
+  94%, 100% { transform: translateY(var(--to)); }
+}
+.nx-pan {
+  animation: nx-pan 26s ease-in-out infinite alternate;
+}
+/* Sur téléphone, pas de survol : la vraie page défile seule */
+@media (hover: none) {
+  .nx-pan-touch {
+    animation: nx-pan 30s ease-in-out infinite alternate;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-pan, .nx-pan-touch { animation: none; }
+}
+
 /* ---------- Utilitaires de marque ---------- */
 
 /* Carte translucide avec contour fin */

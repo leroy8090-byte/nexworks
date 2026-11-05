@@ -5,7 +5,7 @@ import { servicePagePath } from "@/data/service-pages";
 import { Button } from "@/components/ui/Button";
 import { Check } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
-import { ServiceVisual, serviceVisualCaption } from "@/components/visuals/ServiceVisuals";
+import { LiveService } from "@/components/visuals/LiveVisuals";
 
 /**
  * Grande carte de service. `detailed` ajoute présentation, bénéfices et devis (page Services).
@@ -21,7 +21,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
       <p className="text-sm font-semibold text-sky">{n} · {service.label}</p>
       <h3 className="mt-3 font-display text-[clamp(2rem,3.6vw,3rem)] font-bold leading-[1.05] text-white">
         {detailed ? (
-          <span id={service.id} className="scroll-mt-32">
+          <span id={service.id} data-service={service.id} className="scroll-mt-56">
             {service.plainTitle}
           </span>
         ) : (
@@ -98,12 +98,9 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
   );
 
   const visual = (
-    <figure className={cn("relative", flip && "lg:order-1")}>
-      <div className="rounded-3xl bg-ink-2 p-3 sm:p-6">
-        <ServiceVisual id={service.id} />
-      </div>
-      <figcaption className="mt-3 text-center text-xs text-mist/70">{serviceVisualCaption[service.id]}</figcaption>
-    </figure>
+    <div className={cn("relative rounded-3xl bg-ink-2 p-4 sm:p-6", flip && "lg:order-1")}>
+      <LiveService id={service.id} />
+    </div>
   );
 
   return (

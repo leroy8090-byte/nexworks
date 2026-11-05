@@ -5,6 +5,7 @@ import { CtaSection } from "@/components/sections/CtaSection";
 import { Check, Gauge, Layers, Target } from "@/components/ui/Icons";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Container, JsonLd, PageHero, SectionHeading } from "@/components/ui/Section";
+import { ScrollLine } from "@/components/ui/ScrollLine";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 export const metadata: Metadata = buildMetadata({
@@ -124,7 +125,7 @@ export default function ApprochePage() {
             text="Voici comment se déroule concrètement un projet avec NEXWORKS AGENCY."
           />
           <ol className="relative mt-14 space-y-5">
-            <div className="absolute bottom-6 left-[27px] top-6 hidden w-px bg-gradient-to-b from-sky/60 via-white/10 to-transparent sm:block" aria-hidden />
+            <ScrollLine className="absolute bottom-6 left-[27px] top-6 hidden w-0.5 overflow-hidden rounded-full sm:block" />
             {processSteps.map((s, i) => (
               <Reveal key={s.n} delay={0.05}>
                 <li className="relative grid gap-5 sm:grid-cols-[54px_1fr] sm:gap-8">

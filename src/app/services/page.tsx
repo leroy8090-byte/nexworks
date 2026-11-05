@@ -6,6 +6,7 @@ import { breadcrumbJsonLd, organizationId } from "@/lib/seo";
 import { buildMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { ServiceCard } from "@/components/sections/ServiceCard";
+import { ServicesNav } from "@/components/sections/ServicesNav";
 import { Container, JsonLd, PageHero } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
@@ -45,25 +46,16 @@ export default function ServicesPage() {
         eyebrow="Nos services"
         title="Ce qu'on fait, *dit simplement.*"
         text="Quatre services, un objectif : que vos futurs clients vous trouvent, vous comprennent et vous contactent. Vous pouvez en prendre un seul ou les combiner."
-      >
-        <nav aria-label="Aller à un service" className="flex flex-wrap gap-3">
-          {services.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className="rounded-full border border-white/20 px-5 py-3 text-[15px] font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-ink"
-            >
-              {s.plainTitle}
-            </a>
-          ))}
-        </nav>
-      </PageHero>
+      />
 
       <section className="relative pb-24 sm:pb-32">
-        <Container className="space-y-14 lg:space-y-20">
+        <Container>
+          <ServicesNav />
+          <div className="space-y-14 lg:space-y-20">
           {services.map((s, i) => (
             <ServiceCard key={s.id} service={s} index={i} detailed />
           ))}
+          </div>
         </Container>
       </section>
 

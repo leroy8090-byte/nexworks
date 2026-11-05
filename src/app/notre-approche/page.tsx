@@ -8,10 +8,11 @@ import { Container, JsonLd, PageHero, SectionHeading } from "@/components/ui/Sec
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Notre approche : construire un véritable outil digital",
+  title: "Notre méthode de création de site web | NEXWORKS AGENCY",
   description:
-    "La philosophie de NEXWORKS AGENCY : analyser, concevoir, développer et optimiser pour construire un outil digital utile, avec une communication claire et des livrables précis.",
+    "Comment NEXWORKS AGENCY crée votre site en quatre étapes : écouter, dessiner, construire et rendre visible, avec des validations claires et un devis avant de démarrer.",
   path: "/notre-approche",
+  absoluteTitle: true,
 });
 
 const principles = [

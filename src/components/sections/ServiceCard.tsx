@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Service } from "@/data/services";
 import { cn } from "@/lib/utils";
+import { servicePagePath } from "@/data/service-pages";
 import { Button } from "@/components/ui/Button";
 import { Check } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -73,7 +74,12 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
         </>
       )}
 
-      <div className="mt-8 flex flex-wrap items-center gap-4">
+      <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+        {detailed && (
+          <Link href={servicePagePath(service.id)} className="order-2 text-[15px] font-bold text-sky underline-offset-4 hover:underline">
+            Tout savoir sur ce service →
+          </Link>
+        )}
         {detailed ? (
           <Button href={`/contact?projet=${encodeURIComponent(service.projectType)}#formulaire`} arrow>
             Demander un devis

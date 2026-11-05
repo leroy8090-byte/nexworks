@@ -1,12 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
 import { useRef } from "react";
-import { sectors } from "@/data/content";
-import { ArrowUpRight } from "@/components/ui/Icons";
-import { Reveal } from "@/components/ui/Reveal";
 import { Container } from "@/components/ui/Section";
 
 const TEXT = "Vous êtes bon dans votre métier. Mais en ligne, vos futurs clients ne vous trouvent pas, ou ne comprennent pas assez vite ce que vous proposez. Notre travail, c'est de rendre ça simple.";
@@ -39,25 +34,6 @@ export function Statement() {
               ))}
         </p>
 
-        <Reveal className="mt-12 sm:mt-16">
-          <p className="text-base font-semibold text-fog">Vous êtes plutôt :</p>
-          <ul className="mt-4 flex flex-wrap gap-3">
-            {sectors.map((s) => (
-              <li key={s.slug}>
-                <Link
-                  href={`/secteurs/${s.slug}`}
-                  className="group inline-flex items-center gap-3 rounded-full border border-graphite/20 py-2 pl-2 pr-5 text-base font-semibold text-graphite transition-colors hover:border-graphite hover:bg-graphite hover:text-white"
-                >
-                  <span className="relative size-10 shrink-0 overflow-hidden rounded-full">
-                    <Image src={s.image} alt="" fill sizes="40px" className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                  </span>
-                  {s.title}
-                  <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
       </Container>
     </section>
   );

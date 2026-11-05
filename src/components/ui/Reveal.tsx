@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { ease } from "@/lib/utils";
+import { cn, ease } from "@/lib/utils";
 
 type Props = {
   children: ReactNode;
@@ -16,14 +16,23 @@ type Props = {
 
 /** Apparition progressive (fondu + léger déplacement). Respecte prefers-reduced-motion via MotionConfig. */
 export function Reveal({ children, className, delay = 0, y = 28, x = 0, immediate }: Props) {
+  if (immediate) {
+    return (
+      <div
+        className={cn("rise", className)}
+        style={{ animationDelay: `${delay}s`, ["--rise-y" as string]: `${y}px`, ["--rise-x" as string]: `${x}px` }}
+      >
+        {children}
+      </div>
+    );
+  }
   const anim = { opacity: 1, y: 0, x: 0 };
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y, x }}
-      {...(immediate
-        ? { animate: anim }
-        : { whileInView: anim, viewport: { once: true, margin: "-70px 0px -70px 0px" } })}
+      whileInView={anim}
+      viewport={{ once: true, margin: "-70px 0px -70px 0px" }}
       transition={{ duration: 0.85, delay, ease }}
     >
       {children}

@@ -16,7 +16,7 @@ const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-br
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Agence digitale : sites web, design, SEO et GEO`,
+    default: "Création de site internet, SEO et GEO | NEXWORKS AGENCY",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -30,6 +30,14 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false, email: false, address: false },
+  ...(siteConfig.googleVerification || siteConfig.bingVerification
+    ? {
+        verification: {
+          ...(siteConfig.googleVerification ? { google: siteConfig.googleVerification } : {}),
+          ...(siteConfig.bingVerification ? { other: { "msvalidate.01": siteConfig.bingVerification } } : {}),
+        },
+      }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -42,6 +50,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={siteConfig.language} className={`${sora.variable} ${manrope.variable} ${bricolage.variable}`}>
+      <head>
+        {/* Sans JavaScript (certains robots), les blocs animés restent visibles. */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-dvh bg-ink font-sans text-white antialiased">
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <Providers>

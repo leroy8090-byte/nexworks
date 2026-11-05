@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { servicePagePath } from "@/data/service-pages";
 import { services, type Service } from "@/data/services";
 import { Plus } from "@/components/ui/Icons";
 import { Container, SectionHeading } from "@/components/ui/Section";
@@ -49,25 +50,26 @@ export function ServicesExplorer() {
                       </span>
                     </button>
                   </h3>
-                  <AnimatePresence initial={false}>
-                    {open && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease }} className="overflow-hidden">
+                  {/* Toujours présent dans la page : les robots d'IA lisent le texte sans exécuter le JavaScript. */}
+                  <div className={cn("grid transition-[grid-template-rows] duration-500 ease-out", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
+                    <div className="overflow-hidden" inert={!open}>
                         <div className="pb-6">
                           <p className="text-[17px] leading-relaxed text-fog">{s.plainText}</p>
                           {s.note && <p className="mt-3 text-sm leading-relaxed text-fog">{s.note}</p>}
                           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-                            <Link href={`/services#${s.id}`} className="text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
-                              En savoir plus →
+                            <Link href={servicePagePath(s.id)} className="text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
+                              Tout savoir sur ce service →
                             </Link>
                             <span className="text-sm text-fog">Terme technique : {s.label}</span>
                           </div>
-                          <div className="mt-6 lg:hidden">
-                            <VisualPanel service={s} />
-                          </div>
+                          {open && (
+                            <div className="mt-6 lg:hidden">
+                              <VisualPanel service={s} />
+                            </div>
+                          )}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    </div>
+                  </div>
                 </li>
               );
             })}

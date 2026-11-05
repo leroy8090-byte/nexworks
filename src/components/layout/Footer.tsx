@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { navigation, siteConfig } from "@/config/site";
-import { sectors } from "@/data/content";
+import { servicePagePath } from "@/data/service-pages";
 import { services } from "@/data/services";
 import { Container } from "@/components/ui/Section";
 import { Instagram, Linkedin, Mail } from "@/components/ui/Icons";
@@ -15,7 +15,7 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink">
       <Container className="pb-8 pt-16 sm:pt-20">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
           <div>
             <Logo className="h-9" />
             <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-mist">
@@ -52,21 +52,8 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {services.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/services#${s.id}`} className={linkCls}>
+                  <Link href={servicePagePath(s.id)} className={linkCls}>
                     {s.plainTitle}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="Secteurs">
-            <h2 className={titleCls}>Secteurs</h2>
-            <ul className="mt-4 space-y-3">
-              {sectors.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/secteurs/${s.slug}`} className={linkCls}>
-                    {s.title}
                   </Link>
                 </li>
               ))}
@@ -83,6 +70,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/mentions-legales" className={linkCls}>
+                  Mentions légales
+                </Link>
+              </li>
               <li>
                 <Link href="/confidentialite" className={linkCls}>
                   Confidentialité

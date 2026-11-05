@@ -20,6 +20,9 @@ export function Hero() {
       <Glow className="hero-drift -right-52 top-[28%] -z-10 h-[720px] w-[720px] [animation-delay:-7s]" tone="deep" />
 
       <Container>
+        <Reveal immediate y={14}>
+          <p className="mb-5 text-base font-semibold text-sky sm:text-lg">Agence web · Création de sites internet, SEO et GEO</p>
+        </Reveal>
         <AnimatedHeading
           as="h1"
           immediate

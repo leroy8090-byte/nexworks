@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { Container, PageHero } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
   title: "Politique de confidentialité",
-  description: "Comment NEXWORKS AGENCY traite les informations transmises via le formulaire de contact.",
+  description: "Comment NEXWORKS AGENCY traite les informations transmises via son formulaire de contact : données recueillies, utilisation, conservation et droits.",
   path: "/confidentialite",
 });
 
@@ -53,9 +54,12 @@ export default function PrivacyPage() {
               " Les coordonnées de contact seront indiquées ici dès leur configuration."
             )}
           </p>
-          <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-[13px] leading-relaxed text-mist/80">
-            Texte à compléter avec les mentions légales de l&apos;éditeur (raison sociale, adresse, hébergeur, etc.)
-            avant la mise en production.
+          <p className="mt-10 text-[15px] leading-relaxed text-mist">
+            L&apos;éditeur du site et son hébergeur sont indiqués dans les{" "}
+            <Link href="/mentions-legales" className="font-bold text-white underline-offset-4 hover:underline">
+              mentions légales
+            </Link>
+            .
           </p>
         </Container>
       </section>

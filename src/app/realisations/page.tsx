@@ -8,10 +8,11 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Container, JsonLd, PageHero } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nos réalisations : sites web de restaurant et d'hôtel",
+  title: "Exemples de sites web créés par NEXWORKS AGENCY",
   description:
-    "Découvrez les projets de démonstration de NEXWORKS AGENCY : un site de restaurant (SOLEA), un site hôtelier (CALYRA) et un site d'artisan plombier (AZUR PLOMBERIE).",
+    "Sites de démonstration créés par NEXWORKS AGENCY : restaurant, hôtel, artisan, immobilier et salle de sport. Découvrez notre façon de concevoir un site web.",
   path: "/realisations",
+  absoluteTitle: true,
 });
 
 const listJsonLd = {

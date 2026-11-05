@@ -27,9 +27,25 @@ export function AnimatedHeading({ as = "h2", text, className, delay = 0, immedia
     for (const w of raw.split(/\s+/).filter(Boolean)) words.push({ word: w, accent });
   }
 
-  const trigger = immediate
-    ? { animate: "show" as const }
-    : { whileInView: "show" as const, viewport: { once: true, margin: "-60px 0px" } };
+  // Titre principal : animé en CSS pour apparaître dès le premier affichage, même si le JavaScript tarde.
+  if (immediate) {
+    return createElement(
+      as,
+      { className: cn("text-balance", className) },
+      words.map((w, i) => (
+        <Fragment key={i}>
+          <span className="inline-block overflow-hidden pb-[0.14em] -mb-[0.14em] align-bottom">
+            <span className={cn("word-rise", w.accent && "text-sky-gradient")} style={{ animationDelay: `${delay + i * 0.055}s` }}>
+              {w.word}
+            </span>
+          </span>
+          {i < words.length - 1 ? " " : null}
+        </Fragment>
+      )),
+    );
+  }
+
+  const trigger = { whileInView: "show" as const, viewport: { once: true, margin: "-60px 0px" } };
 
   return createElement(
     as,

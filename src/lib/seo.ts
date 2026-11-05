@@ -11,6 +11,9 @@ type PageMeta = {
   noindex?: boolean;
 };
 
+/** Image d'aperçu des partages (réseaux sociaux, messageries), générée par app/opengraph-image. */
+const shareImage = { url: "/opengraph-image", width: 1200, height: 630, alt: "NEXWORKS AGENCY : création de site internet, SEO et GEO" };
+
 export function buildMetadata({ title, description, path, absoluteTitle, noindex }: PageMeta): Metadata {
   const url = `${siteConfig.url}${path}`;
   const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
@@ -26,11 +29,13 @@ export function buildMetadata({ title, description, path, absoluteTitle, noindex
       title: fullTitle,
       description,
       url,
+      images: [shareImage],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [shareImage.url],
     },
   };
 }
@@ -40,19 +45,36 @@ export const websiteId = `${siteConfig.url}/#website`;
 
 export function organizationJsonLd() {
   const sameAs = Object.values(siteConfig.social).filter(Boolean);
+  const { legal } = siteConfig;
+  const hasAddress = Boolean(legal.address && legal.city);
   return {
     "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService"],
+    // Une fiche d'établissement local exige une adresse réelle : on ne l'annonce que si elle est renseignée.
+    "@type": hasAddress ? ["Organization", "ProfessionalService"] : "Organization",
     "@id": organizationId,
     name: siteConfig.name,
     alternateName: siteConfig.shortName,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/brand/nexworks-logo.png`,
+    logo: { "@type": "ImageObject", url: `${siteConfig.url}/brand/nexworks-logo.png`, width: 747, height: 134 },
     image: `${siteConfig.url}/opengraph-image`,
     description: siteConfig.description,
     slogan: siteConfig.tagline,
     ...(siteConfig.contactEmail ? { email: siteConfig.contactEmail } : {}),
     ...(sameAs.length ? { sameAs } : {}),
+    ...(legal.company ? { legalName: legal.company } : {}),
+    ...(legal.siren ? { taxID: legal.siren } : {}),
+    ...(legal.phone ? { telephone: legal.phone } : {}),
+    ...(hasAddress
+      ? { address: { "@type": "PostalAddress", streetAddress: legal.address, addressLocality: legal.city, postalCode: legal.postalCode, addressCountry: "FR" } }
+      : {}),
+    areaServed: { "@type": "Country", name: "France" },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      url: `${siteConfig.url}/contact`,
+      availableLanguage: "French",
+      ...(siteConfig.contactEmail ? { email: siteConfig.contactEmail } : {}),
+    },
     knowsAbout: [
       "Création de sites web",
       "Design UX/UI",
@@ -74,6 +96,35 @@ export function websiteJsonLd() {
     name: siteConfig.name,
     inLanguage: siteConfig.language,
     publisher: { "@id": organizationId },
+  };
+}
+
+export function faqJsonLd(items: readonly { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
+}
+
+export function serviceJsonLd(s: { name: string; serviceType: string; description: string; path: string; items: string[] }) {
+  const url = `${siteConfig.url}${s.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: s.name,
+    serviceType: s.serviceType,
+    description: s.description,
+    url,
+    inLanguage: siteConfig.language,
+    provider: { "@id": organizationId },
+    areaServed: { "@type": "Country", name: "France" },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: s.name,
+      itemListElement: s.items.map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+    },
   };
 }
 

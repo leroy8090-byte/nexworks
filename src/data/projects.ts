@@ -44,7 +44,12 @@ export type Project = {
   alt: string;
 };
 
-const env = (v: string | undefined) => (v && v.trim() ? v.trim() : undefined);
+// En production, une adresse locale ne mène nulle part pour un visiteur : elle est ignorée.
+const env = (v: string | undefined) => {
+  const value = v?.trim();
+  if (!value) return undefined;
+  return process.env.NODE_ENV === "production" && /localhost|127\.0\.0\.1/.test(value) ? undefined : value;
+};
 
 export const projects: Project[] = [
   {

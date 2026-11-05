@@ -30,15 +30,18 @@ export function SectionHeading({
   className?: string;
 }) {
   const light = tone === "light";
+  // Titre de page : visible dès le premier affichage.
+  const first = as === "h1";
   return (
     <div className={cn("max-w-4xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && (
-        <Reveal className={cn("mb-4", align === "center" && "flex justify-center")}>
+        <Reveal immediate={first} className={cn("mb-4", align === "center" && "flex justify-center")}>
           <Eyebrow className={light ? "text-sky-deep" : undefined}>{eyebrow}</Eyebrow>
         </Reveal>
       )}
       <AnimatedHeading
         as={as}
+        immediate={first}
         text={title}
         className={cn(
           "font-display font-bold leading-[1.02]",
@@ -47,7 +50,7 @@ export function SectionHeading({
         )}
       />
       {text && (
-        <Reveal delay={0.15}>
+        <Reveal immediate={first} delay={0.15}>
           <p className={cn("mt-6 max-w-2xl text-lg leading-relaxed", light ? "text-fog" : "text-mist", align === "center" && "mx-auto")}>{text}</p>
         </Reveal>
       )}
@@ -96,7 +99,7 @@ export function PageHero({
       <Glow className="hero-drift -top-52 left-[12%] h-[620px] w-[920px]" />
       <Container className="relative">
         <SectionHeading as="h1" eyebrow={eyebrow} title={title} text={text} />
-        {children && <Reveal delay={0.25} className="mt-10">{children}</Reveal>}
+        {children && <Reveal immediate delay={0.25} className="mt-10">{children}</Reveal>}
       </Container>
     </section>
   );

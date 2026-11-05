@@ -127,6 +127,30 @@ h1, h2, h3, h4 {
   color: transparent;
 }
 
+/* Animations d'arrivée en CSS : le contenu s'affiche sans attendre le chargement du JavaScript */
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(var(--rise-x, 0), var(--rise-y, 28px), 0); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes word-rise {
+  from { opacity: 0; transform: translateY(108%); }
+  to { opacity: 1; transform: none; }
+}
+.word-rise {
+  display: inline-block;
+  animation: word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.page-enter {
+  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Halo qui dérive lentement derrière le hero */
 @keyframes drift {
   0%, 100% { transform: translate3d(-6%, -3%, 0) scale(1); }

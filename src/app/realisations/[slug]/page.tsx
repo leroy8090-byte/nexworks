@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!p) return {};
   return buildMetadata({
     title: `${p.name} : ${p.concept ? "concept de refonte" : p.demo ? "projet de démonstration" : p.categoryLabel.toLowerCase()}`,
-    description: `${p.summary} ${p.concept ? "Concept de refonte réalisé par NEXWORKS AGENCY, sans commande de l'entreprise concernée." : p.demo ? "Site de démonstration réalisé par NEXWORKS AGENCY pour un établissement fictif." : ""}`.trim(),
+    description: `${p.summary} Site de démonstration.`,
     path: `/realisations/${p.slug}`,
   });
 }

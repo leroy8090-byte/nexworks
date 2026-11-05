@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "NEXWORKS AGENCY — Agence digitale : sites web, design, SEO et GEO";
+export const alt = "NEXWORKS AGENCY : création de site internet, SEO et GEO";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

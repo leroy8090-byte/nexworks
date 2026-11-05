@@ -9,10 +9,11 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Container, Eyebrow, Glow, JsonLd } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact : parlons de votre projet web",
+  title: "Demander un devis pour votre site web | NEXWORKS AGENCY",
   description:
-    "Création de site, refonte, SEO ou GEO : décrivez votre besoin à NEXWORKS AGENCY via le formulaire de contact pour demander un devis.",
+    "Création de site, refonte, SEO ou GEO : décrivez votre besoin à NEXWORKS AGENCY en quelques lignes et recevez un devis clair, adapté à votre projet.",
   path: "/contact",
+  absoluteTitle: true,
 });
 
 // Le mode démo dépend des variables d'environnement du serveur : on évalue à chaque requête.

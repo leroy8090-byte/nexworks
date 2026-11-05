@@ -56,95 +56,6 @@ export const whyItems = [
   },
 ] as const;
 
-export type Sector = {
-  slug: string;
-  /** Photo du secteur, dans public/secteurs */
-  image: string;
-  imageAlt: string;
-  title: string;
-  short: string;
-  heading: string;
-  intro: string;
-  needs: { title: string; text: string }[];
-  offer: string[];
-  metaDescription: string;
-};
-
-export const sectors: Sector[] = [
-  {
-    slug: "hotellerie",
-    image: "/secteurs/hotellerie.webp",
-    imageAlt: "Façade d'un hôtel méditerranéen couverte de bougainvilliers, au soleil couchant",
-    title: "Hôtellerie",
-    short: "Valoriser votre établissement et faciliter les réservations directes.",
-    heading: "Un site d'hôtel qui valorise votre établissement et facilite les réservations directes.",
-    intro:
-      "Votre site est la vitrine de votre établissement. Il doit donner envie de venir, présenter clairement vos chambres et vos services, et faciliter la réservation directe.",
-    needs: [
-      { title: "Une présentation qui donne envie", text: "Photos mises en valeur, ambiance, chambres et services présentés clairement." },
-      { title: "Un parcours de réservation simple", text: "Un accès visible et rapide à votre moteur de réservation ou à votre formulaire de contact." },
-      { title: "Une visibilité locale solide", text: "Informations cohérentes sur votre site, votre fiche Google et les plateformes où vous apparaissez." },
-    ],
-    offer: [
-      "Site vitrine d'hôtel responsive",
-      "Présentation des chambres, services et environs",
-      "Intégration d'un lien ou d'un module de réservation existant",
-      "SEO local et optimisation de la fiche Google Business Profile",
-      "Contenus structurés pour les moteurs de réponse IA",
-    ],
-    metaDescription:
-      "Site web pour hôtel : présentation des chambres, réservation directe, SEO local et visibilité dans les moteurs de réponse IA. NEXWORKS AGENCY.",
-  },
-  {
-    slug: "restauration",
-    image: "/secteurs/restauration.webp",
-    imageAlt: "Terrasse de restaurant dressée face à la mer, au coucher du soleil",
-    title: "Restauration",
-    short: "Présenter votre établissement, votre carte et votre expérience client.",
-    heading: "Un site de restaurant qui présente votre carte, votre univers et votre expérience client.",
-    intro:
-      "Vos clients cherchent une adresse, une carte, des horaires et une ambiance. Nous construisons un site lisible et appétissant, utilisable en quelques secondes depuis un smartphone.",
-    needs: [
-      { title: "Une carte claire et à jour", text: "Une carte facile à lire et à modifier, sans PDF illisible sur mobile." },
-      { title: "Les informations essentielles accessibles", text: "Horaires, adresse, contact et réservation visibles dès l'arrivée sur le site." },
-      { title: "Une ambiance fidèle à votre lieu", text: "Un univers visuel qui reflète votre cuisine et votre identité." },
-    ],
-    offer: [
-      "Site vitrine de restaurant responsive",
-      "Carte et menus présentés de façon lisible",
-      "Réservation par formulaire, téléphone ou outil existant",
-      "SEO local et optimisation de la fiche Google Business Profile",
-      "Données structurées adaptées aux établissements de restauration",
-    ],
-    metaDescription:
-      "Site web pour restaurant : carte, horaires, réservation, SEO local et données structurées. Création de sites de restauration par NEXWORKS AGENCY.",
-  },
-  {
-    slug: "entreprises-independants",
-    image: "/secteurs/entreprises-independants.webp",
-    imageAlt: "Une équipe qui travaille ensemble dans un bureau lumineux",
-    title: "Entreprises & indépendants",
-    short: "Renforcer votre image et développer votre visibilité.",
-    heading: "Un site professionnel pour renforcer votre image et développer votre visibilité.",
-    intro:
-      "Artisan, consultant, profession libérale, PME ou commerce : chaque activité a ses codes. Nous concevons un site adapté à votre métier et à votre clientèle, sans vous enfermer dans un modèle.",
-    needs: [
-      { title: "Une image crédible", text: "Un site propre, cohérent et rassurant, qui présente clairement votre activité." },
-      { title: "Des demandes qualifiées", text: "Des pages pensées pour que le visiteur comprenne votre offre et vous contacte facilement." },
-      { title: "Une visibilité qui s'installe", text: "Une base SEO et GEO pour être trouvé par les personnes qui cherchent vos services." },
-    ],
-    offer: [
-      "Site vitrine ou institutionnel sur mesure",
-      "Landing pages dédiées à une offre",
-      "Refonte et amélioration d'un site existant",
-      "Audit et optimisation SEO",
-      "Structuration des contenus pour le GEO",
-    ],
-    metaDescription:
-      "Création de site web pour entreprises, artisans et indépendants : image professionnelle, visibilité SEO et GEO. NEXWORKS AGENCY.",
-  },
-];
-
 export const faq = [
   {
     q: "Quels services propose NEXWORKS AGENCY ?",
@@ -169,6 +80,10 @@ export const faq = [
   {
     q: "Pouvez-vous refondre mon site actuel ?",
     a: "Oui. Nous analysons d'abord votre site existant (design, parcours, performances, structure), puis nous proposons une refonte qui conserve ce qui fonctionne et améliore ce qui freine vos visiteurs.",
+  },
+  {
+    q: "Combien coûte un site internet ?",
+    a: "Le prix dépend du nombre de pages, des fonctionnalités et du contenu à produire. NEXWORKS AGENCY travaille uniquement sur devis : vous décrivez votre projet et vous recevez un prix clair, adapté à votre besoin, avant de vous engager.",
   },
   {
     q: "Comment se déroule un projet ?",

@@ -1,18 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { ease } from "@/lib/utils";
 
-/** Transition d'entrée entre les pages (re-monté à chaque navigation). */
+/** Transition d'entrée entre les pages (re-monté à chaque navigation). En CSS : elle ne retarde pas l'affichage. */
 export default function Template({ children }: { children: ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className="page-enter">{children}</div>;
 }

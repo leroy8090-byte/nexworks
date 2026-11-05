@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { sectors } from "@/data/content";
+import { servicePagePath } from "@/data/service-pages";
 import { services } from "@/data/services";
 import { breadcrumbJsonLd, organizationId } from "@/lib/seo";
 import { buildMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/sections/CtaSection";
-import { SectorsLinks } from "@/components/sections/SectorsLinks";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { Container, JsonLd, PageHero } from "@/components/ui/Section";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nos services : création de site, design, SEO et GEO",
+  title: "Services web : création de site, refonte, SEO, GEO | NEXWORKS",
   description:
-    "Création de sites web, design UX/UI, SEO et GEO : prestations de NEXWORKS AGENCY, sur devis personnalisé.",
+    "Création de site internet, refonte et design UX/UI, référencement SEO et optimisation GEO : les services de NEXWORKS AGENCY, expliqués simplement. Sur devis.",
   path: "/services",
+  absoluteTitle: true,
 });
 
 const servicesJsonLd = {
@@ -28,7 +28,7 @@ const servicesJsonLd = {
       name: s.title,
       description: s.description,
       serviceType: s.projectType,
-      url: `${siteConfig.url}/services#${s.id}`,
+      url: `${siteConfig.url}${servicePagePath(s.id)}`,
       provider: { "@id": organizationId },
       inLanguage: siteConfig.language,
     },
@@ -67,7 +67,6 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <SectorsLinks sectors={sectors} />
       <CtaSection />
     </>
   );

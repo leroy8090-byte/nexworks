@@ -9,9 +9,9 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "NEXWORKS AGENCY — Agence digitale : sites web, design, SEO et GEO",
+  title: "Création de site internet, SEO et GEO | NEXWORKS AGENCY",
   description:
-    "Agence digitale : création de sites web, design UX/UI, référencement SEO et optimisation GEO pour être mieux compris par les moteurs de réponse IA. Parlons de votre projet.",
+    "Agence web : création de site internet sur mesure, refonte, référencement SEO et optimisation GEO pour être trouvé sur Google et compris par les IA. Devis personnalisé.",
   path: "/",
   absoluteTitle: true,
 });

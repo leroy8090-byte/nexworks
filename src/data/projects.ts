@@ -289,6 +289,43 @@ export const projects: Project[] = [
     tags: ["Location de voitures", "Réservation", "Next.js", "Côte d'Azur"],
     alt: "Site ORÉA DRIVE : grand titre « La route vous attend. » sur une photo de voiture et une barre de recherche par lieu et dates",
   },
+  {
+    slug: "capital-immobilier",
+    name: "CAPITAL IMMOBILIER",
+    category: "immobilier",
+    categoryLabel: "Site web agence immobilière",
+    filterLabel: "Immobilier",
+    demo: true,
+    concept: true,
+    images: {
+      cover: "/projects/capital-immobilier-cover.webp",
+      desktop: { src: "/projects/capital-immobilier-desktop.webp", width: 1100, height: 13228 },
+      mobile: { src: "/projects/capital-immobilier-mobile.webp", width: 390, height: 16000 },
+    },
+    summary:
+      "Un concept de refonte pour une agence immobilière de Saint-Raphaël : annonces filtrables, estimation guidée et pages claires pour le syndic et la gestion locative.",
+    context:
+      "CAPITAL IMMOBILIER est une agence réelle de Saint-Raphaël. NEXWORKS AGENCY a imaginé une refonte complète de son site à partir de ses informations publiques : un design noir, blanc et rouge, de grandes animations au défilement et un parcours simple pour acheter, louer, vendre ou confier un bien.",
+    goals: [
+      "Trouver un bien en quelques clics, sur téléphone comme sur ordinateur",
+      "Expliquer clairement les métiers de l'agence, dont le syndic et la gestion d'ASL et d'ASA",
+      "Faciliter les demandes : estimation, visite, proposition de syndic",
+      "Rester honnête : aucun faux avis, aucun chiffre inventé, formulaires qui disent s'ils sont reliés",
+    ],
+    pages: ["Accueil", "Annonces", "Fiche d'un bien", "Acheter", "Louer", "Vendre", "Estimation", "Gestion locative", "Syndic", "ASL et ASA", "Secteurs", "Conseils", "Questions", "L'agence", "Contact"],
+    features: [
+      "Recherche et filtres avec nombre de résultats mis à jour en direct",
+      "Fiches complètes avec galerie, caractéristiques, DPE, favoris et biens similaires",
+      "Estimation en quatre étapes, avec l'adresse précise du bien",
+      "Ouverture animée avec le logo et bandeau de cookies avec un vrai choix",
+      "Animations au défilement, adaptées aux réglages de mouvement réduit",
+      "Données structurées et redirections prêtes en cas de mise en ligne",
+    ],
+    highlights: ["Catalogue filtrable", "Estimation guidée", "Grandes animations"],
+    demoUrl: env(process.env.NEXT_PUBLIC_DEMO_CAPITAL_URL),
+    tags: ["Agence immobilière", "Syndic", "Next.js", "Saint-Raphaël"],
+    alt: "Concept de refonte CAPITAL IMMOBILIER : grand titre « Votre prochain chapitre commence ici. » sur une photo du massif de l'Estérel",
+  },
 ];
 
 export const projectCategories = [

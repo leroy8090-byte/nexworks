@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-b from-ink-3 to-ink-2 p-5 sm:p-10 lg:p-14">
               <div className="bg-dots pointer-events-none absolute inset-0 opacity-40" aria-hidden />
               <div className="relative mx-auto max-w-[900px]">
-                <ProjectMockup images={p.images} label={p.alt} url={`${p.name} · site de démonstration`} />
+                <ProjectMockup images={p.images} label={p.alt} url={`${p.name} · ${p.concept ? "concept de refonte" : "site de démonstration"}`} />
               </div>
               <p className="relative mt-4 text-center text-xs text-mist/70">Aperçu animé : la page défile sur ordinateur et sur téléphone.</p>
             </div>

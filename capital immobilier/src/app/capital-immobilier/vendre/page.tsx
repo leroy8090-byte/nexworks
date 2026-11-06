@@ -35,20 +35,20 @@ export default function Vendre() {
         <p>Un prix juste dépend de l&apos;emplacement, de l&apos;état du bien et du marché du moment. Une agence installée à Saint-Raphaël sait lire ces paramètres secteur par secteur.</p>
         <p>
           Votre bien est dans un autre secteur ? Consultez nos pages{" "}
-          <Link href={`${b}/secteurs/frejus`} className="font-semibold text-[#183B50] underline underline-offset-4">
+          <Link href={`${b}/secteurs/frejus`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
             Fréjus
           </Link>
           ,{" "}
-          <Link href={`${b}/secteurs/antheor`} className="font-semibold text-[#183B50] underline underline-offset-4">
+          <Link href={`${b}/secteurs/antheor`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
             Anthéor
           </Link>{" "}
           ou{" "}
-          <Link href={`${b}/secteurs/saint-raphael`} className="font-semibold text-[#183B50] underline underline-offset-4">
+          <Link href={`${b}/secteurs/saint-raphael`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
             Saint-Raphaël
           </Link>
           .
         </p>
-        <p className="text-[14.5px] text-[#252A2D]/60">Les honoraires de l&apos;agence ne sont pas détaillés ici : ils sont à consulter auprès de l&apos;agence.</p>
+        <p className="text-[14.5px] text-[#1F2D33]/60">Les honoraires de l&apos;agence ne sont pas détaillés ici : ils sont à consulter auprès de l&apos;agence.</p>
       </Split>
       <CtaBand
         title="Prêt à en parler ?"

@@ -24,10 +24,10 @@ export default function Mentions() {
       <PageIntro eyebrow="Informations" title="Mentions légales." />
       <section className="py-14 sm:py-20">
         <Wrap>
-          <dl className="max-w-3xl border-t border-[#183B50]/20">
+          <dl className="max-w-3xl border-t border-[#0E4F68]/20">
             {rows.map(([k, v]) => (
-              <div key={k} className="grid gap-1 border-b border-[#183B50]/20 py-5 sm:grid-cols-[14rem_1fr] sm:gap-6">
-                <dt className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#183B50]/70">{k}</dt>
+              <div key={k} className="grid gap-1 border-b border-[#0E4F68]/20 py-5 sm:grid-cols-[14rem_1fr] sm:gap-6">
+                <dt className="text-[13px] font-semibold uppercase tracking-[0.12em] text-[#0E4F68]/70">{k}</dt>
                 <dd className="text-[15.5px] leading-relaxed">{v}</dd>
               </div>
             ))}

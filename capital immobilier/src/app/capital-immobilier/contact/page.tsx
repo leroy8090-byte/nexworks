@@ -20,15 +20,15 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
             <h2 className={`${serif} text-[2rem]`}>Coordonnées de l&apos;agence</h2>
             <dl className="mt-8 space-y-6">
               <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#183B50]/70">Téléphone</dt>
+                <dt className="text-[14px] font-semibold text-[#0E4F68]">Téléphone</dt>
                 <dd className="mt-1">
-                  <a href={`tel:${capital.phoneHref}`} className={`${serif} text-[2rem] text-[#183B50] hover:underline`}>
+                  <a href={`tel:${capital.phoneHref}`} className={`${serif} text-[2rem] text-[#0E4F68] hover:underline`}>
                     {capital.phone}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#183B50]/70">Adresse</dt>
+                <dt className="text-[14px] font-semibold text-[#0E4F68]">Adresse</dt>
                 <dd className="mt-1 text-[16px]">
                   {capital.address.street}
                   <br />
@@ -36,7 +36,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                 </dd>
               </div>
               <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#183B50]/70">E-mail</dt>
+                <dt className="text-[14px] font-semibold text-[#0E4F68]">E-mail</dt>
                 <dd className="mt-1">
                   <a href={`mailto:${capital.email}`} className="break-all text-[16px] underline underline-offset-4">
                     {capital.email}
@@ -44,7 +44,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                 </dd>
               </div>
             </dl>
-            <p className="mt-8 text-[13.5px] leading-relaxed text-[#252A2D]/60">Site de test : le formulaire ci-contre arrive dans le logiciel NEXWORKS ESTATE, pas chez l&apos;agence. Pour joindre l&apos;agence, utilisez le téléphone ou l&apos;e-mail.</p>
+            <p className="mt-8 text-[13.5px] leading-relaxed text-[#1F2D33]/60">Site de test : le formulaire ci-contre arrive dans le logiciel NEXWORKS ESTATE, pas chez l&apos;agence. Pour joindre l&apos;agence, utilisez le téléphone ou l&apos;e-mail.</p>
           </div>
           <div className="bg-white p-7 shadow-[0_30px_70px_-45px_rgba(24,59,80,.4)] sm:p-10">
             <ContactForm bien={bien} reference={prop?.ref} idPrefix="contact" />

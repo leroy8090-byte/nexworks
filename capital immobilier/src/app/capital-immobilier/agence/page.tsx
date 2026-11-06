@@ -14,25 +14,25 @@ export default function Agence() {
       <Split eyebrow="Qui sommes-nous" title="Où et comment nous trouver." image="/capital-immobilier/agence.webp" alt="Salon lumineux devant un rideau de lin (photographie d'illustration)">
         <p>
           L&apos;agence se situe au {capital.address.street}, {capital.address.postalCode} {capital.address.city}. Vous pouvez la joindre au{" "}
-          <a href={`tel:${capital.phoneHref}`} className="font-semibold text-[#183B50] underline underline-offset-4">
+          <a href={`tel:${capital.phoneHref}`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
             {capital.phone}
           </a>{" "}
-          ou à <a href={`mailto:${capital.email}`} className="font-semibold text-[#183B50] underline underline-offset-4 break-all">{capital.email}</a>.
+          ou à <a href={`mailto:${capital.email}`} className="font-semibold text-[#0E4F68] underline underline-offset-4 break-all">{capital.email}</a>.
         </p>
         <p>
           Historique, équipe, horaires d&apos;ouverture : <ToComplete>à compléter par l&apos;agence</ToComplete>. Aucune date, aucun chiffre ni aucun nom n&apos;est affiché tant qu&apos;il n&apos;est pas confirmé.
         </p>
       </Split>
-      <section className="bg-[#E8E0D4]/55 py-20 sm:py-28">
+      <section className="bg-[#F0E4CE]/55 py-20 sm:py-28">
         <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-14">
           <h2 className="font-[family-name:var(--font-cap-serif)] text-[2.3rem] sm:text-[3rem]">Ses expertises</h2>
-          <ul className="mt-10 grid gap-x-10 border-t border-[#183B50]/20 md:grid-cols-2">
+          <ul className="mt-10 grid gap-x-10 border-t border-[#0E4F68]/20 md:grid-cols-2">
             {expertises.map((e) => (
-              <li key={e.title} className="border-b border-[#183B50]/20 py-5">
+              <li key={e.title} className="border-b border-[#0E4F68]/20 py-5">
                 <Link href={e.href} className="group flex items-baseline justify-between gap-4">
                   <span>
                     <span className="block font-[family-name:var(--font-cap-serif)] text-[1.5rem]">{e.title}</span>
-                    <span className="mt-1 block text-[14.5px] text-[#252A2D]/65">{e.text}</span>
+                    <span className="mt-1 block text-[14.5px] text-[#1F2D33]/65">{e.text}</span>
                   </span>
                   <span aria-hidden className="transition-transform group-hover:translate-x-1.5">
                     →

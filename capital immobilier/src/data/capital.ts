@@ -34,7 +34,7 @@ export const capitalNav = [
   { label: "Acheter", href: `${b}/acheter` },
   { label: "Louer", href: `${b}/louer` },
   { label: "Vendre", href: `${b}/vendre` },
-  { label: "Gestion immobilière", href: `${b}/gestion-immobiliere` },
+  { label: "Gestion", href: `${b}/gestion-immobiliere` },
   { label: "Estimation", href: `${b}/estimation` },
   { label: "L'agence", href: `${b}/agence` },
   { label: "Contact", href: `${b}/contact` },
@@ -234,7 +234,11 @@ export type Filters = {
   rooms?: number;
   surfaceMin?: number;
   sort?: string;
+  features?: string[];
 };
+
+/** Prestations proposées en filtres rapides. */
+export const FEATURE_CHIPS = ["Vue mer", "Piscine", "Jardin", "Terrasse", "Balcon", "Garage", "Ascenseur", "Climatisation"];
 
 export function filterProperties(all: Property[], f: Filters): Property[] {
   const list = all.filter(
@@ -244,7 +248,8 @@ export function filterProperties(all: Property[], f: Filters): Property[] {
       (!f.commune || isSameCommune(p.commune, f.commune)) &&
       (!f.budgetMax || (p.price != null && p.price <= f.budgetMax)) &&
       (!f.rooms || (p.rooms != null && p.rooms >= f.rooms)) &&
-      (!f.surfaceMin || (p.surface != null && p.surface >= f.surfaceMin)),
+      (!f.surfaceMin || (p.surface != null && p.surface >= f.surfaceMin)) &&
+      (!f.features?.length || f.features.every((x) => p.features.includes(x))),
   );
   const price = (p: Property) => p.price ?? 0;
   if (f.sort === "prix-asc") list.sort((a, b) => price(a) - price(b));

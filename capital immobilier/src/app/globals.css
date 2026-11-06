@@ -13,6 +13,46 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Arrivée du contenu en CSS : le texte s'affiche sans attendre le JavaScript. */
+@keyframes cap-rise { from { opacity: 0; transform: translateY(22px); } }
+.cap-rise { animation: cap-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes cap-title { from { opacity: 0; transform: translateY(0.35em); clip-path: inset(0 0 100% 0); } to { clip-path: inset(-10% -5% -15% -5%); } }
+.cap-title { animation: cap-title 1100ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes cap-zoom { from { transform: scale(1.1); } }
+.cap-zoom { animation: cap-zoom 2800ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes cap-page { from { opacity: 0; } }
+.cap-page { animation: cap-page 450ms ease-out backwards; }
+
+/* Les arches montent à leur place */
+@keyframes cap-arch { from { opacity: 0; transform: translateY(60px); clip-path: inset(30% 0 0 0 round 999px 999px 0 0); } }
+.cap-arch { animation: cap-arch 1200ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.cap-arch:nth-child(1) { animation-delay: 150ms; }
+.cap-arch:nth-child(2) { animation-delay: 300ms; }
+.cap-arch:nth-child(3) { animation-delay: 450ms; }
+
+/* Le soleil respire */
+@keyframes cap-sun { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; } }
+.cap-sun { animation: cap-sun 7s ease-in-out infinite; }
+
+/* La vague */
+@keyframes cap-wave { to { transform: translateX(-50%); } }
+.cap-wave { animation: cap-wave 16s linear infinite; }
+
+/* Sur téléphone, le choix de la langue passe au-dessus de la barre d'actions */
+@media (max-width: 639px) {
+  body:has(.cap-root) [data-demo-lang-ui] { bottom: 5rem !important; left: auto !important; right: 12px; }
+}
+
+/* Les communes défilent */
+@keyframes cap-marquee { to { transform: translateX(-50%); } }
+.cap-marquee { animation: cap-marquee 46s linear infinite; }
+.cap-marquee:hover { animation-play-state: paused; }
+
+/* Une réponse s'ouvre en douceur */
+.cap-faq::details-content { block-size: 0; overflow: clip; transition: block-size 350ms ease, content-visibility 350ms allow-discrete; }
+.cap-faq[open]::details-content { block-size: auto; }
+@supports (interpolate-size: allow-keywords) { .cap-faq { interpolate-size: allow-keywords; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

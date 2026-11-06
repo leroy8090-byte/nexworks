@@ -10,8 +10,8 @@ import { capital, communeNames, propertyTypeLabel } from "@/data/capital";
  */
 
 const input =
-  "w-full rounded-none border-0 border-b border-[#183B50]/25 bg-transparent px-0 py-3 text-[15px] text-[#252A2D] outline-none transition-colors placeholder:text-[#252A2D]/40 focus:border-[#183B50]";
-const labelCls = "block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#183B50]/70";
+  "w-full rounded-none border-0 border-b border-[#0E4F68]/25 bg-transparent px-0 py-3 text-[15px] text-[#1F2D33] outline-none transition-colors placeholder:text-[#1F2D33]/40 focus:border-[#0E4F68]";
+const labelCls = "block text-[14px] font-semibold text-[#0E4F68]";
 
 type Errors = Record<string, string>;
 
@@ -23,7 +23,7 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
       </label>
       {children}
       {error && (
-        <p id={`${id}-err`} role="alert" className="mt-1.5 text-[12.5px] text-[#9a3b2e]">
+        <p id={`${id}-err`} role="alert" className="mt-1.5 text-[12.5px] text-[#A32E1A]">
           {error}
         </p>
       )}
@@ -48,12 +48,12 @@ const str = (d: FormData, k: string) => String(d.get(k) ?? "").trim();
 
 function Success({ title, onReset }: { title: string; onReset: () => void }) {
   return (
-    <div role="status" className="border border-[#183B50]/30 bg-[#F8F7F3] p-8">
-      <p className="font-[family-name:var(--font-cap-serif)] text-[1.9rem] leading-tight text-[#252A2D]">{title}</p>
-      <p className="mt-3 text-[15px] leading-relaxed text-[#252A2D]/70">
+    <div role="status" className="border border-[#0E4F68]/30 bg-[#FBF7EE] p-8">
+      <p className="font-[family-name:var(--font-cap-serif)] text-[1.9rem] leading-tight text-[#1F2D33]">{title}</p>
+      <p className="mt-3 text-[15px] leading-relaxed text-[#1F2D33]/70">
         Votre demande est enregistrée dans le logiciel de test NEXWORKS ESTATE. Pour joindre l&apos;agence elle-même, utilisez ses coordonnées réelles.
       </p>
-      <button type="button" onClick={onReset} className="mt-6 text-[13px] font-semibold text-[#183B50] underline underline-offset-4">
+      <button type="button" onClick={onReset} className="mt-6 text-[13px] font-semibold text-[#0E4F68] underline underline-offset-4">
         Remplir à nouveau
       </button>
     </div>
@@ -62,7 +62,7 @@ function Success({ title, onReset }: { title: string; onReset: () => void }) {
 
 function SendError() {
   return (
-    <p role="alert" className="text-[13.5px] leading-relaxed text-[#9a3b2e]">
+    <p role="alert" className="text-[13.5px] leading-relaxed text-[#A32E1A]">
       L&apos;envoi a échoué. Réessayez, ou appelez l&apos;agence au {capital.phone}.
     </p>
   );
@@ -111,12 +111,12 @@ const consentText = "Site de test : j'accepte que ma demande soit enregistrée d
 function Consent({ error }: { error?: string }) {
   return (
     <div>
-      <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#252A2D]/70">
-        <input type="checkbox" name="consent" id="consent" className="mt-1 size-4 accent-[#183B50]" />
+      <label className="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#1F2D33]/70">
+        <input type="checkbox" name="consent" id="consent" className="mt-1 size-4 accent-[#0E4F68]" />
         {consentText}
       </label>
       {error && (
-        <p role="alert" className="mt-1.5 text-[12.5px] text-[#9a3b2e]">
+        <p role="alert" className="mt-1.5 text-[12.5px] text-[#A32E1A]">
           {error}
         </p>
       )}
@@ -129,7 +129,7 @@ function Submit({ pending, children }: { pending: boolean; children: ReactNode }
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex items-center justify-center rounded-full bg-[#183B50] px-8 py-4 text-[13.5px] font-semibold text-[#F8F7F3] transition-colors hover:bg-[#252A2D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#183B50] disabled:opacity-60"
+      className="inline-flex items-center justify-center rounded-full bg-[#0E4F68] px-8 py-4 text-[13.5px] font-semibold text-[#FBF7EE] transition-colors hover:bg-[#1F2D33] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0E4F68] disabled:opacity-60"
     >
       {pending ? "Envoi…" : children}
     </button>

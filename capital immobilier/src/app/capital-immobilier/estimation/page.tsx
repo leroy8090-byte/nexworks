@@ -15,14 +15,14 @@ export default function Estimation() {
             <EstimateForm />
           </div>
           <div>
-            <div className="relative aspect-[4/3] overflow-hidden bg-[#E8E0D4]">
+            <div className="relative aspect-[4/3] overflow-hidden bg-[#F0E4CE]">
               <Image src="/capital-immobilier/villa-pool.webp" alt="Villa contemporaine face à sa piscine (photographie d'illustration)" fill sizes="(min-width:1024px) 35vw, 100vw" className="object-cover" />
             </div>
             <h2 className={`${serif} mt-8 text-[1.9rem] leading-tight`}>Pour préparer l&apos;échange</h2>
-            <ul className="mt-5 space-y-3 text-[15.5px] leading-relaxed text-[#252A2D]/72">
+            <ul className="mt-5 space-y-3 text-[15.5px] leading-relaxed text-[#1F2D33]/72">
               {["Adresse ou quartier du bien", "Type de bien, surface approximative, nombre de pièces", "Travaux récents ou à prévoir", "Votre calendrier et vos attentes"].map((t) => (
                 <li key={t} className="flex gap-3">
-                  <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-[#183B50]" />
+                  <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-[#0E4F68]" />
                   {t}
                 </li>
               ))}

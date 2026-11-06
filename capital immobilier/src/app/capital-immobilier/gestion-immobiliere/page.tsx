@@ -27,7 +27,7 @@ export default function Gestion() {
         </p>
         <p>
           La gestion des immeubles passe aussi par le{" "}
-          <Link href={`${b}/gestion-copropriete`} className="font-semibold text-[#183B50] underline underline-offset-4">
+          <Link href={`${b}/gestion-copropriete`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
             syndic de copropriété
           </Link>
           , autre expertise de l&apos;agence.
@@ -35,9 +35,9 @@ export default function Gestion() {
       </Split>
       <Split eyebrow="Propriétaires bailleurs" title="Vous cherchez à louer ou à faire gérer ?">
         <p>
-          Parcourez nos <Link href={`${b}/louer`} className="font-semibold text-[#183B50] underline underline-offset-4">annonces de location</Link>, ou contactez l&apos;agence pour étudier la gestion de votre bien à Saint-Raphaël ou dans les communes voisines.
+          Parcourez nos <Link href={`${b}/louer`} className="font-semibold text-[#0E4F68] underline underline-offset-4">annonces de location</Link>, ou contactez l&apos;agence pour étudier la gestion de votre bien à Saint-Raphaël ou dans les communes voisines.
         </p>
-        <p className="text-[14.5px] text-[#252A2D]/60">Honoraires de gestion : à consulter auprès de l&apos;agence.</p>
+        <p className="text-[14.5px] text-[#1F2D33]/60">Honoraires de gestion : à consulter auprès de l&apos;agence.</p>
       </Split>
       <CtaBand title="Confiez-nous la gestion de votre bien." primary={{ label: "Contacter l'agence", href: `${b}/contact` }} secondary={{ label: "Voir les locations", href: `${b}/louer` }} />
     </>

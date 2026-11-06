@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { capital, communes, formatEuro, formatPrice, isSameCommune, roomsSummary, similarProperties, videoEmbedUrl } from "@/data/capital";
 import { ContactForm } from "@/components/capital/Forms";
-import { PropertyCard } from "@/components/capital/PropertyCard";
+import { HeartButton, PropertyCard } from "@/components/capital/PropertyCard";
 import { PropertyGallery } from "@/components/capital/PropertyGallery";
 import { breadcrumbLd, capitalMeta } from "@/components/capital/seo";
 import { CapButton, DemoNotice, JsonLdScript, Reveal, serif, Wrap } from "@/components/capital/ui";
@@ -51,39 +51,40 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
         ])}
       />
       <Wrap className="pt-8">
-        <nav aria-label="Fil d'Ariane" className="text-[13px] text-[#252A2D]/65">
+        <nav aria-label="Fil d'Ariane" className="text-[13px] text-[#1F2D33]/65">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href={capital.basePath} className="hover:text-[#183B50]">
+              <Link href={capital.basePath} className="hover:text-[#0E4F68]">
                 Accueil
               </Link>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href={`${capital.basePath}/${p.transaction === "vente" ? "acheter" : "louer"}`} className="hover:text-[#183B50]">
+              <Link href={`${capital.basePath}/${p.transaction === "vente" ? "acheter" : "louer"}`} className="hover:text-[#0E4F68]">
                 {p.transaction === "vente" ? "Acheter" : "Louer"}
               </Link>
             </li>
             <li aria-hidden>/</li>
-            <li aria-current="page" className="text-[#252A2D]">
+            <li aria-current="page" className="text-[#1F2D33]">
               {p.title}
             </li>
           </ol>
         </nav>
         <DemoNotice className="mt-5" />
+        <div className="mt-6">
+          {p.images.length > 0 ? (
+            <PropertyGallery images={p.images} title={`${p.title} à ${p.commune}`} />
+          ) : (
+            <div className="grid aspect-[16/10] place-items-center rounded-t-[8rem] bg-[#F0E4CE] text-[14px] text-[#0E4F68]/60">Photos à venir</div>
+          )}
+        </div>
       </Wrap>
 
       <Wrap className="grid gap-12 py-10 lg:grid-cols-[1.7fr_1fr] lg:gap-16 lg:py-14">
         <div>
-          {p.images.length > 0 ? (
-            <PropertyGallery images={p.images} title={`${p.title} à ${p.commune}`} />
-          ) : (
-            <div className="grid aspect-[16/10] place-items-center bg-[#E8E0D4] text-[14px] text-[#183B50]/60">Photos à venir</div>
-          )}
-
-          <Reveal className="mt-14">
+          <Reveal>
             <h2 className={`${serif} text-[2.2rem] leading-tight`}>À propos de ce bien</h2>
-            <div className="mt-5 space-y-5 text-[16.5px] leading-[1.9] text-[#252A2D]/72">
+            <div className="mt-5 space-y-5 text-[16.5px] leading-[1.9] text-[#1F2D33]/72">
               {p.description.map((d) => (
                 <p key={d} className="whitespace-pre-line">{d}</p>
               ))}
@@ -92,10 +93,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
 
           <Reveal className="mt-14">
             <h2 className={`${serif} text-[2.2rem] leading-tight`}>Caractéristiques</h2>
-            <dl className="mt-6 grid border-t border-[#183B50]/20 sm:grid-cols-2 sm:gap-x-10">
+            <dl className="mt-6 grid border-t border-[#0E4F68]/20 sm:grid-cols-2 sm:gap-x-10">
               {facts.map(([k, v]) => (
-                <div key={k} className="flex items-baseline justify-between border-b border-[#183B50]/20 py-4">
-                  <dt className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#183B50]/70">{k}</dt>
+                <div key={k} className="flex items-baseline justify-between border-b border-[#0E4F68]/20 py-4">
+                  <dt className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#0E4F68]/70">{k}</dt>
                   <dd className="text-[16px]">{v}</dd>
                 </div>
               ))}
@@ -103,7 +104,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             {p.features.length > 0 && (
               <ul className="mt-8 flex flex-wrap gap-2.5" aria-label="Prestations">
                 {p.features.map((f) => (
-                  <li key={f} className="rounded-full border border-[#183B50]/25 px-4 py-2 text-[14px] text-[#183B50]">
+                  <li key={f} className="rounded-full border border-[#0E4F68]/25 px-4 py-2 text-[14px] text-[#0E4F68]">
                     {f}
                   </li>
                 ))}
@@ -118,7 +119,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
                 {p.videos.map((v, i) => {
                   const embed = videoEmbedUrl(v);
                   return embed ? (
-                    <div key={v} className="relative aspect-[16/9] overflow-hidden bg-[#183B50]">
+                    <div key={v} className="relative aspect-[16/9] overflow-hidden bg-[#0E4F68]">
                       <iframe
                         src={embed}
                         title={`Vidéo ${i + 1} : ${p.title}`}
@@ -129,7 +130,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
                       />
                     </div>
                   ) : (
-                    <a key={v} href={v} target="_blank" rel="noopener noreferrer" className="block font-semibold text-[#183B50] underline underline-offset-4">
+                    <a key={v} href={v} target="_blank" rel="noopener noreferrer" className="block font-semibold text-[#0E4F68] underline underline-offset-4">
                       Voir la vidéo {p.videos.length > 1 ? i + 1 : ""}
                     </a>
                   );
@@ -139,9 +140,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
           )}
 
           <Reveal className="mt-14">
-            <div className="border border-[#E8E0D4] bg-white p-6">
-              <h2 className="cap-label text-[13px] font-semibold uppercase tracking-[0.16em] text-[#183B50]/70">Performance énergétique</h2>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#252A2D]/72">
+            <div className="border border-[#F0E4CE] bg-white p-6">
+              <h2 className="cap-label text-[13px] font-semibold uppercase tracking-[0.16em] text-[#0E4F68]/70">Performance énergétique</h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#1F2D33]/72">
                 {p.dpe || p.ges ? (
                   <>
                     {p.dpe && <>DPE : <strong className="font-semibold">{p.dpe === "NC" ? "non concerné" : p.dpe}</strong></>}
@@ -157,18 +158,18 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
 
           <Reveal className="mt-14">
             <h2 className={`${serif} text-[2.2rem] leading-tight`}>Localisation</h2>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#252A2D]/72">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#1F2D33]/72">
               {p.address ? `${p.address}, ${p.commune}` : `${p.commune}. L'adresse exacte est communiquée par l'agence.`}
             </p>
-            <div className="relative mt-5 aspect-[16/10] overflow-hidden border border-[#E8E0D4] bg-[#E8E0D4]">
+            <div className="relative mt-5 aspect-[16/10] overflow-hidden border border-[#F0E4CE] bg-[#F0E4CE]">
               <iframe src={mapSrc} title={`Carte : ${p.title}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 size-full border-0" />
             </div>
             <p className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-[14px]">
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#183B50] underline underline-offset-4">
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0E4F68] underline underline-offset-4">
                 Ouvrir dans Google Maps
               </a>
               {commune && (
-                <Link href={`${capital.basePath}/secteurs/${commune.slug}`} className="font-semibold text-[#183B50] underline underline-offset-4">
+                <Link href={`${capital.basePath}/secteurs/${commune.slug}`} className="font-semibold text-[#0E4F68] underline underline-offset-4">
                   Immobilier à {commune.name}
                 </Link>
               )}
@@ -177,15 +178,16 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
         </div>
 
         <aside className="lg:sticky lg:top-36 lg:self-start" aria-label="Prix et contact">
-          <div className="border border-[#E8E0D4] bg-white p-7 sm:p-8">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-[#183B50]">
+          <div className="relative rounded-[2rem] bg-white p-7 shadow-[0_24px_60px_-34px_rgba(11,58,76,.5)] sm:p-8">
+            <HeartButton reference={p.ref} title={p.title} className="absolute right-5 top-5 border border-[#F0E4CE]" />
+            <p className="pr-12 text-[15px] font-semibold text-[#0E4F68]">
               {p.commune} · {p.transaction === "vente" ? "À vendre" : "À louer"}
             </p>
-            <h1 className={`${serif} mt-3 text-[2.3rem] leading-[1.08]`}>{p.title}</h1>
-            <p className={`${serif} mt-6 text-[2.4rem] text-[#183B50]`}>{formatPrice(p)}</p>
-            {p.transaction === "location" && <p className="mt-1 text-[12.5px] text-[#252A2D]/60">Loyer hors charges.</p>}
+            <h1 className={`${serif} mt-2 text-[2.4rem] leading-[1.05]`}>{p.title}</h1>
+            <p className={`${serif} mt-5 text-[2.5rem] leading-none text-[#B94F33]`}>{formatPrice(p)}</p>
+            {p.transaction === "location" && <p className="mt-1 text-[12.5px] text-[#1F2D33]/60">Loyer hors charges.</p>}
             {(p.fees != null || p.feesNote) && (
-              <p className="mt-1 text-[12.5px] text-[#252A2D]/60">
+              <p className="mt-1 text-[12.5px] text-[#1F2D33]/60">
                 Honoraires{p.fees != null ? ` : ${formatEuro(p.fees)}` : ""}
                 {p.feesNote ? ` (${p.feesNote})` : ""}
               </p>
@@ -200,13 +202,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
         </aside>
       </Wrap>
 
-      <section id="contact-bien" className="scroll-mt-32 bg-[#E8E0D4]/55 py-20">
+      <section id="contact-bien" className="scroll-mt-32 bg-[#F5ECDA] py-20">
         <Wrap className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>
             <h2 className={`${serif} text-[2.4rem] leading-tight`}>Ce bien vous intéresse ?</h2>
-            <p className="mt-4 max-w-md text-[16px] leading-[1.8] text-[#252A2D]/70">Laissez-nous vos coordonnées et vos disponibilités : le message est pré-rempli avec la référence du bien.</p>
+            <p className="mt-4 max-w-md text-[16px] leading-[1.8] text-[#1F2D33]/70">Laissez-nous vos coordonnées et vos disponibilités : le message est pré-rempli avec la référence du bien.</p>
           </div>
-          <div className="bg-white p-7 sm:p-10">
+          <div className="rounded-[2rem] bg-white p-7 sm:p-10">
             <ContactForm bien={bien} reference={p.ref} idPrefix="bien" />
           </div>
         </Wrap>

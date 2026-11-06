@@ -1,6 +1,6 @@
 import { CapitalLanguage } from "@/components/demo-i18n/sites";
 import type { Metadata } from "next";
-import { Figtree, Newsreader } from "next/font/google";
+import { DM_Serif_Display, Figtree } from "next/font/google";
 import { capital } from "@/data/capital";
 import { EstateTracker } from "@/components/capital/EstateTracker";
 import { CapitalShell } from "@/components/capital/Shell";
@@ -8,7 +8,7 @@ import { agencyJsonLd } from "@/components/capital/seo";
 import { JsonLdScript } from "@/components/capital/ui";
 import { getAgencySocials } from "@/lib/capital-properties";
 
-const serif = Newsreader({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-cap-serif", display: "swap" });
+const serif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--font-cap-serif", display: "swap" });
 const sans = Figtree({ subsets: ["latin"], variable: "--font-cap-sans", display: "swap" });
 
 export const metadata: Metadata = {

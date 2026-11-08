@@ -8,7 +8,8 @@ export const standalonePrefixes = ["/azur-plomberie", "/maison-riviera", "/volt-
 
 export function useIsStandalone() {
   const pathname = usePathname() || "";
-  return standalonePrefixes.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  // Les animations du laboratoire se jouent aussi en plein écran (la page /animations, elle, garde le site autour)
+  return standalonePrefixes.some((p) => pathname === p || pathname.startsWith(`${p}/`)) || pathname.startsWith("/animations/");
 }
 
 export function HideOnDemo({ children }: { children: ReactNode }) {

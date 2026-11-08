@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getServicePage, servicePagePath, servicePages } from "@/data/service-pages";
 import { getService, services } from "@/data/services";
 import { breadcrumbJsonLd, buildMetadata, faqJsonLd, serviceJsonLd } from "@/lib/seo";
+import { AnimationShowcase } from "@/components/animations/AnimationShowcase";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
@@ -78,6 +79,9 @@ export default async function ServicePageView({ params }: { params: Promise<Para
           </div>
         </Container>
       </section>
+
+      {/* Design & UX/UI : les types d'animation d'entrée, à lancer en plein écran */}
+      {page.id === "design-ux" && <AnimationShowcase />}
 
       <section className="paper relative z-10 rounded-t-[2rem] pb-20 pt-20 sm:rounded-t-[3rem] sm:pb-28 sm:pt-28">
         <Container className="space-y-16 sm:space-y-24">

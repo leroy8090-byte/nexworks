@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import type { NextConfig } from "next";
 
@@ -7,9 +7,9 @@ const snapshot = JSON.parse(readFileSync("src/data/listings.snapshot.json", "utf
 const go = (source: string, destination: string) => ({ source, destination, statusCode: 301 as const });
 
 const nextConfig: NextConfig = {
-  // En local, ce projet réutilise les dépendances du dossier parent : la racine doit les inclure.
-  // Pour le déployer seul : retirer cette ligne et lancer npm install dans ce dossier.
-  turbopack: { root: path.resolve("..") },
+  // En local, ce projet peut réutiliser les dépendances du dossier parent : la racine doit alors les inclure.
+  // Déployé seul, avec ses propres dépendances, il n'a besoin de rien.
+  ...(existsSync("node_modules/next") ? {} : { turbopack: { root: path.resolve("..") } }),
   reactStrictMode: true,
   poweredByHeader: false,
   experimental: { turbopackFileSystemCacheForDev: false },

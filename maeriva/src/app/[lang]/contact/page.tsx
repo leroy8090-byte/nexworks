@@ -11,13 +11,13 @@ type Props = { params: Promise<{ lang: string }> };
 const C = {
   fr: {
     title: "Contact et rendez-vous", description: "Prendre rendez-vous avec MAÉRIVA pour acheter, vendre ou louer une propriété dans le golfe de Saint-Tropez.",
-    kicker: "Contact", h1: "Prendre rendez-vous.", text: "Un projet d'achat, une maison à vendre, une location pour l'été : écrivez-nous, un conseiller vous répond personnellement.",
+    kicker: "Contact", h1: "Prendre *rendez-vous.*", text: "Un projet d'achat, une maison à vendre, une location pour l'été : écrivez-nous, un conseiller vous répond personnellement.",
     alt: "Les façades colorées du port de Saint-Tropez", reach: "Nous joindre", listening: "À votre écoute.", phone: "Téléphone", office: "Agence", visits: "Les visites se font uniquement sur rendez-vous.",
     submit: "Envoyer", project: "Votre projet", projects: ["Acheter une propriété", "Vendre ou faire estimer", "Location saisonnière", "Gestion d'une maison", "Autre demande"],
   },
   en: {
     title: "Contact and appointments", description: "Book an appointment with MAÉRIVA to buy, sell or rent a property on the Gulf of Saint-Tropez.",
-    kicker: "Contact", h1: "Book an appointment.", text: "A purchase, a home to sell, a summer rental: write to us and an advisor will reply to you personally.",
+    kicker: "Contact", h1: "Book an *appointment.*", text: "A purchase, a home to sell, a summer rental: write to us and an advisor will reply to you personally.",
     alt: "The colourful façades of the harbour of Saint-Tropez", reach: "Get in touch", listening: "At your service.", phone: "Phone", office: "Agency", visits: "Viewings are by appointment only.",
     submit: "Send", project: "Your project", projects: ["Buying a property", "Selling or a valuation", "Seasonal rental", "Managing a home", "Other request"],
   },

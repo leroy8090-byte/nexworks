@@ -12,13 +12,13 @@ const C = {
   fr: {
     title: "Destinations : Saint-Tropez, Sainte-Maxime, Saint-Raphaël",
     description: "La presqu'île de Saint-Tropez avec Ramatuelle, Gassin et Grimaud, Sainte-Maxime face au golfe, Saint-Raphaël entre mer et Estérel : les quartiers, l'art de vivre et les biens disponibles.",
-    kicker: "Destinations", h1: "Le golfe, rivage par rivage.", text: "Chaque côté du golfe a son caractère : le village et ses ruelles, les collines face à la mer, les roches rouges de l'Estérel.",
+    kicker: "Destinations", h1: "Le golfe, *rivage par rivage.*", text: "Chaque côté du golfe a son caractère : le village et ses ruelles, les collines face à la mer, les roches rouges de l'Estérel.",
     alt: "Vue sur le golfe de Saint-Tropez depuis le village de Grimaud", discover: "Découvrir", one: "propriété", many: "propriétés",
   },
   en: {
     title: "Destinations: Saint-Tropez, Sainte-Maxime, Saint-Raphaël",
     description: "The Saint-Tropez peninsula with Ramatuelle, Gassin and Grimaud, Sainte-Maxime facing the gulf, Saint-Raphaël between sea and Estérel: the neighbourhoods, the lifestyle and the available properties.",
-    kicker: "Destinations", h1: "The gulf, shore by shore.", text: "Each side of the gulf has its own character: the village and its lanes, the hills facing the sea, the red rocks of the Estérel.",
+    kicker: "Destinations", h1: "The gulf, *shore by shore.*", text: "Each side of the gulf has its own character: the village and its lanes, the hills facing the sea, the red rocks of the Estérel.",
     alt: "View over the Gulf of Saint-Tropez from the village of Grimaud", discover: "Discover", one: "property", many: "properties",
   },
 };

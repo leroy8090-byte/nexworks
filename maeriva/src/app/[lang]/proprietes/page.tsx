@@ -11,13 +11,13 @@ const C = {
   fr: {
     title: "Propriétés à vendre et à louer, golfe de Saint-Tropez",
     description: "Villas avec vue mer, bastides, maisons de village et programmes neufs à Saint-Tropez, Ramatuelle, Gassin, Grimaud, Sainte-Maxime et Saint-Raphaël, à la vente ou en location saisonnière.",
-    kicker: "Propriétés", h1: "Les maisons du golfe.", text: "Une sélection de villas, bastides et maisons de village, à la vente ou pour l'été. Filtrez, comparez, mettez de côté celles qui vous parlent.",
+    kicker: "Propriétés", h1: "Les maisons *du golfe.*", text: "Une sélection de villas, bastides et maisons de village, à la vente ou pour l'été. Filtrez, comparez, mettez de côté celles qui vous parlent.",
     loading: "Chargement des propriétés…", ctaTitle: "Vous ne trouvez pas la maison idéale ?", ctaText: "Décrivez-nous votre projet : nous vous présentons aussi les biens qui ne sont jamais publiés.",
   },
   en: {
     title: "Properties for sale and rent, Gulf of Saint-Tropez",
     description: "Sea-view villas, bastides, village houses and new developments in Saint-Tropez, Ramatuelle, Gassin, Grimaud, Sainte-Maxime and Saint-Raphaël, for sale or for seasonal rental.",
-    kicker: "Properties", h1: "The homes of the gulf.", text: "A selection of villas, bastides and village houses, for sale or for the summer. Filter, compare, and keep the ones that speak to you.",
+    kicker: "Properties", h1: "The homes *of the gulf.*", text: "A selection of villas, bastides and village houses, for sale or for the summer. Filter, compare, and keep the ones that speak to you.",
     loading: "Loading properties…", ctaTitle: "Can't find the ideal home?", ctaText: "Tell us about your project: we will also present the properties that are never listed.",
   },
 };

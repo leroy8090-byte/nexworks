@@ -3,6 +3,7 @@ import Link from "next/link";
 import { agencyFor, destinationsFor } from "@/data/localized";
 import { LIVE } from "@/data/site";
 import { localePath, type Lang } from "@/i18n/config";
+import { BigWordmark } from "./BigWordmark";
 import { Icon } from "./ui";
 
 const T = {
@@ -54,6 +55,7 @@ export function Footer({ lang }: { lang: Lang }) {
             <p className="mt-1 text-[14.5px] text-muted">{agency.city}, {agency.region}</p>
           </div>
         </div>
+        <BigWordmark />
         <div className="flex flex-col gap-4 border-t border-line pt-8 text-[12.5px] text-muted md:flex-row md:items-center md:justify-between">
           <p>{LIVE ? `© ${new Date().getFullYear()} ${agency.name}` : t.demo}</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">

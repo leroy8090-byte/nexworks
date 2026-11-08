@@ -53,13 +53,24 @@ export function Header({ lang }: { lang: Lang }) {
   const nav = navFor(lang);
   const path = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => setOpen(false), [path]);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 20);
+    // L'en-tête s'efface quand on descend (au-delà du premier écran) et revient dès qu'on remonte.
+    let last = window.scrollY;
+    const on = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      if (Math.abs(y - last) > 6) { setHidden(y > last && y > 320); last = y; }
+    };
     on(); window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+  const hide = hidden && !open;
+  useEffect(() => {
+    if (hide) document.documentElement.dataset.header = "hidden"; else delete document.documentElement.dataset.header;
+  }, [hide]);
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
@@ -71,7 +82,7 @@ export function Header({ lang }: { lang: Lang }) {
   const active = (href: string) => current === href || current.startsWith(`${href}/`);
   const L = (p: string) => localePath(lang, p);
   return (
-    <div className="fixed inset-x-0 top-0 z-50">
+    <div className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${hide ? "-translate-y-full" : ""}`}>
       {!LIVE && <p className="bg-paper px-4 py-1.5 text-center text-[11px] leading-snug tracking-wide text-muted">{t.demo}</p>}
       <header className={`bg-white/95 backdrop-blur-md transition-shadow duration-300 ${scrolled || open ? "shadow-[0_1px_0_var(--color-line)]" : ""}`}>
         <div className={`mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 transition-[height] duration-300 sm:px-10 lg:px-16 ${scrolled ? "h-[68px]" : "h-[84px]"}`}>

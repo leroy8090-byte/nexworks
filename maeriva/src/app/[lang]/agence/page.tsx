@@ -11,7 +11,7 @@ type Props = { params: Promise<{ lang: string }> };
 const C = {
   fr: {
     title: "L'agence : notre approche de l'immobilier de prestige", description: "Discrétion, exigence, connaissance du golfe : l'approche de MAÉRIVA pour la vente, l'achat et la location saisonnière de maisons d'exception.",
-    kicker: "L'agence", h1: "Une maison discrète, pour des maisons rares.", text: "MAÉRIVA accompagne ceux qui achètent, vendent ou louent une maison d'exception dans le golfe de Saint-Tropez.",
+    kicker: "L'agence", h1: "Une maison discrète, pour des *maisons rares.*", text: "MAÉRIVA accompagne ceux qui achètent, vendent ou louent une maison d'exception dans le golfe de Saint-Tropez.",
     alt: "Les toits de Saint-Tropez et son clocher, face au golfe", approach: "Notre approche", approachTitle: "Comprendre ce qui fait la valeur d'une maison, ici.",
     p1: "Sur le golfe, deux maisons de même surface peuvent n'avoir rien en commun. L'exposition, le vent, la vue, le chemin jusqu'à la mer, le calme du quartier : ce sont ces détails qui font une propriété d'exception.",
     p2: "Nous présentons chaque maison avec ce regard, et nous recevons chaque acquéreur pour comprendre ce qu'il cherche vraiment, avant de lui proposer une visite.",
@@ -20,7 +20,7 @@ const C = {
   },
   en: {
     title: "The agency: our approach to luxury real estate", description: "Discretion, high standards, knowledge of the gulf: the MAÉRIVA approach to selling, buying and renting exceptional homes.",
-    kicker: "The agency", h1: "A discreet house, for rare homes.", text: "MAÉRIVA guides those who buy, sell or rent an exceptional home on the Gulf of Saint-Tropez.",
+    kicker: "The agency", h1: "A discreet house, for *rare homes.*", text: "MAÉRIVA guides those who buy, sell or rent an exceptional home on the Gulf of Saint-Tropez.",
     alt: "The rooftops of Saint-Tropez and its bell tower, facing the gulf", approach: "Our approach", approachTitle: "Understanding what gives a home its value, here.",
     p1: "On the gulf, two homes of the same size can have nothing in common. Exposure, wind, views, the path down to the sea, the calm of the neighbourhood: these are the details that make an exceptional property.",
     p2: "We present every home with this eye, and we meet every buyer to understand what they are really looking for, before suggesting a viewing.",

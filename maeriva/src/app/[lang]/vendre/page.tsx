@@ -11,7 +11,7 @@ const C = {
   fr: {
     title: "Vendre et estimer sa propriété dans le golfe de Saint-Tropez",
     description: "Estimation argumentée, présentation soignée, vente publique ou confidentielle : confiez la vente de votre villa ou de votre bastide à Saint-Tropez, Sainte-Maxime ou Saint-Raphaël.",
-    kicker: "Vendre avec Maériva", h1: "Une maison rare mérite une vente sur mesure.", text: "Chaque propriété a son histoire et ses acquéreurs. Nous préparons la vente comme on prépare une maison pour recevoir.",
+    kicker: "Vendre avec Maériva", h1: "Une maison rare mérite une vente *sur mesure.*", text: "Chaque propriété a son histoire et ses acquéreurs. Nous préparons la vente comme on prépare une maison pour recevoir.",
     alt: "Façade de bastide couverte de glycine", crumb: "Vendre", method: "Notre méthode", methodTitle: "Cinq étapes, un seul interlocuteur.", courtAlt: "Cour intérieure d'un mas provençal",
     steps: [
       { t: "L'estimation", d: "Une visite, puis un avis de valeur argumenté : les ventes comparables, l'exposition, la vue, l'état, le potentiel." },
@@ -27,12 +27,12 @@ const C = {
       { q: "Quels documents faut-il prévoir ?", a: "Le titre de propriété, les diagnostics obligatoires (dont le DPE), les taxes foncières, et pour une copropriété les documents du syndic. Nous vous aidons à les réunir." },
       { q: "Accompagnez-vous les vendeurs qui vivent à l'étranger ?", a: "Oui. Visites, suivi et échanges avec le notaire peuvent se faire à distance, avec des comptes rendus réguliers." },
     ],
-    faqTitle: "Vendre, en pratique.", ctaKicker: "Vente confidentielle", ctaTitle: "Parlons de votre maison, en toute discrétion.", ctaText: "Un premier échange, sans engagement, pour comprendre votre projet et vous présenter notre approche.",
+    faqTitle: "Vendre, en pratique.", ctaKicker: "Vente confidentielle", ctaTitle: "Parlons de votre maison, en toute *discrétion.*", ctaText: "Un premier échange, sans engagement, pour comprendre votre projet et vous présenter notre approche.",
   },
   en: {
     title: "Sell and value your property on the Gulf of Saint-Tropez",
     description: "A reasoned valuation, a careful presentation, a public or confidential sale: entrust the sale of your villa or bastide in Saint-Tropez, Sainte-Maxime or Saint-Raphaël.",
-    kicker: "Selling with Maériva", h1: "A rare home deserves a tailored sale.", text: "Every property has its own story and its own buyers. We prepare the sale the way one prepares a home to welcome guests.",
+    kicker: "Selling with Maériva", h1: "A rare home deserves a *tailored sale.*", text: "Every property has its own story and its own buyers. We prepare the sale the way one prepares a home to welcome guests.",
     alt: "Bastide façade covered in wisteria", crumb: "Sell", method: "Our method", methodTitle: "Five steps, a single point of contact.", courtAlt: "Inner courtyard of a Provençal farmhouse",
     steps: [
       { t: "The valuation", d: "A visit, then a reasoned valuation: comparable sales, exposure, views, condition, potential." },
@@ -48,7 +48,7 @@ const C = {
       { q: "Which documents should be prepared?", a: "The title deed, the mandatory surveys (including the DPE energy rating), property tax notices and, for a co-ownership, the managing agent's documents. We help you gather them." },
       { q: "Do you assist sellers who live abroad?", a: "Yes. Viewings, follow-up and exchanges with the notary can all be handled remotely, with regular reports." },
     ],
-    faqTitle: "Selling, in practice.", ctaKicker: "Confidential sale", ctaTitle: "Let's talk about your home, in complete discretion.", ctaText: "A first conversation, with no obligation, to understand your project and present our approach.",
+    faqTitle: "Selling, in practice.", ctaKicker: "Confidential sale", ctaTitle: "Let's talk about your home, in complete *discretion.*", ctaText: "A first conversation, with no obligation, to understand your project and present our approach.",
   },
 };
 

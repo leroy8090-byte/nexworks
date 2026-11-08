@@ -26,7 +26,7 @@ export function Featured({ lang }: { lang: Lang }) {
       </div>
       <AnimatePresence mode="wait">
         <m.ul key={tab} role="tabpanel" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.35, ease: EASE }} className="mt-12 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p, i) => <li key={p.slug}><PropertyCard p={p} lang={lang} eager={i < 3} /></li>)}
+          {list.map((p, i) => <m.li key={p.slug} initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 1, ease: EASE, delay: (i % 3) * 0.12 }}><PropertyCard p={p} lang={lang} eager={i < 3} /></m.li>)}
         </m.ul>
       </AnimatePresence>
     </>

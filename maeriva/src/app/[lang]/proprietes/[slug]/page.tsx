@@ -155,7 +155,7 @@ export default async function PropertyPage({ params }: Props) {
             <p className="mt-12 text-[12.5px] leading-relaxed text-muted">{c.fiction}</p>
           </div>
           <aside id="visite" className="scroll-mt-28 lg:col-span-5">
-            <div className="lg:sticky lg:top-28"><PropertyActions p={p} lang={lang} /></div>
+            <div className="under-header lg:sticky lg:top-28"><PropertyActions p={p} lang={lang} /></div>
           </aside>
         </Container>
       </section>

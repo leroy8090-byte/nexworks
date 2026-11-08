@@ -6,8 +6,8 @@ import { Photo } from "./Photo";
 import { SaveButton } from "./Selection";
 
 const T = {
-  fr: { rent: "Location saisonnière", newDev: "Programme neuf · perspective", land: "terrain", beds: "chambres", sea: "vue mer", in: "à" },
-  en: { rent: "Seasonal rental", newDev: "New development · rendering", land: "plot", beds: "bedrooms", sea: "sea view", in: "in" },
+  fr: { view: "Voir le bien", rent: "Location saisonnière", newDev: "Programme neuf · perspective", land: "terrain", beds: "chambres", sea: "vue mer", in: "à" },
+  en: { view: "View the property", rent: "Seasonal rental", newDev: "New development · rendering", land: "plot", beds: "bedrooms", sea: "sea view", in: "in" },
 };
 
 /**
@@ -22,8 +22,9 @@ export function PropertyCard({ p, lang, sizes = "(min-width:1024px) 33vw, (min-w
     <article className="group relative">
       <Link href={localePath(lang, `/proprietes/${p.slug}`)} className="block" aria-label={`${p.name}, ${typeLabel(p.type, lang).toLowerCase()} ${t.in} ${p.city}, ${price}`}>
         <div className={`relative overflow-hidden bg-paper ${tall ? "aspect-[4/5]" : "aspect-[4/3]"}`}>
-          <Photo src={p.images[0].src} alt={p.images[0].alt} fill sizes={sizes} loading={eager ? "eager" : undefined} className="object-cover transition-opacity duration-700 ease-out group-hover:opacity-0" />
-          <Photo src={second.src} alt="" fill sizes={sizes} loading={eager ? "eager" : undefined} className="object-cover opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100" />
+          <Photo src={p.images[0].src} alt={p.images[0].alt} fill sizes={sizes} loading={eager ? "eager" : undefined} className="object-cover transition-[opacity,transform] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-hover:opacity-0" />
+          <Photo src={second.src} alt="" fill sizes={sizes} loading={eager ? "eager" : undefined} className="object-cover opacity-0 transition-[opacity,transform] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-hover:opacity-100" />
+          <span aria-hidden className="absolute bottom-4 left-4 flex translate-y-3 items-center gap-2 bg-white px-4 py-2.5 text-[10.5px] font-medium tracking-[0.22em] text-ink uppercase opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">{t.view}<span className="text-[13px] tracking-normal">→</span></span>
           <span className="absolute top-4 left-4 bg-white px-3 py-1.5 text-[10px] font-medium tracking-[0.22em] text-ink uppercase">{p.transaction === "location" ? t.rent : p.render ? t.newDev : typeLabel(p.type, lang)}</span>
         </div>
         <p className="caps mt-5 text-[10px] text-pave-dark">{p.city} · {p.sector}</p>

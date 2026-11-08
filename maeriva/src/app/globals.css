@@ -23,7 +23,7 @@
   --font-sans: var(--font-mv-sans), system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; overflow-x: clip; -webkit-text-size-adjust: 100%; }
+html { scrollbar-gutter: stable; scroll-behavior: smooth; overflow-x: clip; -webkit-text-size-adjust: 100%; }
 body {
   overflow-x: clip;
   background: #ffffff;
@@ -44,6 +44,31 @@ h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -
 .kicker { display: inline-flex; align-items: center; gap: 0.9rem; font-size: 11px; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--color-pave-dark); }
 .kicker::before { content: ""; width: 2rem; height: 1px; background: var(--color-gold); }
 .caps { font-size: 11px; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; }
+/* Le filet doré se dessine quand le surtitre arrive à l'écran (seulement si le JavaScript tourne : sinon il reste visible) */
+.kicker::before { transform-origin: left; transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 120ms; }
+html.js .kicker:not([data-in])::before { transform: scaleX(0); }
+
+/* Italique éditoriale : quelques mots clés des titres, en Cormorant italique, couleur bronze */
+.accent { font-style: italic; color: #7d6538; font-weight: 400; }
+
+/* Mots qui montent hors d'un masque invisible */
+.word-mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+@keyframes word-up { from { transform: translateY(110%); } }
+.word-up { display: inline-block; animation: word-up 1100ms cubic-bezier(0.22, 1, 0.36, 1) backwards; animation-delay: var(--d, 0ms); }
+
+/* Photo de haut de page : un voile blanc se lève comme un rideau */
+@keyframes curtain { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+.curtain { transform-origin: top; animation: curtain 1150ms cubic-bezier(0.76, 0, 0.24, 1) 250ms both; }
+
+/* Boutons : un fond qui glisse de gauche à droite au survol, la flèche avance */
+.sweep { position: relative; isolation: isolate; overflow: hidden; }
+.sweep::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sweep, #7d6538); transform: scaleX(0); transform-origin: right; transition: transform 650ms cubic-bezier(0.76, 0, 0.24, 1); }
+.sweep:hover::before, .sweep:focus-visible::before { transform: scaleX(1); transform-origin: left; }
+
+/* En-tête qui s'efface quand on descend et revient quand on remonte ; les éléments collés suivent */
+.under-header { transition: top 500ms cubic-bezier(0.22, 1, 0.36, 1); }
+html[data-header="hidden"] .under-header { top: 1.5rem; }
+html[data-header="hidden"] .under-header-0 { top: 0; }
 
 /*
  * Mouvements : peu nombreux, courts, toujours au service de la lecture.
@@ -72,15 +97,25 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 select.field option { color: var(--color-ink); }
 textarea.field { resize: vertical; min-height: 7rem; }
 
-/* Introduction vidéo : décidée par le script du <head> ; la page ne défile pas pendant ce temps */
-html[data-intro="1"] { overflow: hidden; }
-/* Le voile noir couvre le site dès le premier affichage, avant même le JavaScript ; la vidéo vient par-dessus */
-html[data-intro="1"] body::before { content: ""; position: fixed; inset: 0; z-index: 99; background: #0b0b0c; }
-/* Les animations d'entrée de l'accueil attendent la fin de la vidéo : le titre et la photo apparaissent après l'intro, pas derrière */
-html[data-intro="1"] :is(.rise, .settle, .word-up) { animation-play-state: paused; }
-/* Le logo de l'en-tête reste caché pendant que celui de la vidéo vient prendre sa place */
-[data-logo] { transition: opacity 450ms ease; }
-html:is([data-intro="1"], [data-handoff="1"]) [data-logo] { opacity: 0; }
+/* Introduction « le golfe à travers le nom » : décidée par le script du <head> ; la page ne défile pas pendant ce temps */
+html[data-intro] { overflow: hidden; }
+/* Le blanc couvre le site dès le premier affichage, avant même le JavaScript ; l'introduction vient par-dessus */
+html[data-intro="1"] body::before { content: ""; position: fixed; inset: 0; z-index: 99; background: #fff; }
+/* Les animations d'entrée de l'accueil attendent : le titre apparaît quand la photo se range (data-intro="2"), la villa se pose à la toute fin */
+html[data-intro="1"] :is(.rise, .settle, .word-up, .curtain) { animation-play-state: paused; }
+html[data-intro="2"] .settle { animation-play-state: paused; }
+/* La photo de l'intro se range dans le cadre de l'accueil : le voile blanc de ce cadre n'a plus lieu d'être,
+   et la villa, déjà là sous la photo qui s'efface, se pose sans repartir du blanc */
+[data-intro-played] .curtain { display: none; }
+@keyframes settle-soft { from { transform: scale(1.06); } }
+[data-intro-played] .settle { animation-name: settle-soft; animation-duration: 1800ms; }
+/* Le nom : les lettres se resserrent et se remplissent de la photo, l'une après l'autre */
+.intro-word { font-size: min(15vw, 30vh); letter-spacing: 0.2em; margin-right: -0.2em; color: #000; transition: letter-spacing 1300ms cubic-bezier(0.22, 1, 0.36, 1), margin 1300ms cubic-bezier(0.22, 1, 0.36, 1); }
+.intro-word[data-on] { letter-spacing: 0.06em; margin-right: -0.06em; }
+.intro-letter { color: #fff; transform: translateY(0.14em); transition: color 900ms ease calc(var(--i) * 70ms), transform 900ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 70ms); }
+.intro-word[data-on] .intro-letter { color: #000; transform: none; }
+.intro-place { top: calc(50% + min(15vw, 30vh) * 0.6); }
+@media (max-width: 640px) { .intro-word { font-size: 18vw; } .intro-place { top: calc(50% + 18vw * 0.6); } }
 
 .no-bar { scrollbar-width: none; }
 .no-bar::-webkit-scrollbar { display: none; }

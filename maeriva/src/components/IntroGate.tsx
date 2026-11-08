@@ -2,126 +2,160 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { INTRO_PHOTO } from "@/lib/intro";
 
-type Phase = "off" | "loading" | "playing" | "handoff" | "leaving";
+type Phase = "off" | "ready" | "letters" | "zoom" | "settle" | "fade" | "leaving";
 
-/** Position du logo dans la dernière image de la vidéo, et sa découpe dans public/intro/intro-logo.png */
-// Mesurés dans la dernière image de chaque version (script d'encodage) : l'ordinateur reçoit l'image 1920 × 1080,
-// le téléphone un cadrage vertical 810 × 1080 pris dans la même image, donc plus net.
-const HD = { frame: { w: 1920, h: 1080 }, logo: { left: 725, top: 318, width: 432, height: 349 } };
-const MOBILE = { frame: { w: 810, h: 1080 }, logo: { left: 180, top: 325, width: 434, height: 350 } };
-const END_BG = "#f9f7f3"; // le blanc cassé de la dernière image
+const WORD = ["M", "A", "É", "R", "I", "V", "A"];
+const ZOOM_AT = 4; // le I : son fût plein sert de porte d'entrée dans la photo
+
+// Durées en millisecondes
+const T = { letters: 1350, zoom: 1100, settle: 950, fade: 600 };
+const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /**
- * L'introduction vidéo (3,4 s) : l'extérieur de l'agence, l'entrée, l'accueil, l'écran, puis le logo.
- * Fin enchaînée avec le site : le logo de la vidéo est remplacé par sa découpe exacte, la vidéo s'efface,
- * le logo remonte se fondre dans celui de l'en-tête, et la page d'accueil fait son entrée.
+ * Introduction « le golfe à travers le nom » (environ 4 s) :
+ * 1. sur fond blanc, les lettres de MAÉRIVA apparaissent et laissent voir la photo de Saint-Tropez à travers elles ;
+ * 2. le nom grandit en plongeant dans le I jusqu'à ce que la photo remplisse l'écran ;
+ * 3. la photo se range dans le cadre de la photo d'accueil pendant que le titre de la page apparaît ;
+ * 4. elle s'efface sur la photo de la villa, qui se pose.
+ *
+ * Tout en code (aucune vidéo) : net sur tous les écrans, léger sur téléphone.
+ * Effet de découpe : un calque blanc en mode « screen » ; le noir des lettres y devient transparent.
+ * Le zoom est recalculé à chaque image (pas de calque mis en cache) pour garder des bords nets.
  *
  * Jouée seulement à la première visite de l'accueil pendant la session (ou avec ?intro dans l'adresse),
  * jamais si le visiteur a demandé moins d'animations ou économise ses données : la décision est prise
- * avant l'affichage, dans le <head>, qui pose data-intro sur <html>.
- * Garde-fous : bouton « Passer », touche Échap, abandon si la lecture ne démarre pas vite.
+ * avant l'affichage, dans le <head>, qui pose data-intro sur <html> et précharge la photo.
+ * Garde-fous : bouton « Passer », touche Échap, abandon si la photo ou la police tardent.
  */
-export function IntroGate({ skipLabel }: { skipLabel: string }) {
-  const video = useRef<HTMLVideoElement>(null);
-  const logo = useRef<HTMLImageElement>(null);
+export function IntroGate({ skipLabel, place }: { skipLabel: string; place: string }) {
   const [phase, setPhase] = useState<Phase>("off");
-  const box = useRef(HD);
-  const finishRef = useRef<() => void>(() => {});
+  const photo = useRef<HTMLImageElement>(null);
+  const word = useRef<HTMLDivElement>(null);
+  const pivot = useRef<HTMLSpanElement>(null);
+  const veil = useRef<HTMLDivElement>(null);
+  const skipRef = useRef<() => void>(() => {});
 
   // 1. La décision du <head> : faut-il jouer l'introduction ?
   useEffect(() => {
-    if (document.documentElement.dataset.intro === "1") setPhase("loading");
+    if (document.documentElement.dataset.intro === "1") setPhase("ready");
   }, []);
 
-  // 2. La vidéo est à l'écran : on la lance.
+  // 2. Le déroulé
   const started = phase !== "off";
   useEffect(() => {
-    const v = video.current;
-    if (!started || !v) return;
+    const img = photo.current, w = word.current, iEl = pivot.current;
+    if (!started || !img || !w || !iEl) return;
     const root = document.documentElement;
     try { sessionStorage.setItem("maeriva:intro", "1"); } catch { /* stockage indisponible : rien de grave */ }
-    let done = false, alive = true;
+    let done = false, alive = true, raf = 0;
     const timers: number[] = [];
-    const later = (fn: () => void, ms: number) => timers.push(window.setTimeout(fn, ms));
-    const release = () => { delete root.dataset.intro; }; // la page reprend : défilement, animations d'entrée de l'accueil
+    const later = (fn: () => void, ms: number) => timers.push(window.setTimeout(() => alive && fn(), ms));
+    const finish = () => { delete root.dataset.intro; };
 
-    // Fin normale : passage de relais vers le site, avec le logo qui rejoint l'en-tête.
-    const handoff = () => {
-      if (done) return; done = true;
-      const img = logo.current, target = document.querySelector<HTMLElement>("[data-logo]");
-      if (!img || !target) { setPhase("leaving"); release(); later(() => alive && setPhase("off"), 650); return; }
-      // Le logo découpé se pose exactement sur celui de la dernière image (la vidéo couvre l'écran : object-fit cover).
-      const vw = window.innerWidth, vh = window.innerHeight;
-      const { frame: F, logo: L } = box.current;
-      const s = Math.max(vw / F.w, vh / F.h);
-      const ox = (vw - F.w * s) / 2, oy = (vh - F.h * s) / 2;
-      const from = { x: ox + L.left * s, y: oy + L.top * s, w: L.width * s, h: L.height * s };
-      const t = target.getBoundingClientRect();
-      const toH = t.height * 1.9, toW = toH * (L.width / L.height);
-      const to = { x: t.left + t.width * 0.18 - toW / 2, y: t.top + t.height / 2 - toH / 2, w: toW };
-      Object.assign(img.style, { left: `${from.x}px`, top: `${from.y}px`, width: `${from.w}px`, transform: "none", transition: "opacity 180ms ease", opacity: "1" });
-      root.dataset.handoff = "1"; // le logo de l'en-tête reste caché pendant le trajet
-      release();
-      setPhase("handoff");
-      // Trajet du logo vers l'en-tête, pendant que la vidéo s'efface
-      later(() => {
-        img.style.transition = "transform 1050ms cubic-bezier(0.65, 0, 0.25, 1), opacity 420ms ease 700ms";
-        img.style.transform = `translate(${to.x - from.x}px, ${to.y - from.y}px) scale(${to.w / from.w})`;
-        img.style.transformOrigin = "0 0";
-        img.style.opacity = "0";
-      }, 200);
-      later(() => { delete root.dataset.handoff; }, 960);   // le logo de l'en-tête apparaît sous le logo qui arrive
-      later(() => alive && setPhase("off"), 1400);
-    };
-    // Bouton « Passer » ou Échap : simple fondu, sans trajet du logo.
+    // Bouton « Passer », Échap ou contretemps : simple fondu, la page fait son entrée habituelle.
     const skip = () => {
       if (done) return; done = true;
-      release();
+      cancelAnimationFrame(raf);
+      finish();
       setPhase("leaving");
-      later(() => alive && setPhase("off"), 650);
+      later(() => setPhase("off"), 600);
     };
-    finishRef.current = skip;
+    skipRef.current = skip;
 
-    const mobile = window.matchMedia("(max-width: 820px)").matches;
-    box.current = mobile ? MOBILE : HD;
-    v.src = mobile ? "/intro/maeriva-intro-mobile.mp4" : "/intro/maeriva-intro.mp4";
-    const failsafe = window.setTimeout(skip, 4000);  // la lecture n'a pas démarré à temps
-    const hardStop = window.setTimeout(skip, 9000);  // quoi qu'il arrive, le site reprend la main
-    const onPlaying = () => { window.clearTimeout(failsafe); if (!done) setPhase("playing"); };
-    v.addEventListener("playing", onPlaying, { once: true });
-    v.addEventListener("ended", handoff);
-    v.addEventListener("error", skip);
-    v.play().catch(skip); // lecture automatique refusée par le navigateur : on passe directement au site
+    // Le zoom : le nom grandit autour du I, l'échelle progresse de façon exponentielle (vitesse perçue régulière).
+    const zoom = () => {
+      const r = w.getBoundingClientRect(), p = iEl.getBoundingClientRect();
+      const size = parseFloat(getComputedStyle(w).fontSize);
+      // centre du fût : la largeur de la lettre comprend l'espacement qui la suit (0,06 em)
+      const ox = p.left + (p.width - size * 0.06) / 2 - r.left, oy = p.top + p.height * 0.55 - r.top;
+      w.style.transformOrigin = `${ox}px ${oy}px`;
+      const stem = size * 0.03; // épaisseur du fût du I, comptée au plus juste : on va un peu plus loin que nécessaire
+      const max = (Math.hypot(window.innerWidth, window.innerHeight) * 1.25) / stem;
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - t0) / T.zoom);
+        w.style.transform = `scale(${Math.pow(max, ease(t))})`;
+        if (veil.current) veil.current.style.opacity = String(Math.min(1, (1 - t) / 0.12)); // sur la fin, le blanc s'efface : plus aucun bord
+        if (t < 1) raf = requestAnimationFrame(step); else settle();
+      };
+      setPhase("zoom");
+      raf = requestAnimationFrame(step);
+    };
+
+    // La photo plein écran se range dans le cadre de la photo d'accueil.
+    const settle = () => {
+      if (done) return;
+      const frame = document.querySelector<HTMLElement>("[data-hero-frame]");
+      frame?.setAttribute("data-intro-played", ""); // voir globals.css : pas de voile blanc, la villa se pose sans repartir du blanc
+      root.dataset.intro = "2";           // le titre de l'accueil fait son entrée
+      setPhase("settle");
+      if (!frame) { later(fade, 50); return; }
+      const f = frame.getBoundingClientRect();
+      img.style.transition = `left ${T.settle}ms cubic-bezier(0.76,0,0.24,1), top ${T.settle}ms cubic-bezier(0.76,0,0.24,1), width ${T.settle}ms cubic-bezier(0.76,0,0.24,1), height ${T.settle}ms cubic-bezier(0.76,0,0.24,1)`;
+      Object.assign(img.style, { left: `${f.left}px`, top: `${f.top}px`, width: `${f.width}px`, height: `${f.height}px` });
+      later(fade, T.settle);
+    };
+
+    // Fondu sur la photo de la villa, qui se pose ; la page est rendue au visiteur.
+    const fade = () => {
+      if (done) return; done = true;
+      delete root.dataset.intro;
+      setPhase("fade");
+      later(() => setPhase("off"), T.fade);
+    };
+
+    // On attend la photo et la police, sans jamais faire patienter plus de 2,5 s.
+    const fontsReady = document.fonts ? document.fonts.load(`600 100px ${getComputedStyle(w).fontFamily}`).catch(() => null).then(() => document.fonts.ready) : Promise.resolve();
+    const photoReady = img.complete && img.naturalWidth ? Promise.resolve() : new Promise<void>((ok, ko) => { img.onload = () => ok(); img.onerror = () => ko(); });
+    const failsafe = window.setTimeout(skip, 2500);
+    Promise.all([photoReady, fontsReady]).then(() => {
+      window.clearTimeout(failsafe);
+      if (done || !alive) return;
+      setPhase("letters");
+      later(zoom, T.letters + 150);
+    }, skip);
+
+    const hardStop = window.setTimeout(skip, 9000); // quoi qu'il arrive, le site reprend la main
     const esc = (e: KeyboardEvent) => e.key === "Escape" && skip();
     window.addEventListener("keydown", esc);
     return () => {
-      alive = false; timers.forEach(clearTimeout); window.clearTimeout(failsafe); window.clearTimeout(hardStop);
-      window.removeEventListener("keydown", esc); v.removeEventListener("ended", handoff); v.removeEventListener("error", skip);
-      delete root.dataset.handoff;
+      alive = false; cancelAnimationFrame(raf); timers.forEach(clearTimeout); window.clearTimeout(failsafe); window.clearTimeout(hardStop);
+      window.removeEventListener("keydown", esc);
     };
   }, [started]);
 
   // Rendue directement dans <body>, au-dessus de tout le site (en-tête compris).
   if (phase === "off") return null;
-  const fading = phase === "handoff" || phase === "leaving";
+  const shown = phase !== "ready";
+  const late = phase === "settle" || phase === "fade";
   return createPortal(
-    <>
-      <div className={`fixed inset-0 z-[100] transition-opacity ease-out ${phase === "handoff" ? "duration-[800ms]" : "duration-[600ms]"} ${fading ? "pointer-events-none opacity-0" : "opacity-100"}`} style={{ background: phase === "handoff" ? END_BG : "#0b0b0c" }}>
-        <video ref={video} muted playsInline preload="auto" aria-hidden disablePictureInPicture className="absolute inset-0 h-full w-full object-cover" />
-        {/* Le temps que la vidéo arrive : l'emblème, très discret */}
-        <div aria-hidden className={`pointer-events-none absolute inset-0 grid place-items-center bg-[#0b0b0c] transition-opacity duration-500 ${phase === "loading" ? "opacity-100" : "opacity-0"}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/emblem-light.png" alt="" width={124} height={60} className="h-10 w-auto animate-pulse opacity-50" />
+    <div className={`fixed inset-0 z-[100] isolate overflow-hidden transition-opacity duration-500 ${phase === "leaving" ? "opacity-0" : ""} ${late ? "pointer-events-none" : "bg-white"}`}>
+      {/* La photo : derrière le calque blanc, puis seule à l'écran, puis rangée dans le cadre de l'accueil */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img ref={photo} src={`${INTRO_PHOTO}-1920.webp`} srcSet={`${INTRO_PHOTO}-1280.webp 1280w, ${INTRO_PHOTO}-1920.webp 1920w`} sizes="100vw" alt="" aria-hidden decoding="async"
+        className={`absolute object-cover transition-opacity duration-[600ms] ease-out ${phase === "fade" ? "opacity-0" : ""}`}
+        style={{ left: 0, top: 0, width: "100%", height: "100%" }} />
+
+      {/* Le calque blanc : le noir des lettres y devient transparent et laisse voir la photo */}
+      <div ref={veil} aria-hidden className={`absolute inset-0 grid place-items-center bg-white mix-blend-screen ${late ? "hidden" : ""}`}>
+        <div ref={word} className="intro-word serif whitespace-nowrap leading-none font-semibold" data-on={shown ? "" : undefined}>
+          {WORD.map((l, i) => (
+            <span key={i} ref={i === ZOOM_AT ? pivot : undefined} className="intro-letter inline-block" style={{ "--i": i } as React.CSSProperties}>{l}</span>
+          ))}
         </div>
-        <button type="button" onClick={() => finishRef.current()} className="absolute right-5 bottom-5 z-10 inline-flex min-h-11 items-center gap-2 border border-white/40 bg-black/25 px-5 text-[10.5px] font-medium tracking-[0.24em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-white hover:text-ink sm:right-8 sm:bottom-8">
+      </div>
+
+      {/* La signature, sous le nom ; elle s'efface avant la plongée */}
+      <p aria-hidden className={`intro-place caps pointer-events-none absolute inset-x-0 text-center text-[10.5px] tracking-[0.42em] text-ink/70 transition-opacity duration-300 ${phase === "letters" ? "opacity-100" : "opacity-0"}`}>{place}</p>
+
+      {!late && (
+        <button type="button" onClick={() => skipRef.current()} className="absolute right-5 bottom-5 z-10 inline-flex min-h-11 items-center gap-2 border border-ink/15 bg-white/80 px-5 text-[10.5px] font-medium tracking-[0.24em] text-ink uppercase backdrop-blur-sm transition-colors hover:bg-ink hover:text-white sm:right-8 sm:bottom-8">
           {skipLabel} <span aria-hidden>→</span>
         </button>
-      </div>
-      {/* Le logo de la dernière image, détouré : il prend le relais de la vidéo puis rejoint l'en-tête */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img ref={logo} src="/intro/intro-logo.png" alt="" aria-hidden width={HD.logo.width} height={HD.logo.height} className="pointer-events-none fixed z-[101] h-auto opacity-0" style={{ left: 0, top: 0 }} />
-    </>,
+      )}
+    </div>,
     document.body,
   );
 }

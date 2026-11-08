@@ -56,7 +56,7 @@ export function PropertyBrowser({ lang }: { lang: Lang }) {
 
   return (
     <div>
-      <div className="z-30 -mx-5 md:sticky md:top-[95px] border-b border-line bg-white/95 px-5 py-5 backdrop-blur-md sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16">
+      <div className="under-header-0 z-30 -mx-5 md:sticky md:top-[95px] border-b border-line bg-white/95 px-5 py-5 backdrop-blur-md sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16">
         <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t.group}>
           {[{ v: "", l: t.all }, { v: "vente", l: t.buy }, { v: "location", l: t.rent }].map((o) => <button key={o.v} type="button" aria-pressed={tx === o.v} onClick={() => set({ transaction: o.v })} className={chip(tx === o.v)}>{o.l}</button>)}
           <span className="mx-2 hidden h-6 w-px bg-line sm:block" />

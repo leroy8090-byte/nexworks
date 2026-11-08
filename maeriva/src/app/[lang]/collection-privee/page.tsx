@@ -11,7 +11,7 @@ type Props = { params: Promise<{ lang: string }> };
 const C = {
   fr: {
     title: "Collection privée : biens confidentiels", description: "Villas et domaines présentés uniquement en rendez-vous, à la demande de leurs propriétaires. Demandez un accès à la collection privée MAÉRIVA.",
-    kicker: "Collection privée", h1: "Ce qui ne se publie pas.", text: "Certains propriétaires souhaitent vendre sans que leur maison apparaisse en ligne. Ces biens sont présentés en rendez-vous, aux acquéreurs que nous avons rencontrés.",
+    kicker: "Collection privée", h1: "Ce qui ne se *publie pas.*", text: "Certains propriétaires souhaitent vendre sans que leur maison apparaisse en ligne. Ces biens sont présentés en rendez-vous, aux acquéreurs que nous avons rencontrés.",
     alt: "Grande baie vitrée ouverte sur la mer au crépuscule", now: "En ce moment", nowTitle: "Trois biens, présentés sur rendez-vous.", nowText: "Les photos, les adresses et les prix ne sont communiqués qu'après un premier échange.", onRequest: "Prix sur demande",
     access: "Demande d'accès", accessTitle: "Présentez-nous votre projet.", accessText: "Votre recherche, votre budget, vos dates : nous revenons vers vous pour un premier échange, puis nous vous présentons les biens qui y répondent.",
     points: ["Réponse personnalisée, sans liste automatique", "Coordonnées utilisées uniquement pour votre demande", "Visites organisées à vos dates"],
@@ -20,7 +20,7 @@ const C = {
   },
   en: {
     title: "Private collection: confidential properties", description: "Villas and estates presented by appointment only, at their owners' request. Request access to the MAÉRIVA private collection.",
-    kicker: "Private collection", h1: "What is never published.", text: "Some owners wish to sell without their home appearing online. These properties are presented by appointment, to buyers we have met.",
+    kicker: "Private collection", h1: "What is *never published.*", text: "Some owners wish to sell without their home appearing online. These properties are presented by appointment, to buyers we have met.",
     alt: "Large bay window opening onto the sea at dusk", now: "Currently", nowTitle: "Three properties, presented by appointment.", nowText: "Photos, addresses and prices are only shared after a first conversation.", onRequest: "Price on request",
     access: "Access request", accessTitle: "Tell us about your project.", accessText: "Your search, your budget, your dates: we will get back to you for a first conversation, then present the properties that match.",
     points: ["A personal reply, never an automated list", "Details used solely for your request", "Viewings arranged on your dates"],

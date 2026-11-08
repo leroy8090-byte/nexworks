@@ -25,11 +25,12 @@ Agence immobilière de prestige **fictive**, créée pour le portfolio de NEXWOR
 - Bouton FR / EN dans l'en-tête : même page dans l'autre langue, recherche conservée. Balises hreflang sur chaque page.
 - Les demandes reçues par l'agence restent en français, avec la langue du visiteur.
 
-## Introduction vidéo
+## Introduction « le golfe à travers le nom »
 
-- Vidéo fournie par le propriétaire (`Downloads/maeriva_intro_HD_sans_son.mp4`, 60 images/s), coupée de 0,05 s à 3,41 s : la fin montrait une fausse version du site.
-- `public/intro/maeriva-intro.mp4` (1920 × 1080, 60 i/s, qualité CRF 20, 6 Mo) et `public/intro/maeriva-intro-mobile.mp4` (cadrage vertical 810 × 1080 pris au centre de l'image pleine résolution, 30 i/s, 1,9 Mo, choisie sur téléphone).
-- Entrée dans l'écran adoucie à l'encodage : zoom centré de 3,07 s à la fin (courbe en S, jusqu'à ×1,16) qui fait sortir le cadre de l'écran avant le passage au blanc ; netteté légère (unsharp). Filtre ffmpeg : `scale` avec `eval=frame` puis `crop` dont la position est calculée depuis la même courbe (sinon le zoom part du coin haut gauche).
-- Passage au site : `public/intro/intro-logo.png` est le logo découpé dans la dernière image. Il se pose exactement sur celui de la vidéo (positions `LOGO_HD` et `LOGO_MOBILE` dans `IntroGate.tsx`, à remesurer si la vidéo change), la vidéo s'efface, le logo rejoint celui de l'en-tête, et les animations d'entrée de l'accueil attendent la fin de la vidéo.
-- Lancée par `src/components/IntroGate.tsx` : première visite de l'accueil (français ou anglais) seulement, jamais si moins d'animations ou économie de données ; bouton Passer, touche Échap ; si la lecture ne démarre pas en 4 s, le site s'affiche directement.
+- Remplace la vidéo d'introduction (supprimée le 2026-11-08, récupérable dans l'historique Git, commit 7308bdd).
+- Tout en code, sans vidéo : `src/components/IntroGate.tsx`, styles `.intro-*` et règles `data-intro` dans `globals.css`. Photo : `src/lib/intro.ts` (vue aérienne de la Ponche, `public/photos/ponche-aerien-*.webp`), préchargée par le script du `<head>` quand l'intro va se jouer.
+- Déroulé (environ 4 s) : les lettres de MAÉRIVA se remplissent de la photo sur fond blanc (calque blanc en mode « screen »), le nom plonge dans le I jusqu'à ce que la photo remplisse l'écran, la photo se range dans le cadre de la photo d'accueil (`data-hero-frame`) pendant que le titre apparaît, puis s'efface sur la villa.
+- Pendant l'intro, `html[data-intro="1"]` met en pause les animations d'entrée de l'accueil ; `data-intro="2"` (photo qui se range) laisse partir le titre ; `data-intro-played` sur le cadre retire son voile blanc et remplace l'apparition de la villa par un simple recul.
+- Première visite de l'accueil (français ou anglais) seulement, jamais si moins d'animations ou économie de données ; bouton Passer, touche Échap ; si la photo ou la police tardent plus de 2,5 s, le site s'affiche directement.
+- Graisse 600 de Cormorant Garamond chargée pour les lettres (plus épaisses, on voit mieux la photo).
 - Pour la rejouer pendant une démo : `http://localhost:3006/?intro` ou `http://localhost:3006/en?intro`

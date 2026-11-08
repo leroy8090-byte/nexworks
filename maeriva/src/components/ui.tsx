@@ -2,8 +2,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { localePath, type Lang } from "@/i18n/config";
 import { breadcrumbLd } from "@/lib/seo";
-import { ImageReveal, Reveal } from "./Motion";
+import { ImageReveal, Parallax, Reveal } from "./Motion";
 import { Photo } from "./Photo";
+import { MaskText, Words } from "./Words";
 
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-[1440px] px-5 sm:px-10 lg:px-16 ${className}`}>{children}</div>;
@@ -11,27 +12,30 @@ export function Container({ children, className = "" }: { children: ReactNode; c
 
 type Variant = "ink" | "outline" | "quiet";
 const STYLES: Record<Variant, string> = {
-  ink: "bg-ink text-white hover:bg-sea",
-  outline: "border border-ink/25 text-ink hover:border-ink",
+  ink: "sweep bg-ink text-white",
+  outline: "sweep border border-ink/25 text-ink [--sweep:var(--color-ink)] hover:border-ink hover:text-white",
   quiet: "text-ink",
 };
 /** Boutons rectangulaires, en petites capitales espacées : la sobriété des maisons de prestige. */
-export const btn = (v: Variant = "ink", extra = "") => `group/b inline-flex min-h-[3.4rem] items-center justify-center gap-3 whitespace-nowrap rounded-[1px] px-8 text-[11.5px] font-medium tracking-[0.24em] uppercase transition-colors duration-300 ${STYLES[v]} ${extra}`;
+export const btn = (v: Variant = "ink", extra = "") => `group/b inline-flex min-h-[3.4rem] items-center justify-center gap-3 whitespace-nowrap rounded-[1px] px-8 text-[11.5px] font-medium tracking-[0.24em] uppercase transition-[color,border-color] duration-500 ${STYLES[v]} ${extra}`;
 
 export function Btn({ href, children, variant, className, arrow, lang = "fr" }: { href: string; children: ReactNode; variant?: Variant; className?: string; arrow?: boolean; lang?: Lang }) {
-  const inner = <>{children}{arrow && <span aria-hidden className="text-[15px] tracking-normal transition-transform duration-300 group-hover/b:translate-x-1">→</span>}</>;
+  const inner = <>{children}{arrow && <span aria-hidden className="text-[15px] tracking-normal transition-transform duration-300 group-hover/b:translate-x-1.5">→</span>}</>;
   if (/^(tel:|mailto:|https?:)/.test(href)) return <a href={href} className={btn(variant, className)} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{inner}</a>;
   return <Link href={localePath(lang, href)} className={btn(variant, className)}>{inner}</Link>;
 }
 
-/** Un titre de section : surtitre, grand titre, texte d'introduction. Il apparaît d'un seul geste. */
+/**
+ * Un titre de section : le filet doré du surtitre se dessine, les mots du titre montent un à un hors d'un masque,
+ * puis le texte d'introduction apparaît. Les mots entre *astérisques* passent en italique.
+ */
 export function Title({ kicker, title, text, className = "", as: Tag = "h2", center }: { kicker?: string; title: string; text?: string; className?: string; as?: "h2" | "h3"; center?: boolean }) {
   return (
-    <Reveal className={`max-w-3xl ${center ? "mx-auto text-center" : ""} ${className}`}>
-      {kicker && <p className={`kicker ${center ? "justify-center" : ""}`}>{kicker}</p>}
-      <Tag className="mt-6 text-[2.5rem] text-ink sm:text-[3.8rem]">{title}</Tag>
-      {text && <p className={`mt-6 max-w-2xl text-[16.5px] leading-[1.8] text-muted ${center ? "mx-auto" : ""}`}>{text}</p>}
-    </Reveal>
+    <div className={`max-w-3xl ${center ? "mx-auto text-center" : ""} ${className}`}>
+      {kicker && <Reveal><p className={`kicker ${center ? "justify-center" : ""}`}>{kicker}</p></Reveal>}
+      <Tag className="mt-6 text-[2.5rem] text-ink sm:text-[3.8rem]"><Words text={title} delay={0.1} /></Tag>
+      {text && <Reveal delay={0.25}><p className={`mt-6 max-w-2xl text-[16.5px] leading-[1.8] text-muted ${center ? "mx-auto" : ""}`}>{text}</p></Reveal>}
+    </div>
   );
 }
 
@@ -62,7 +66,7 @@ export function PageHero({ kicker, title, text, image, alt, crumbs, children, la
         <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <p className="rise kicker" style={{ animationDelay: "80ms" }}>{kicker}</p>
-            <h1 className="rise mt-6 text-[3rem] text-ink sm:text-[5rem]" style={{ animationDelay: "160ms" }}>{title}</h1>
+            <h1 className="mt-6 text-[3rem] text-ink sm:text-[5rem]"><MaskText text={title} start={150} /></h1>
           </div>
           {text && <p className="rise text-[16.5px] leading-[1.8] text-muted lg:col-span-4" style={{ animationDelay: "260ms" }}>{text}</p>}
         </div>
@@ -71,7 +75,8 @@ export function PageHero({ kicker, title, text, image, alt, crumbs, children, la
       {image && (
         <Container className="mt-14 sm:mt-20">
           <div className="relative aspect-[4/3] overflow-hidden bg-paper sm:aspect-[21/9]">
-            <Photo src={image} alt={alt ?? ""} fill preload sizes="(min-width:1440px) 1312px, 100vw" className="settle object-cover" />
+            <Parallax amount={5}><Photo src={image} alt={alt ?? ""} fill preload sizes="(min-width:1440px) 1312px, 100vw" className="settle object-cover" /></Parallax>
+            <span aria-hidden className="curtain reveal-cover pointer-events-none absolute inset-0 bg-white" />
           </div>
         </Container>
       )}
@@ -81,8 +86,8 @@ export function PageHero({ kicker, title, text, image, alt, crumbs, children, la
 
 /** Bandeau de fin de page, clair : une invitation à prendre rendez-vous. */
 const CTA = {
-  fr: { kicker: "Rendez-vous privé", title: "Parlons de la maison que vous cherchez.", text: "Un premier échange, en toute discrétion, pour comprendre votre projet et vous présenter les biens qui y répondent, publiés ou non.", meet: "Prendre rendez-vous", see: "Voir les propriétés" },
-  en: { kicker: "Private appointment", title: "Let's talk about the home you are looking for.", text: "A first conversation, in complete discretion, to understand your project and present the properties that match it, listed or not.", meet: "Book an appointment", see: "View properties" },
+  fr: { kicker: "Rendez-vous privé", title: "Parlons de la maison que *vous cherchez.*", text: "Un premier échange, en toute discrétion, pour comprendre votre projet et vous présenter les biens qui y répondent, publiés ou non.", meet: "Prendre rendez-vous", see: "Voir les propriétés" },
+  en: { kicker: "Private appointment", title: "Let's talk about the home *you are looking for.*", text: "A first conversation, in complete discretion, to understand your project and present the properties that match it, listed or not.", meet: "Book an appointment", see: "View properties" },
 };
 export function CtaBand({ lang = "fr", kicker = CTA[lang].kicker, title = CTA[lang].title, text = CTA[lang].text }: { lang?: Lang; kicker?: string; title?: string; text?: string }) {
   return (
@@ -90,7 +95,7 @@ export function CtaBand({ lang = "fr", kicker = CTA[lang].kicker, title = CTA[la
       <Container className="text-center">
         <Reveal>
           <p className="kicker justify-center">{kicker}</p>
-          <h2 className="mx-auto mt-7 max-w-3xl text-[2.6rem] text-ink sm:text-[4.2rem]">{title}</h2>
+          <h2 className="mx-auto mt-7 max-w-3xl text-[2.6rem] text-ink sm:text-[4.2rem]"><Words text={title} /></h2>
           <p className="mx-auto mt-6 max-w-xl text-[16.5px] leading-[1.8] text-muted">{text}</p>
           <div className="mt-11 flex flex-col justify-center gap-3 sm:flex-row"><Btn lang={lang} href="/contact" arrow>{CTA[lang].meet}</Btn><Btn lang={lang} href="/proprietes" variant="outline">{CTA[lang].see}</Btn></div>
         </Reveal>
@@ -121,8 +126,9 @@ export function Faq({ items, lang = "fr", title = lang === "fr" ? "Questions fr�
 }
 
 /** Une photo de section, qui se pose doucement à l'arrivée. */
-export function Picture({ src, alt, className = "", sizes = "(min-width:1024px) 50vw, 100vw" }: { src: string; alt: string; className?: string; sizes?: string }) {
-  return <ImageReveal className={`relative overflow-hidden bg-paper ${className}`}><Photo src={src} alt={alt} fill sizes={sizes} className="object-cover" /></ImageReveal>;
+export function Picture({ src, alt, className = "", sizes = "(min-width:1024px) 50vw, 100vw", depth }: { src: string; alt: string; className?: string; sizes?: string; depth?: boolean }) {
+  const img = <Photo src={src} alt={alt} fill sizes={sizes} className="object-cover" />;
+  return <ImageReveal className={`relative overflow-hidden bg-paper ${className}`}>{depth ? <Parallax>{img}</Parallax> : img}</ImageReveal>;
 }
 
 /** Pictogrammes fins, dessinés au trait. */

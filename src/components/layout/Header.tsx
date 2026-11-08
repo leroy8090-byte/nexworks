@@ -51,7 +51,7 @@ export function Header() {
             scrolled || open ? "border-white/15 bg-[#0a0e13]/90 backdrop-blur-xl" : "border-white/10 bg-[#0a0e13]/55 backdrop-blur-md",
           )}
         >
-          <Logo priority className="h-7 sm:h-8" />
+          <Logo priority className="box-content h-7 py-2 sm:h-8" />
 
           <nav aria-label="Navigation principale" className="hidden items-center gap-1 lg:flex">
             {navigation.map((item) => {

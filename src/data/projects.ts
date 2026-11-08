@@ -341,7 +341,7 @@ export const projects: Project[] = [
     summary:
       "Une agence immobilière de prestige fictive sur le golfe de Saint-Tropez : un site blanc et épuré, bilingue français et anglais, avec une introduction animée et un parcours pensé pour vendre.",
     context:
-      "MAÉRIVA est une agence fictive créée par NEXWORKS AGENCY pour montrer ce qu'un site d'immobilier de luxe peut faire : villas, bastides et maisons de village à Saint-Tropez, Sainte-Maxime et Saint-Raphaël. Le site s'ouvre sur une courte vidéo de l'agence, puis laisse toute la place aux photos et aux biens.",
+      "MAÉRIVA est une agence fictive créée par NEXWORKS AGENCY pour montrer ce qu'un site d'immobilier de luxe peut faire : villas, bastides et maisons de village à Saint-Tropez, Sainte-Maxime et Saint-Raphaël. Le site s'ouvre sur une courte animation, le golfe vu à travers le nom de l'agence, puis laisse toute la place aux photos et aux biens.",
     goals: [
       "Donner une image haut de gamme, sobre et lumineuse, à la hauteur des biens présentés",
       "Faire vendre : recherche, estimation et prise de rendez-vous dès le premier écran",

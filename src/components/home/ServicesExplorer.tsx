@@ -82,8 +82,8 @@ export function ServicesExplorer() {
                         <div className="pb-6">
                           <p className="text-[17px] leading-relaxed text-fog">{s.plainText}</p>
                           {s.note && <p className="mt-3 text-sm leading-relaxed text-fog">{s.note}</p>}
-                          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-                            <Link href={servicePagePath(s.id)} className="text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
+                          <div className="mt-2 flex flex-wrap items-center gap-x-5">
+                            <Link href={servicePagePath(s.id)} className="inline-flex min-h-11 items-center text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
                               Tout savoir sur ce service →
                             </Link>
                             <span className="text-sm text-fog">Terme technique : {s.label}</span>

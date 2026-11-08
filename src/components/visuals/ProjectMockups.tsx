@@ -42,7 +42,7 @@ export function ProjectMockup({ images, label, url }: { images: ProjectImages; l
             <span className="size-[7px] rounded-full bg-white/25" />
             <span className="size-[7px] rounded-full bg-white/25" />
             <span className="size-[7px] rounded-full bg-white/25" />
-            <div className="ml-3 flex h-[18px] flex-1 items-center rounded-md bg-white/[0.07] px-2.5 text-[9px] tracking-wide text-mist/80">
+            <div aria-hidden className="ml-3 flex h-[18px] flex-1 items-center rounded-md bg-white/[0.07] px-2.5 text-[9px] tracking-wide text-mist/80">
               {url}
             </div>
           </div>

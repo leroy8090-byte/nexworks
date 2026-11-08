@@ -76,7 +76,7 @@ function WebLive() {
         </div>
       </div>
       <p className="mt-3 max-w-[72%] text-sm leading-relaxed text-mist">{p.summary}</p>
-      <Link href={`/realisations/${p.slug}`} className="group mt-2 inline-flex items-center gap-1.5 text-sm font-bold text-sky">
+      <Link href={`/realisations/${p.slug}`} className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-sky">
         Voir ce projet <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
       </Link>
     </div>

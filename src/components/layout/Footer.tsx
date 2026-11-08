@@ -7,6 +7,7 @@ import { Instagram, Linkedin, Mail } from "@/components/ui/Icons";
 import { Logo } from "./Logo";
 
 const linkCls = "text-[15px] text-mist transition-colors hover:text-white";
+const navLinkCls = `${linkCls} inline-block py-1.5`;
 const titleCls = "text-sm font-bold text-white";
 
 export function Footer() {
@@ -15,16 +16,16 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink">
       <Container className="pb-8 pt-16 sm:pt-20">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-[1.5fr_1fr_1fr]">
+          <div className="col-span-2 lg:col-span-1">
             <Logo className="h-9" />
             <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-mist">
               Des sites clairs, faciles à trouver, et un accompagnement qui ne s&apos;arrête pas à la mise en ligne.
             </p>
-            <ul className="mt-6 flex flex-wrap items-center gap-4">
+            <ul className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
               {contactEmail && (
                 <li>
-                  <a href={`mailto:${contactEmail}`} className={`${linkCls} inline-flex items-center gap-2`}>
+                  <a href={`mailto:${contactEmail}`} className={`${linkCls} inline-flex min-h-11 items-center gap-2`}>
                     <Mail className="size-4 text-sky" />
                     {contactEmail}
                   </a>
@@ -32,14 +33,14 @@ export function Footer() {
               )}
               {social.linkedin && (
                 <li>
-                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={linkCls}>
+                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={`${linkCls} inline-flex size-11 items-center justify-center`}>
                     <Linkedin className="size-5" />
                   </a>
                 </li>
               )}
               {social.instagram && (
                 <li>
-                  <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={linkCls}>
+                  <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={`${linkCls} inline-flex size-11 items-center justify-center`}>
                     <Instagram className="size-5" />
                   </a>
                 </li>
@@ -49,10 +50,10 @@ export function Footer() {
 
           <nav aria-label="Services">
             <h2 className={titleCls}>Services</h2>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-1">
               {services.map((s) => (
                 <li key={s.id}>
-                  <Link href={servicePagePath(s.id)} className={linkCls}>
+                  <Link href={servicePagePath(s.id)} className={navLinkCls}>
                     {s.plainTitle}
                   </Link>
                 </li>
@@ -62,21 +63,21 @@ export function Footer() {
 
           <nav aria-label="Navigation du site">
             <h2 className={titleCls}>NEXWORKS</h2>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-1">
               {navigation.map((n) => (
                 <li key={n.href}>
-                  <Link href={n.href} className={linkCls}>
+                  <Link href={n.href} className={navLinkCls}>
                     {n.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/mentions-legales" className={linkCls}>
+                <Link href="/mentions-legales" className={navLinkCls}>
                   Mentions légales
                 </Link>
               </li>
               <li>
-                <Link href="/confidentialite" className={linkCls}>
+                <Link href="/confidentialite" className={navLinkCls}>
                   Confidentialité
                 </Link>
               </li>

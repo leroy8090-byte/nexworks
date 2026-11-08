@@ -49,8 +49,8 @@ export default async function ServicePageView({ params }: { params: Promise<Para
       <section className="relative overflow-hidden pb-16 pt-36 sm:pb-20 sm:pt-44">
         <Glow className="hero-drift -top-52 left-[12%] h-[620px] w-[920px]" />
         <Container className="relative">
-          <nav aria-label="Fil d'Ariane" className="mb-6 text-[15px] text-mist">
-            <Link href="/services" className="transition-colors hover:text-white">
+          <nav aria-label="Fil d'Ariane" className="mb-3 text-[15px] text-mist">
+            <Link href="/services" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
               ← Tous les services
             </Link>
           </nav>

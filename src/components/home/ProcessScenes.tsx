@@ -102,15 +102,14 @@ export function SceneBuild({ cover, mobile }: { cover: string; mobile: string })
 /** Étape 4 : ce qu'on vise, illustré sur un exemple, sans promettre de position. */
 export function SceneVisible() {
   return (
-    <Stage>
-      <div className="absolute inset-0 flex flex-col justify-center gap-3">
+    <div className="flex aspect-[5/4] w-full flex-col justify-center gap-3 sm:aspect-[4/3]">
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }} className="rounded-2xl border border-white/10 bg-ink-3 p-4 sm:p-5">
           <p className="text-xs font-bold text-mist">On cherche sur Google : plombier saint-raphaël</p>
           <p className="mt-2 text-[15px] font-bold leading-snug text-sky sm:text-lg">Plombier à Saint-Raphaël : dépannage et fuites | Azur Plomberie</p>
           <p className="mt-1 text-[13px] leading-relaxed text-mist sm:text-sm">Fuite, chauffe-eau, salle de bain. Le prix est annoncé avant les travaux.</p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6, ease }} className="rounded-2xl border border-white/10 bg-ink-3 p-4 sm:p-5">
-          <p className="text-xs font-bold text-mist">On demande à une IA : qui peut réparer une fuite ?</p>
+          <p className="text-xs font-bold text-mist">On demande à une IA : qui peut réparer une fuite&nbsp;?</p>
           <p className="mt-2 text-[15px] leading-snug text-white sm:text-base">« D&apos;après son site, Azur Plomberie intervient à Saint-Raphaël et à Fréjus pour les fuites et le dépannage. »</p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 1.2, type: "spring", stiffness: 240, damping: 20 }} className="flex items-center gap-3 self-end rounded-2xl bg-sky px-4 py-3 text-ink">
@@ -118,7 +117,6 @@ export function SceneVisible() {
           <p className="font-bold leading-tight">Nouvelle demande : fuite sous l&apos;évier à Fréjus</p>
         </motion.div>
         <p className="text-center text-xs text-mist">Exemple sur un artisan fictif. Aucun classement ni aucune citation par une IA ne peut être garanti.</p>
-      </div>
-    </Stage>
+    </div>
   );
 }

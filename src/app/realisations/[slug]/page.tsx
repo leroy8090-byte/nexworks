@@ -63,15 +63,15 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <div className="bg-grid absolute inset-0" aria-hidden />
         <Glow className="-top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2" />
         <Container className="relative">
-          <nav aria-label="Fil d'Ariane" className="mb-8 text-sm text-mist">
-            <Link href="/realisations" className="transition-colors hover:text-white">
+          <nav aria-label="Fil d'Ariane" className="mb-5 text-[15px] text-mist">
+            <Link href="/realisations" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
               ← Nos réalisations
             </Link>
           </nav>
           <div className="flex flex-wrap items-center gap-3">
             <Eyebrow>{p.categoryLabel}</Eyebrow>
             {p.demo && (
-              <span className="rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky">
+              <span className="rounded-full border border-sky/30 bg-sky/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-sky">
                 {p.concept ? "Concept de refonte" : "Projet de démonstration"}
               </span>
             )}
@@ -178,10 +178,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           <Container>
             <h2 className="font-display text-2xl font-semibold text-white">Autres réalisations</h2>
             <div className="mt-8 grid gap-6 lg:grid-cols-2">
-              {others.map((o) => (
-                <ProjectCard key={o.slug} project={o} />
+              {others.map((o, i) => (
+                <div key={o.slug} className={i >= 3 ? "hidden lg:block" : undefined}>
+                  <ProjectCard project={o} />
+                </div>
               ))}
             </div>
+            {others.length > 3 && (
+              <Button href="/realisations" variant="secondary" arrow className="mt-8 lg:hidden">
+                Voir tous les projets
+              </Button>
+            )}
           </Container>
         </section>
       )}

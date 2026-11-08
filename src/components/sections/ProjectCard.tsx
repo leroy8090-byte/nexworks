@@ -44,12 +44,12 @@ export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640p
               : "Réalisé par NEXWORKS pour un établissement fictif, et non pour un client réel."}
           </p>
         )}
-        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px] font-bold">
-          <Link href={`/realisations/${p.slug}`} className="text-white underline-offset-4 hover:underline">
+        <div className="mt-2 flex flex-wrap items-center gap-x-6 text-[15px] font-bold">
+          <Link href={`/realisations/${p.slug}`} className="inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline">
             Découvrir le projet →
           </Link>
           {p.demoUrl && (
-            <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sky underline-offset-4 hover:underline">
+            <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-sky underline-offset-4 hover:underline">
               Ouvrir le site <ArrowUpRight className="size-4" />
             </a>
           )}

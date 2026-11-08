@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/*
+ * MAÉRIVA : un site pur. Du blanc, une encre presque noire, la pierre de Saint-Tropez en touches très légères,
+ * et l'or du logo seulement pour les filets. La couleur vient des photographies.
+ * (Les anciens noms navy et sea pointent vers l'encre : plus aucun bleu dans l'interface.)
+ */
+@theme {
+  --color-white: #ffffff;
+  --color-shell: #ffffff;
+  --color-paper: #f7f5f1;
+  --color-ink: #141619;
+  --color-navy: #141619;
+  --color-sea: #3b3e43;
+  --color-stone: #d9cfbf;
+  --color-stone-light: #f3efe8;
+  --color-pave-dark: #7a746c;
+  --color-gold: #a68a56;
+  --color-ochre: #b07a45;
+  --color-muted: #6e6f72;
+  --color-line: #e7e3dc;
+  --font-serif: var(--font-mv-serif), Georgia, serif;
+  --font-sans: var(--font-mv-sans), system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; overflow-x: clip; -webkit-text-size-adjust: 100%; }
+body {
+  overflow-x: clip;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 350;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+:focus-visible { outline: 1.5px solid var(--color-ink); outline-offset: 3px; }
+::selection { background: var(--color-stone); color: var(--color-ink); }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.012em; text-wrap: balance; line-height: 1.04; }
+.serif { font-family: var(--font-serif); }
+.overflow-hidden { overflow: clip; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Surtitre : petites capitales espacées, comme « REAL ESTATE » sur le logo, précédées d'un filet doré */
+.kicker { display: inline-flex; align-items: center; gap: 0.9rem; font-size: 11px; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--color-pave-dark); }
+.kicker::before { content: ""; width: 2rem; height: 1px; background: var(--color-gold); }
+.caps { font-size: 11px; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; }
+
+/*
+ * Mouvements : peu nombreux, courts, toujours au service de la lecture.
+ * Le haut de page apparaît en douceur, sans attendre le JavaScript ; rien ne détourne le défilement.
+ */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.rise { animation: rise 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes settle { from { opacity: 0; transform: scale(1.04); } }
+.settle { animation: settle 1600ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes page-in { from { opacity: 0; } }
+.page-in { animation: page-in 450ms ease backwards; }
+
+/* Liens et boutons : un trait qui se dessine, un fond qui s'assombrit */
+.line { background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px; transition: background-size 450ms cubic-bezier(0.22, 1, 0.36, 1); padding-bottom: 3px; }
+.line:hover, .line:focus-visible, .line[aria-current="page"] { background-size: 100% 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+
+/* Champs de formulaire : un simple trait, qui fonce au focus */
+.field { width: 100%; border: 0; border-bottom: 1px solid var(--color-line); background: transparent; padding: 0.85rem 0; font-size: 16px; color: inherit; outline: none; transition: border-color 300ms; border-radius: 0; }
+.field:hover { border-color: color-mix(in srgb, var(--color-ink) 35%, transparent); }
+.field:focus { border-color: var(--color-ink); }
+select.field { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 10px) 52%, calc(100% - 5px) 52%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 1.6rem; cursor: pointer; }
+select.field option { color: var(--color-ink); }
+textarea.field { resize: vertical; min-height: 7rem; }
+
+/* Introduction vidéo : décidée par le script du <head> ; la page ne défile pas pendant ce temps */
+html[data-intro="1"] { overflow: hidden; }
+/* Le voile noir couvre le site dès le premier affichage, avant même le JavaScript ; la vidéo vient par-dessus */
+html[data-intro="1"] body::before { content: ""; position: fixed; inset: 0; z-index: 99; background: #0b0b0c; }
+/* Les animations d'entrée de l'accueil attendent la fin de la vidéo : le titre et la photo apparaissent après l'intro, pas derrière */
+html[data-intro="1"] :is(.rise, .settle, .word-up) { animation-play-state: paused; }
+/* Le logo de l'en-tête reste caché pendant que celui de la vidéo vient prendre sa place */
+[data-logo] { transition: opacity 450ms ease; }
+html:is([data-intro="1"], [data-handoff="1"]) [data-logo] { opacity: 0; }
+
+.no-bar { scrollbar-width: none; }
+.no-bar::-webkit-scrollbar { display: none; }

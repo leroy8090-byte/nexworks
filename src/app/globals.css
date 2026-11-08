@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @source not "../../capital immobilier";
+@source not "../../paradis vert";
+@source not "../../maeriva";
 
 @theme {
   --color-ink: #050505;

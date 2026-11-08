@@ -326,6 +326,42 @@ export const projects: Project[] = [
     tags: ["Agence immobilière", "Syndic", "Next.js", "Saint-Raphaël"],
     alt: "Concept de refonte CAPITAL IMMOBILIER : grand titre « Votre prochain chapitre commence ici. » sur une photo du massif de l'Estérel",
   },
+  {
+    slug: "maeriva",
+    name: "MAÉRIVA Real Estate",
+    category: "immobilier",
+    categoryLabel: "Site web immobilier de prestige",
+    filterLabel: "Immobilier",
+    demo: true,
+    images: {
+      cover: "/projects/maeriva-cover.webp",
+      desktop: { src: "/projects/maeriva-desktop.webp", width: 1100, height: 6368 },
+      mobile: { src: "/projects/maeriva-mobile.webp", width: 390, height: 14132 },
+    },
+    summary:
+      "Une agence immobilière de prestige fictive sur le golfe de Saint-Tropez : un site blanc et épuré, bilingue français et anglais, avec une introduction vidéo et un parcours pensé pour vendre.",
+    context:
+      "MAÉRIVA est une agence fictive créée par NEXWORKS AGENCY pour montrer ce qu'un site d'immobilier de luxe peut faire : villas, bastides et maisons de village à Saint-Tropez, Sainte-Maxime et Saint-Raphaël. Le site s'ouvre sur une courte vidéo de l'agence, puis laisse toute la place aux photos et aux biens.",
+    goals: [
+      "Donner une image haut de gamme, sobre et lumineuse, à la hauteur des biens présentés",
+      "Faire vendre : recherche, estimation et prise de rendez-vous dès le premier écran",
+      "Accueillir une clientèle internationale avec une version anglaise complète",
+      "Rester honnête : agence, biens et prix fictifs, clairement signalés",
+    ],
+    pages: ["Accueil", "Propriétés", "Fiche d'un bien", "Destinations", "Saint-Tropez", "Sainte-Maxime", "Saint-Raphaël", "Vendre et estimer", "Collection privée", "L'agence", "Ma sélection", "Contact"],
+    features: [
+      "Introduction vidéo qui se fond dans le site, avec le logo qui rejoint l'en-tête",
+      "Site bilingue français et anglais, adresses traduites et bouton FR / EN",
+      "Recherche et filtres conservés dans l'adresse de la page",
+      "Fiches avec galerie plein écran, DPE, sélection de favoris et visite groupée",
+      "Estimation en cinq étapes et accès à une collection privée sur demande",
+      "Données structurées des annonces et balises de langue pour le référencement",
+    ],
+    highlights: ["Introduction vidéo", "Bilingue FR / EN", "Pensé pour vendre"],
+    demoUrl: env(process.env.NEXT_PUBLIC_DEMO_MAERIVA_URL),
+    tags: ["Immobilier de luxe", "Bilingue", "Next.js", "Saint-Tropez"],
+    alt: "Site MAÉRIVA : grand titre « Les plus belles maisons du golfe, en toute discrétion. » à côté de la photo d'une villa blanche contemporaine",
+  },
 ];
 
 export const projectCategories = [

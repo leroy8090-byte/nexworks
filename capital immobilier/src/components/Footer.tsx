@@ -36,7 +36,7 @@ export function Footer() {
       <div className="overflow-hidden pb-4"><p aria-hidden className="footer-mark select-none whitespace-nowrap px-3 text-center text-[9.1vw] font-bold uppercase leading-[0.95] tracking-[-0.04em] text-white [font-family:var(--font-display)]">Capital Immobilier</p></div>
       <div className="border-t border-white/15">
         <div className="mx-auto flex w-full max-w-[1480px] flex-col gap-3 px-5 py-6 text-[14px] text-white/65 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-16">
-          <p>{LIVE ? `© ${new Date().getFullYear()} ${agency.name}` : "Concept de refonte réalisé par NEXWORKS AGENCY."}</p>
+          <p>{LIVE ? `© ${new Date().getFullYear()} ${agency.name}` : <>Concept de refonte réalisé par <a href="https://www.nexworks.agency" target="_blank" rel="noopener" className="line-link text-white hover:text-white">NEXWORKS AGENCY</a>.</>}</p>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link href="/mentions-legales" className="line-link hover:text-white">Mentions légales</Link>
             <Link href="/confidentialite" className="line-link hover:text-white">Politique de confidentialité</Link>

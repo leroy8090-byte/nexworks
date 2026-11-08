@@ -515,3 +515,13 @@ h1, h2, h3, h4 {
   animation: shot-scroll 32s linear infinite;
   will-change: transform;
 }
+
+/* Petit mot sur les cookies : entrée douce, le cookie se balance (désactivé si le visiteur préfère moins de mouvement) */
+@keyframes cookie-in { from { transform: translateY(24px) scale(0.97); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes cookie-wobble { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(6deg) translateY(-2px); } }
+.cookie-note { animation: cookie-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.cookie-wobble { transform-origin: 50% 60%; animation: cookie-wobble 3.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .cookie-note { animation: none; }
+  .cookie-wobble { animation: none; }
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { counterpartPath, ogLocale, type Lang } from "@/i18n/lang";
 
 type PageMeta = {
   title: string;
@@ -9,33 +10,41 @@ type PageMeta = {
   /** true = titre complet (sans suffixe de marque) */
   absoluteTitle?: boolean;
   noindex?: boolean;
+  /** Langue de la page (français par défaut) */
+  lang?: Lang;
 };
 
 /** Image d'aperçu des partages (réseaux sociaux, messageries), générée par app/opengraph-image. */
 const shareImage = { url: "/opengraph-image", width: 1200, height: 630, alt: "NEXWORKS AGENCY : création de site internet, SEO et GEO" };
+const shareImageEn = { url: "/en/opengraph-image", width: 1200, height: 630, alt: "NEXWORKS AGENCY: website creation, SEO and GEO" };
 
-export function buildMetadata({ title, description, path, absoluteTitle, noindex }: PageMeta): Metadata {
+export function buildMetadata({ title, description, path, absoluteTitle, noindex, lang = "fr" }: PageMeta): Metadata {
   const url = `${siteConfig.url}${path}`;
+  // Chaque page existe en français et en anglais : on le dit aux moteurs de recherche (hreflang)
+  const fr = counterpartPath(path, "fr");
+  const en = counterpartPath(path, "en");
+  const languages = { fr, en, "x-default": fr };
   const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, languages },
     robots: noindex ? { index: false, follow: false } : undefined,
     openGraph: {
       type: "website",
-      locale: siteConfig.locale,
+      locale: ogLocale[lang],
+      alternateLocale: ogLocale[lang === "fr" ? "en" : "fr"],
       siteName: siteConfig.name,
       title: fullTitle,
       description,
       url,
-      images: [shareImage],
+      images: [lang === "en" ? shareImageEn : shareImage],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [shareImage.url],
+      images: [(lang === "en" ? shareImageEn : shareImage).url],
     },
   };
 }
@@ -72,7 +81,7 @@ export function organizationJsonLd() {
       "@type": "ContactPoint",
       contactType: "customer service",
       url: `${siteConfig.url}/contact`,
-      availableLanguage: "French",
+      availableLanguage: ["French", "English"],
       ...(siteConfig.contactEmail ? { email: siteConfig.contactEmail } : {}),
     },
     knowsAbout: [
@@ -94,7 +103,7 @@ export function websiteJsonLd() {
     "@id": websiteId,
     url: siteConfig.url,
     name: siteConfig.name,
-    inLanguage: siteConfig.language,
+    inLanguage: ["fr", "en"],
     publisher: { "@id": organizationId },
   };
 }
@@ -107,7 +116,7 @@ export function faqJsonLd(items: readonly { q: string; a: string }[]) {
   };
 }
 
-export function serviceJsonLd(s: { name: string; serviceType: string; description: string; path: string; items: string[] }) {
+export function serviceJsonLd(s: { name: string; serviceType: string; description: string; path: string; items: string[]; lang?: Lang }) {
   const url = `${siteConfig.url}${s.path}`;
   return {
     "@context": "https://schema.org",
@@ -117,7 +126,7 @@ export function serviceJsonLd(s: { name: string; serviceType: string; descriptio
     serviceType: s.serviceType,
     description: s.description,
     url,
-    inLanguage: siteConfig.language,
+    inLanguage: s.lang ?? siteConfig.language,
     provider: { "@id": organizationId },
     areaServed: { "@type": "Country", name: "France" },
     hasOfferCatalog: {

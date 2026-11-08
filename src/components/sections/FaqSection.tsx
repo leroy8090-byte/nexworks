@@ -1,25 +1,28 @@
-import { faq } from "@/data/content";
+import { faqFor } from "@/data/localized";
+import type { Lang } from "@/i18n/lang";
 import { Plus } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { Container, JsonLd, SectionHeading } from "@/components/ui/Section";
 
-export const faqJsonLd = {
+const faqJsonLd = (lang: Lang) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faq.map((f) => ({
+  inLanguage: lang,
+  mainEntity: faqFor(lang).map((f) => ({
     "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
-};
+});
 
 /** FAQ : réponses toujours présentes dans le HTML (utile aux moteurs de réponse), repliables pour l'utilisateur. */
-export function FaqSection() {
+export function FaqSection({ lang = "fr" }: { lang?: Lang }) {
+  const faq = faqFor(lang);
   return (
     <section id="faq" className="paper relative z-10 rounded-t-[2rem] pb-28 pt-20 sm:rounded-t-[3rem] sm:pb-40 sm:pt-28">
-      <JsonLd data={faqJsonLd} />
+      <JsonLd data={faqJsonLd(lang)} />
       <Container className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14">
-        <SectionHeading tone="light" eyebrow="Questions fréquentes" title="Ce qu'on nous demande *le plus souvent.*" />
+        <SectionHeading tone="light" eyebrow={lang === "en" ? "Frequently asked questions" : "Questions fréquentes"} title={lang === "en" ? "What people *ask us most.*" : "Ce qu'on nous demande *le plus souvent.*"} />
         <div className="border-t border-graphite/15">
           {faq.map((f, i) => (
             <Reveal key={f.q} delay={Math.min(i, 4) * 0.04} y={14}>

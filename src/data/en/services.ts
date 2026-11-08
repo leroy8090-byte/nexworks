@@ -1,0 +1,117 @@
+// Version anglaise de ../services.ts : `projectType` reste en français (valeur envoyée au formulaire).
+import type { Service } from "../services";
+
+export const servicesEn: Service[] = [
+  {
+    id: "creation-web",
+    label: "Web creation",
+    plainTitle: "Create your website",
+    plainText: "A clear, fast website that explains what you do and makes people want to contact you, on computer and on phone.",
+    title: "Website creation",
+    description: "Modern, fast websites designed to turn your visitors into customers.",
+    items: [
+      "Professional showcase websites",
+      "Websites for hotels and restaurants",
+      "Landing pages",
+      "Corporate websites",
+      "Responsive websites",
+      "Forms and tailored features",
+    ],
+    intro: [
+      "Your website is often the first contact between your business and a future customer. We design it as a real tool: clear, fast and pleasant to use on mobile and on desktop.",
+      "Each site is built to measure around your goals: presenting your business, receiving enquiries, making bookings easier or simply strengthening your credibility.",
+    ],
+    benefits: [
+      "A professional image from the very first visit",
+      "A fast website that is easy to read on every screen",
+      "A simple journey that leads visitors to get in touch",
+      "A sound technical base, ready for search engine optimisation",
+    ],
+    projectType: "Création de site web",
+  },
+  {
+    id: "design-ux",
+    label: "Design & UX/UI",
+    plainTitle: "Modernise your current website",
+    plainText: "Your website exists, but it looks dated and no longer brings in enough enquiries? We make it clearer, more pleasant and easier to use.",
+    title: "Design & user experience",
+    description: "A polished digital identity that showcases your business and builds your visitors' trust.",
+    items: [
+      "Redesign of existing websites",
+      "UI/UX design",
+      "User journey optimisation",
+      "Conversion improvement",
+      "Mobile adaptation",
+      "Visual consistency and digital identity",
+    ],
+    intro: [
+      "A website can hold the right information and still put visitors off: confusing navigation, a dated design, a rough mobile display. Design is not about decoration, it is what makes your offer understandable.",
+      "We analyse your current site, rethink the screens and journeys, then bring everything in line with your visual identity.",
+    ],
+    benefits: [
+      "A clear interface that inspires trust",
+      "Smoother journeys, from the first click to the contact request",
+      "A mobile experience that is designed, not just adapted",
+      "Visual consistency across all your pages",
+    ],
+    projectType: "Design & refonte",
+  },
+  {
+    id: "seo",
+    label: "SEO",
+    plainTitle: "Be found on Google",
+    plainText: "When someone nearby searches for what you offer, we work to make your business more visible in the results.",
+    title: "SEO (search engine optimisation)",
+    description: "Improve your visibility on Google and make it easier for future customers to find your business.",
+    items: [
+      "SEO audit",
+      "Technical optimisation",
+      "Optimisation of titles and content",
+      "Page structure",
+      "Local SEO",
+      "Google Business Profile optimisation",
+      "Performance improvement",
+    ],
+    intro: [
+      "Search engine optimisation (SEO) covers everything that helps search engines understand your website and show it to the right people. It is long-term groundwork, built over time.",
+      "We start with an overview of where you stand, then improve the technical side, the content and your local presence. Nobody can guarantee a position on Google: we work on the levers that really depend on your website.",
+    ],
+    benefits: [
+      "A website that search engines understand better",
+      "Pages that are faster, clearer and better structured",
+      "A consistent local presence (Google listing, contact details)",
+      "Clear improvement priorities, explained simply",
+    ],
+    projectType: "Référencement SEO",
+    note: "SEO is ongoing optimisation work. No ranking is guaranteed.",
+  },
+  {
+    id: "geo",
+    label: "GEO optimisation",
+    plainTitle: "Be understood by AI",
+    plainText: "ChatGPT, Gemini or Perplexity answer more and more questions. We present your business so that they understand it and describe it correctly.",
+    title: "Visibility in AI",
+    description:
+      "Prepare your digital presence for new search habits and improve how AI answer engines understand your business.",
+    items: [
+      "Content optimisation for answer engines",
+      "Structuring of information",
+      "Relevant structured data",
+      "Development of useful, reliable content",
+      "Consistency of information across the web",
+      "Optimisation of your presence in AI search environments",
+    ],
+    intro: [
+      "More and more people put their questions directly to AI-based assistants and answer engines. GEO (Generative Engine Optimisation) means making your business easy to understand and to cite correctly: clear, structured and consistent information everywhere on the web.",
+      "GEO is optimisation work, not a promise of results. No provider can guarantee that you will appear in ChatGPT, Gemini, Perplexity or Google: we improve what is within our scope.",
+    ],
+    benefits: [
+      "Clear, consistent information about your business",
+      "Structured content that is easier for AI to interpret",
+      "A solid base that also serves your SEO and your visitors",
+      "Preparation for new search habits",
+    ],
+    projectType: "Optimisation GEO",
+    note: "GEO is optimisation work. No appearance in an AI or search engine is guaranteed.",
+  },
+];

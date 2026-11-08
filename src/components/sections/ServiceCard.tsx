@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Service } from "@/data/services";
 import { cn } from "@/lib/utils";
-import { servicePagePath } from "@/data/service-pages";
+import { servicePagePathFor } from "@/data/localized";
+import { pagePath, type Lang } from "@/i18n/lang";
 import { Button } from "@/components/ui/Button";
 import { Check } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,7 +12,13 @@ import { LiveService } from "@/components/visuals/LiveVisuals";
  * Grande carte de service. `detailed` ajoute présentation, bénéfices et devis (page Services).
  * Le service « Design & UX » affiche sa comparaison avant / après en pleine largeur pour rester lisible.
  */
-export function ServiceCard({ service, index, detailed }: { service: Service; index: number; detailed?: boolean }) {
+const T = {
+  fr: { included: "Ce qui est inclus", offer: "Prestations", benefits: "Ce que cela vous apporte", all: "Tout savoir sur ce service", quote: "Demander un devis", more: "En savoir plus" },
+  en: { included: "What's included", offer: "What we do", benefits: "What it brings you", all: "Everything about this service", quote: "Request a quote", more: "Learn more" },
+};
+
+export function ServiceCard({ service, index, detailed, lang = "fr" }: { service: Service; index: number; detailed?: boolean; lang?: Lang }) {
+  const t = T[lang];
   const wide = service.id === "design-ux";
   const flip = !wide && index % 2 === 1;
   const n = String(index + 1).padStart(2, "0");
@@ -47,7 +54,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
   const lists = (
     <div>
       <h4 className="text-base font-bold text-white">
-        {detailed ? "Ce qui est inclus" : "Prestations"}
+        {detailed ? t.included : t.offer}
       </h4>
       <ul className="mt-4 space-y-2.5">
         {service.items.map((item) => (
@@ -62,7 +69,7 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
       {detailed && (
         <>
-          <h4 className="mt-7 text-base font-bold text-white">Ce que cela vous apporte</h4>
+          <h4 className="mt-7 text-base font-bold text-white">{t.benefits}</h4>
           <ul className="mt-4 space-y-2.5">
             {service.benefits.map((b) => (
               <li key={b} className="flex items-start gap-3 text-[15px] text-mist">
@@ -76,20 +83,20 @@ export function ServiceCard({ service, index, detailed }: { service: Service; in
 
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
         {detailed && (
-          <Link href={servicePagePath(service.id)} className="order-2 inline-flex min-h-11 items-center text-[15px] font-bold text-sky underline-offset-4 hover:underline">
-            Tout savoir sur ce service →
+          <Link href={servicePagePathFor(lang, service.id)} className="order-2 inline-flex min-h-11 items-center text-[15px] font-bold text-sky underline-offset-4 hover:underline">
+            {t.all} →
           </Link>
         )}
         {detailed ? (
-          <Button href={`/contact?projet=${encodeURIComponent(service.projectType)}#formulaire`} arrow>
-            Demander un devis
+          <Button href={`${pagePath(lang, "contact")}?projet=${encodeURIComponent(service.projectType)}#formulaire`} arrow>
+            {t.quote}
           </Button>
         ) : (
           <Link
-            href={`/services#${service.id}`}
+            href={`${pagePath(lang, "services")}#${service.id}`}
             className="group inline-flex items-center gap-2 text-sm font-semibold text-sky transition-colors hover:text-white"
           >
-            En savoir plus
+            {t.more}
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </Link>
         )}

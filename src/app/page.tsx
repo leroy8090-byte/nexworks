@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/home/Hero";
-import { ProcessStory } from "@/components/home/ProcessStory";
-import { ServicesExplorer } from "@/components/home/ServicesExplorer";
-import { Statement } from "@/components/home/Statement";
-import { WorkGallery } from "@/components/home/WorkGallery";
-import { CtaSection } from "@/components/sections/CtaSection";
-import { FaqSection } from "@/components/sections/FaqSection";
 import { buildMetadata } from "@/lib/seo";
+import { HomeView } from "@/views/HomeView";
 
 export const metadata: Metadata = buildMetadata({
   title: "Création de site internet, SEO et GEO | NEXWORKS AGENCY",
@@ -17,15 +11,5 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <Statement />
-      <ServicesExplorer />
-      <ProcessStory />
-      <WorkGallery />
-      <FaqSection />
-      <CtaSection />
-    </>
-  );
+  return <HomeView lang="fr" />;
 }

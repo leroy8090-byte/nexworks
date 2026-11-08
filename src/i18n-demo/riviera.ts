@@ -174,7 +174,7 @@ const dict = { strings: {
  "Concept fictif —": "Fictional concept:",
  "Navigation": "Navigation",
  "Formulaire de démonstration": "Demonstration form",
- ". Projet de démonstration fictif réalisé pour le portfolio NEXWORKS AGENCY.": ". Fictional demonstration project created for the NEXWORKS AGENCY portfolio.",
+ ". Projet de démonstration fictif réalisé pour le portfolio": ". Fictional demonstration project created for the portfolio of",
  "Site de démonstration réalisé par": "Demonstration site created by",
  "— agence fictive, biens et contenus imaginaires.": "— fictional agency, imaginary properties and content.",
  "Coordonnées renseignées pour la démonstration.": "Details provided for the demonstration.",

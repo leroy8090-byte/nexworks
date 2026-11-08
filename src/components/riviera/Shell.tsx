@@ -172,7 +172,8 @@ function Footer() {
       <div className="border-t border-[#FFFEFA]/10">
         <Wrap className="flex flex-col gap-3 py-6 text-[12.5px] text-[#858178] sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {riviera.name}. Projet de démonstration fictif réalisé pour le portfolio NEXWORKS AGENCY.
+            © {new Date().getFullYear()} {riviera.name}. Projet de démonstration fictif réalisé pour le portfolio{" "}
+            <Link href="/" className="underline underline-offset-2 hover:text-[#FFFEFA]">NEXWORKS AGENCY</Link>.
           </p>
           <div className="flex gap-5">
             <Link href={`${riviera.basePath}/mentions-legales`} className="hover:text-[#FFFEFA]">

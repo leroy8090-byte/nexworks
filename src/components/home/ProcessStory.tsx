@@ -3,25 +3,29 @@
 import { AnimatePresence, motion, useInView, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, type ReactNode } from "react";
 import { useCalmMotion } from "@/lib/useCalmMotion";
-import { processSteps } from "@/data/content";
-import { projects } from "@/data/projects";
+import { processStepsFor, projectsFor } from "@/data/localized";
+import { useLang } from "@/i18n/use-lang";
+import type { Lang } from "@/i18n/lang";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { cn, ease } from "@/lib/utils";
 import { SceneBrief, SceneBuild, SceneDesign, SceneVisible } from "./ProcessScenes";
 
-const demo = projects.find((p) => p.slug === "solea-restaurant")!;
-
-function scene(i: number): ReactNode {
-  if (i === 0) return <SceneBrief items={processSteps[0].details} />;
+function scene(i: number, lang: Lang): ReactNode {
+  const demo = projectsFor(lang).find((p) => p.slug === "solea-restaurant")!;
+  if (i === 0) return <SceneBrief items={processStepsFor(lang)[0].details} />;
   if (i === 1) return <SceneDesign />;
   if (i === 2) return <SceneBuild cover={demo.images.cover} mobile={demo.images.mobile.src} />;
   return <SceneVisible />;
 }
 
-const heading = <SectionHeading eyebrow="Comment ça se passe" title="De votre idée à vos premières *demandes.*" />;
+const Heading = ({ lang }: { lang: Lang }) => (
+  <SectionHeading eyebrow={lang === "en" ? "How it works" : "Comment ça se passe"} title={lang === "en" ? "From your idea to your first *enquiries.*" : "De votre idée à vos premières *demandes.*"} />
+);
 
 /** Sur grand écran : la page se fige et le site se construit au fil du défilement. */
 function Pinned() {
+  const lang = useLang();
+  const processSteps = processStepsFor(lang);
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [step, setStep] = useState(0);
@@ -33,7 +37,7 @@ function Pinned() {
       <div className="sticky top-0 flex h-svh items-center pt-16">
         <Container className="grid items-center gap-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <div>
-            {heading}
+            <Heading lang={lang} />
             <ol className="relative mt-10 pl-7">
               <span className="absolute bottom-1 left-0 top-1 w-0.5 rounded-full bg-white/10" aria-hidden />
               <motion.span style={{ scaleY: bar }} className="absolute bottom-1 left-0 top-1 w-0.5 origin-top rounded-full bg-sky" aria-hidden />
@@ -58,7 +62,7 @@ function Pinned() {
           </div>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={step} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.3, ease }}>
-              {scene(step)}
+              {scene(step, lang)}
             </motion.div>
           </AnimatePresence>
         </Container>
@@ -75,18 +79,20 @@ function PlayInView({ children }: { children: ReactNode }) {
 }
 
 function Stacked({ always }: { always?: boolean }) {
+  const lang = useLang();
+  const processSteps = processStepsFor(lang);
   return (
     <div className={cn("py-20 sm:py-28", !always && "lg:hidden")}>
       <Container>
-        {heading}
+        <Heading lang={lang} />
         <ol className="mt-12 space-y-14">
           {processSteps.map((s, i) => (
             <li key={s.n}>
-              <p className="text-sm font-bold text-sky">Étape {i + 1}</p>
+              <p className="text-sm font-bold text-sky">{lang === "en" ? "Step" : "Étape"} {i + 1}</p>
               <h3 className="mt-1 font-display text-3xl font-bold text-white">{s.plainTitle}</h3>
               <p className="mt-2 max-w-2xl text-[17px] leading-relaxed text-mist">{s.plainText}</p>
               <div className="mt-6 max-w-2xl">
-                <PlayInView>{scene(i)}</PlayInView>
+                <PlayInView>{scene(i, lang)}</PlayInView>
               </div>
             </li>
           ))}

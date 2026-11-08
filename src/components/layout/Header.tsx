@@ -4,14 +4,25 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navigation, quoteHref } from "@/config/site";
+import { navigationFor, quoteHrefFor } from "@/config/site";
+import { useLang } from "@/i18n/use-lang";
 import { cn, ease } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Close, Menu } from "@/components/ui/Icons";
+import { LangSwitch } from "./LangSwitch";
 import { Logo } from "./Logo";
+
+const T = {
+  fr: { skip: "Aller au contenu", main: "Navigation principale", mobile: "Navigation mobile", quote: "Demander un devis", open: "Ouvrir le menu", close: "Fermer le menu" },
+  en: { skip: "Skip to content", main: "Main navigation", mobile: "Mobile navigation", quote: "Request a quote", open: "Open menu", close: "Close menu" },
+};
 
 export function Header() {
   const pathname = usePathname();
+  const lang = useLang();
+  const t = T[lang];
+  const navigation = navigationFor(lang);
+  const quoteHref = quoteHrefFor(lang);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
@@ -43,7 +54,7 @@ export function Header() {
           href="#contenu"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:rounded-full focus:bg-sky focus:px-4 focus:py-2 focus:text-ink"
         >
-          Aller au contenu
+          {t.skip}
         </a>
         <div
           className={cn(
@@ -51,9 +62,9 @@ export function Header() {
             scrolled || open ? "border-white/15 bg-[#0a0e13]/90 backdrop-blur-xl" : "border-white/10 bg-[#0a0e13]/55 backdrop-blur-md",
           )}
         >
-          <Logo priority className="box-content h-7 py-2 sm:h-8" />
+          <Logo priority lang={lang} className="box-content h-7 py-2 sm:h-8" />
 
-          <nav aria-label="Navigation principale" className="hidden items-center gap-1 lg:flex">
+          <nav aria-label={t.main} className="hidden items-center gap-1 lg:flex">
             {navigation.map((item) => {
               const active = isActive(item.href);
               return (
@@ -73,15 +84,16 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <LangSwitch compact className="hidden lg:inline-flex" />
             <div className="hidden sm:block">
-              <Button href={quoteHref}>Demander un devis</Button>
+              <Button href={quoteHref}>{t.quote}</Button>
             </div>
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-controls="menu-mobile"
-              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-label={open ? t.close : t.open}
               className="inline-flex size-11 items-center justify-center rounded-full border border-white/15 text-white transition active:scale-95 lg:hidden"
             >
               {open ? <Close className="size-5" /> : <Menu className="size-5" />}
@@ -103,7 +115,7 @@ export function Header() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-ink/95 px-5 pb-10 pt-28 backdrop-blur-2xl lg:hidden"
           >
-            <nav aria-label="Navigation mobile" className="relative flex flex-col">
+            <nav aria-label={t.mobile} className="relative flex flex-col">
               {navigation.map((item, i) => (
                 <motion.div key={item.href} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 + i * 0.06, duration: 0.6, ease }}>
                   <Link
@@ -119,8 +131,9 @@ export function Header() {
             </nav>
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.6, ease }} className="relative mt-10">
               <Button href={quoteHref} size="lg" arrow className="w-full">
-                Demander un devis
+                {t.quote}
               </Button>
+              <LangSwitch className="mt-6" />
             </motion.div>
           </motion.div>
         )}

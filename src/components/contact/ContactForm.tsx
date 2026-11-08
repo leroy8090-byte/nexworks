@@ -4,9 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { siteConfig } from "@/config/site";
+import { pagePath } from "@/i18n/lang";
+import { useLang } from "@/i18n/use-lang";
 import {
   emptyContact,
   limits,
+  projectTypeLabels,
   projectTypes,
   validateContact,
   type ContactApiResponse,
@@ -16,16 +19,101 @@ import {
 import { cn, ease } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Check, Mail } from "@/components/ui/Icons";
+import { Turnstile } from "./Turnstile";
 
 type Status = "idle" | "submitting" | "sent" | "demo" | "error";
 
+const T = {
+  fr: {
+    optional: "Facultatif",
+    name: "Nom",
+    namePh: "Votre nom",
+    company: "Entreprise",
+    companyPh: "Nom de votre entreprise",
+    email: "Adresse e-mail",
+    emailPh: "nom@entreprise.fr",
+    phone: "Téléphone",
+    phonePh: "Votre numéro",
+    type: "Type de projet",
+    choose: "Sélectionnez…",
+    message: "Description du besoin",
+    messagePh: "Votre activité, vos objectifs, ce que vous souhaitez améliorer ou créer…",
+    count: (n: number, max: number, min: number) => `${n} / ${max} caractères (minimum ${min})`,
+    consentBefore: "J'accepte que mes informations soient utilisées pour répondre à ma demande, conformément à la ",
+    consentLink: "politique de confidentialité",
+    form: "Formulaire de contact",
+    demoTitle: "Mode démonstration.",
+    demoText: " Aucun service d'envoi n'est encore configuré : vous pouvez tester le formulaire, mais votre demande ne sera pas transmise.",
+    honeypot: "Ne pas remplir ce champ",
+    captchaLabel: "Vérification anti-robot",
+    captchaWait: "Vérification anti-robot en cours…",
+    captchaMissing: "Merci de valider la vérification anti-robot avant d'envoyer.",
+    captchaDown: "La vérification anti-robot n'a pas pu se charger. Rechargez la page, puis réessayez.",
+    error: "Une erreur est survenue. Réessayez dans un instant.",
+    network: "Connexion impossible. Vérifiez votre réseau puis réessayez.",
+    sending: "Envoi en cours…",
+    send: "Envoyer ma demande",
+    required: "Champs obligatoires",
+    demoDone: "Mode démonstration : demande non transmise",
+    sent: "Votre demande a bien été transmise.",
+    demoBodyA: "Le formulaire fonctionne, mais aucun service d'envoi n'est encore configuré sur ce site : ",
+    demoBodyB: "votre message n'a pas été envoyé ni enregistré.",
+    demoBodyC: " Vous pouvez nous écrire directement par e-mail :",
+    thanks: "Merci. Nous avons bien reçu votre message et reviendrons vers vous pour échanger sur votre projet.",
+    back: "Revenir au formulaire",
+    again: "Envoyer une autre demande",
+  },
+  en: {
+    optional: "Optional",
+    name: "Name",
+    namePh: "Your name",
+    company: "Company",
+    companyPh: "Your company name",
+    email: "Email address",
+    emailPh: "name@company.com",
+    phone: "Phone",
+    phonePh: "Your number",
+    type: "Project type",
+    choose: "Select…",
+    message: "What do you need?",
+    messagePh: "Your business, your goals, what you would like to improve or create…",
+    count: (n: number, max: number, min: number) => `${n} / ${max} characters (minimum ${min})`,
+    consentBefore: "I agree that my details may be used to answer my request, in line with the ",
+    consentLink: "privacy policy",
+    form: "Contact form",
+    demoTitle: "Demo mode.",
+    demoText: " No sending service is configured yet: you can try the form, but your request will not be passed on.",
+    honeypot: "Do not fill in this field",
+    captchaLabel: "Anti-robot check",
+    captchaWait: "Anti-robot check in progress…",
+    captchaMissing: "Please complete the anti-robot check before sending.",
+    captchaDown: "The anti-robot check could not load. Please reload the page and try again.",
+    error: "Something went wrong. Please try again in a moment.",
+    network: "Couldn't connect. Please check your network and try again.",
+    sending: "Sending…",
+    send: "Send my request",
+    required: "Required fields",
+    demoDone: "Demo mode: request not sent",
+    sent: "Your request has been sent.",
+    demoBodyA: "The form works, but no sending service is configured on this site yet: ",
+    demoBodyB: "your message has not been sent or saved.",
+    demoBodyC: " You can write to us directly by email:",
+    thanks: "Thank you. We have received your message and will get back to you to talk about your project.",
+    back: "Back to the form",
+    again: "Send another request",
+  },
+} as const;
+
 const fieldCls =
   "w-full rounded-xl border bg-white/[0.03] px-4 py-3.5 text-[15px] text-white placeholder:text-mist/50 transition focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-sky/40";
+
+const captchaKey = (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "").trim();
 
 function Field({
   id,
   label,
   optional,
+  optionalLabel,
   error,
   hint,
   children,
@@ -33,6 +121,7 @@ function Field({
   id: string;
   label: string;
   optional?: boolean;
+  optionalLabel: string;
   error?: string;
   hint?: string;
   children: ReactNode;
@@ -44,7 +133,7 @@ function Field({
           {label}
           {!optional && <span className="ml-1 text-sky" aria-hidden>*</span>}
         </span>
-        {optional && <span className="text-xs font-normal text-mist/70">Facultatif</span>}
+        {optional && <span className="text-xs font-normal text-mist/70">{optionalLabel}</span>}
       </label>
       {children}
       {hint && !error && <p className="mt-1.5 text-xs text-mist/70">{hint}</p>}
@@ -75,11 +164,17 @@ export function ContactForm({
   demoMode: boolean;
   defaultProjectType?: string;
 }) {
+  const lang = useLang();
+  const t = T[lang];
   const [values, setValues] = useState<ContactValues>({ ...emptyContact, projectType: defaultProjectType });
   const [errors, setErrors] = useState<ContactErrors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof ContactValues, boolean>>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState("");
+  const [captchaActive, setCaptchaActive] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaReset, setCaptchaReset] = useState(0);
+  const [captchaIssue, setCaptchaIssue] = useState<"" | "missing" | "down">("");
   const startedAt = useRef(0);
   const formRef = useRef<HTMLFormElement>(null);
   const honeypot = useRef<HTMLInputElement>(null);
@@ -100,14 +195,14 @@ export function ContactForm({
     const next = { ...values, [key]: value };
     setValues(next);
     if (touched[key]) {
-      const e = validateContact(next);
+      const e = validateContact(next, lang);
       setErrors((prev) => ({ ...prev, [key]: e[key] }));
     }
   };
 
   const blur = (key: keyof ContactValues) => {
-    setTouched((t) => ({ ...t, [key]: true }));
-    setErrors((prev) => ({ ...prev, [key]: validateContact(values)[key] }));
+    setTouched((s) => ({ ...s, [key]: true }));
+    setErrors((prev) => ({ ...prev, [key]: validateContact(values, lang)[key] }));
   };
 
   const bind = (key: Exclude<keyof ContactValues, "consent">) => ({
@@ -124,12 +219,17 @@ export function ContactForm({
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (status === "submitting") return;
-    const errs = validateContact(values);
+    const errs = validateContact(values, lang);
     setErrors(errs);
     setTouched({ name: true, company: true, email: true, phone: true, projectType: true, message: true, consent: true });
     const first = Object.keys(errs)[0];
     if (first) {
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    if (captchaKey && !captchaToken) {
+      setCaptchaIssue((i) => i || "missing");
+      setCaptchaActive(true);
       return;
     }
     setStatus("submitting");
@@ -138,7 +238,7 @@ export function ContactForm({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, website: honeypot.current?.value ?? "", startedAt: startedAt.current }),
+        body: JSON.stringify({ ...values, lang, captcha: captchaToken, website: honeypot.current?.value ?? "", startedAt: startedAt.current }),
       });
       const data = (await res.json()) as ContactApiResponse;
       if (data.status === "sent") setStatus("sent");
@@ -151,8 +251,13 @@ export function ContactForm({
         setStatus("error");
       }
     } catch {
-      setServerMessage("Connexion impossible. Vérifiez votre réseau puis réessayez.");
+      setServerMessage(t.network);
       setStatus("error");
+    }
+    // Un jeton Turnstile ne sert qu'une fois : on en demande un nouveau
+    if (captchaKey) {
+      setCaptchaToken("");
+      setCaptchaReset((n) => n + 1);
     }
   }
 
@@ -185,18 +290,16 @@ export function ContactForm({
         >
           {isDemo ? <Mail className="size-7" /> : <Check className="size-8" strokeWidth={2} />}
         </div>
-        <h3 className="mt-6 font-display text-2xl font-semibold text-white">
-          {isDemo ? "Mode démonstration : demande non transmise" : "Votre demande a bien été transmise."}
-        </h3>
+        <h3 className="mt-6 font-display text-2xl font-semibold text-white">{isDemo ? t.demoDone : t.sent}</h3>
         <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-mist">
           {isDemo ? (
             <>
-              Le formulaire fonctionne, mais aucun service d&apos;envoi n&apos;est encore configuré sur ce site :{" "}
-              <strong className="font-semibold text-white">votre message n&apos;a pas été envoyé ni enregistré.</strong>
-              {siteConfig.contactEmail ? " Vous pouvez nous écrire directement par e-mail :" : ""}
+              {t.demoBodyA}
+              <strong className="font-semibold text-white">{t.demoBodyB}</strong>
+              {siteConfig.contactEmail ? t.demoBodyC : ""}
             </>
           ) : (
-            "Merci. Nous avons bien reçu votre message et reviendrons vers vous pour échanger sur votre projet."
+            t.thanks
           )}
         </p>
         {isDemo && siteConfig.contactEmail && (
@@ -209,7 +312,7 @@ export function ContactForm({
         )}
         <div className="mt-8">
           <Button type="button" variant="secondary" onClick={reset}>
-            {isDemo ? "Revenir au formulaire" : "Envoyer une autre demande"}
+            {isDemo ? t.back : t.again}
           </Button>
         </div>
       </motion.div>
@@ -217,13 +320,20 @@ export function ContactForm({
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} noValidate className="space-y-6" aria-label="Formulaire de contact">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      noValidate
+      className="space-y-6"
+      aria-label={t.form}
+      onFocusCapture={() => captchaKey && setCaptchaActive(true)}
+    >
       {demoMode && (
         <div className="flex gap-3 rounded-xl border border-amber-300/25 bg-amber-300/[0.06] p-4 text-[13px] leading-relaxed text-amber-100/90">
           <span className="mt-0.5 size-2 shrink-0 rounded-full bg-amber-300" aria-hidden />
           <p>
-            <strong className="font-semibold">Mode démonstration.</strong> Aucun service d&apos;envoi n&apos;est encore
-            configuré : vous pouvez tester le formulaire, mais votre demande ne sera pas transmise.
+            <strong className="font-semibold">{t.demoTitle}</strong>
+            {t.demoText}
           </p>
         </div>
       )}
@@ -231,31 +341,31 @@ export function ContactForm({
       {/* Champ piège anti-spam : invisible pour les humains */}
       <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
-          Ne pas remplir ce champ
+          {t.honeypot}
           <input ref={honeypot} type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
         </label>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field id="name" label="Nom" error={errors.name}>
-          <input type="text" autoComplete="name" placeholder="Votre nom" maxLength={limits.name + 20} {...bind("name")} />
+        <Field id="name" label={t.name} optionalLabel={t.optional} error={errors.name}>
+          <input type="text" autoComplete="name" placeholder={t.namePh} maxLength={limits.name + 20} {...bind("name")} />
         </Field>
-        <Field id="company" label="Entreprise" error={errors.company}>
-          <input type="text" autoComplete="organization" placeholder="Nom de votre entreprise" maxLength={limits.company + 20} {...bind("company")} />
+        <Field id="company" label={t.company} optionalLabel={t.optional} error={errors.company}>
+          <input type="text" autoComplete="organization" placeholder={t.companyPh} maxLength={limits.company + 20} {...bind("company")} />
         </Field>
-        <Field id="email" label="Adresse e-mail" error={errors.email}>
-          <input type="email" autoComplete="email" inputMode="email" placeholder="nom@entreprise.fr" {...bind("email")} />
+        <Field id="email" label={t.email} optionalLabel={t.optional} error={errors.email}>
+          <input type="email" autoComplete="email" inputMode="email" placeholder={t.emailPh} {...bind("email")} />
         </Field>
-        <Field id="phone" label="Téléphone" optional error={errors.phone}>
-          <input type="tel" autoComplete="tel" inputMode="tel" placeholder="Votre numéro" {...bind("phone")} />
+        <Field id="phone" label={t.phone} optionalLabel={t.optional} optional error={errors.phone}>
+          <input type="tel" autoComplete="tel" inputMode="tel" placeholder={t.phonePh} {...bind("phone")} />
         </Field>
         <div className="sm:col-span-2">
-        <Field id="projectType" label="Type de projet" error={errors.projectType}>
+        <Field id="projectType" label={t.type} optionalLabel={t.optional} error={errors.projectType}>
           <select {...bind("projectType")} className={cn(bind("projectType").className, "appearance-none bg-[length:16px] bg-[right_1rem_center] bg-no-repeat pr-10")} style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355BDF2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}>
-            <option value="" className="bg-ink-2">Sélectionnez…</option>
-            {projectTypes.map((t) => (
-              <option key={t} value={t} className="bg-ink-2">
-                {t}
+            <option value="" className="bg-ink-2">{t.choose}</option>
+            {projectTypes.map((value, i) => (
+              <option key={value} value={value} className="bg-ink-2">
+                {projectTypeLabels[lang][i]}
               </option>
             ))}
           </select>
@@ -265,13 +375,14 @@ export function ContactForm({
 
       <Field
         id="message"
-        label="Description du besoin"
+        label={t.message}
+        optionalLabel={t.optional}
         error={errors.message}
-        hint={`${msgLen} / ${limits.message.max} caractères (minimum ${limits.message.min})`}
+        hint={t.count(msgLen, limits.message.max, limits.message.min)}
       >
         <textarea
           rows={6}
-          placeholder="Votre activité, vos objectifs, ce que vous souhaitez améliorer ou créer…"
+          placeholder={t.messagePh}
           maxLength={limits.message.max + 200}
           {...bind("message")}
           className={cn(bind("message").className, "resize-y")}
@@ -291,9 +402,9 @@ export function ContactForm({
             className="mt-1 size-4 shrink-0 cursor-pointer accent-[#55BDF2]"
           />
           <span>
-            J&apos;accepte que mes informations soient utilisées pour répondre à ma demande, conformément à la{" "}
-            <Link href="/confidentialite" className="text-sky underline-offset-4 hover:underline" target="_blank">
-              politique de confidentialité
+            {t.consentBefore}
+            <Link href={pagePath(lang, "privacy")} className="text-sky underline-offset-4 hover:underline" target="_blank">
+              {t.consentLink}
             </Link>
             .
           </span>
@@ -305,18 +416,39 @@ export function ContactForm({
         )}
       </div>
 
+      {captchaKey && (
+        <div role="group" aria-label={t.captchaLabel}>
+          <Turnstile
+            siteKey={captchaKey}
+            lang={lang}
+            active={captchaActive}
+            resetKey={captchaReset}
+            onToken={(tok) => {
+              setCaptchaToken(tok);
+              if (tok) setCaptchaIssue("");
+            }}
+            onUnavailable={() => setCaptchaIssue("down")}
+          />
+          {captchaIssue && (
+            <p role="alert" className="mt-1.5 text-[13px] text-[#ff8d8d]">
+              {captchaIssue === "down" ? t.captchaDown : t.captchaMissing}
+            </p>
+          )}
+        </div>
+      )}
+
       {status === "error" && (
         <p role="alert" className="rounded-xl border border-[#ff8d8d]/30 bg-[#ff8d8d]/[0.07] p-4 text-sm leading-relaxed text-[#ffb3b3]">
-          {serverMessage || "Une erreur est survenue. Réessayez dans un instant."}
+          {serverMessage || t.error}
         </p>
       )}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <Button type="submit" size="lg" arrow disabled={status === "submitting"} className="w-full sm:w-auto">
-          {status === "submitting" ? "Envoi en cours…" : "Envoyer ma demande"}
+          {status === "submitting" ? t.sending : t.send}
         </Button>
         <p className="text-xs text-mist/70">
-          <span className="text-sky">*</span> Champs obligatoires
+          <span className="text-sky">*</span> {t.required}
         </p>
       </div>
     </form>

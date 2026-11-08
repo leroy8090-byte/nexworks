@@ -25,6 +25,14 @@ export const siteConfig = {
   locale: "fr_FR",
   language: "fr",
 
+  /** Version anglaise */
+  en: {
+    tagline: "Design. Optimise. Build.",
+    promise: "We turn your digital presence into a real growth lever.",
+    description:
+      "NEXWORKS AGENCY is a web agency specialising in custom website creation, redesign and UX/UI design, search engine optimisation (SEO) and optimisation for AI assistants (GEO). Every project is quoted individually.",
+  },
+
   /** Adresse e-mail de contact (variable NEXT_PUBLIC_CONTACT_EMAIL). Vide = non affichée. */
   contactEmail: (process.env.NEXT_PUBLIC_CONTACT_EMAIL || "").trim(),
 
@@ -60,4 +68,16 @@ export const navigation = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+/** Menu dans la langue demandée */
+export const navigationFor = (lang: "fr" | "en") =>
+  lang === "en"
+    ? ([
+        { label: "Services", href: "/en/services" },
+        { label: "Work", href: "/en/work" },
+        { label: "Approach", href: "/en/approach" },
+        { label: "Contact", href: "/en/contact" },
+      ] as const)
+    : navigation;
+
 export const quoteHref = "/contact?objet=devis";
+export const quoteHrefFor = (lang: "fr" | "en") => (lang === "en" ? "/en/contact?objet=quote" : quoteHref);

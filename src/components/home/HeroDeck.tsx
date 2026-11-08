@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, type PointerEvent } from "react";
 import { BrowserFrame } from "@/components/ui/BrowserFrame";
+import { projectPath } from "@/i18n/lang";
+import { useLang } from "@/i18n/use-lang";
 import { cn, ease } from "@/lib/utils";
 
 export type DeckItem = { slug: string; name: string; cover: string; desktop: { src: string; width: number; height: number } };
@@ -19,6 +21,7 @@ const LAYOUT = [
 ];
 
 function DeckCard({ item, index, progress }: { item: DeckItem; index: number; progress: MotionValue<number> }) {
+  const lang = useLang();
   const l = LAYOUT[index];
   const center = l.x === 0;
   const x = useTransform(progress, [0.2, 0.75], [`${-50 + l.x * 0.72}%`, `${-50 + l.x}%`]);
@@ -30,9 +33,9 @@ function DeckCard({ item, index, progress }: { item: DeckItem; index: number; pr
   return (
     <motion.div style={{ x, y, rotate, zIndex: l.z }} className={cn("absolute left-1/2 top-0 w-[84%] sm:w-[54%] lg:w-[47%]", l.outer && "hidden sm:block")}>
       <motion.div initial={{ opacity: 0, y: 90 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.35 + Math.abs(l.x) * 0.006, ease }}>
-        <Link href={`/realisations/${item.slug}`} className="block transition-transform duration-500 hover:-translate-y-3">
-          <span className="sr-only">Voir le projet {item.name}</span>
-          <BrowserFrame url={`${item.name.toLowerCase()} · site de démonstration`}>
+        <Link href={projectPath(lang, item.slug)} className="block transition-transform duration-500 hover:-translate-y-3">
+          <span className="sr-only">{lang === "en" ? "View the project" : "Voir le projet"} {item.name}</span>
+          <BrowserFrame url={`${item.name.toLowerCase()} · ${lang === "en" ? "demo site" : "site de démonstration"}`}>
             <div className="relative aspect-[16/10] overflow-hidden bg-ink-3">
               {center ? (
                 <Image

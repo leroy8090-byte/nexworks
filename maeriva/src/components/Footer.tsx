@@ -11,14 +11,14 @@ const T = {
     props: "Propriétés", buy: "Acheter", rent: "Location saisonnière", newDev: "Programme neuf", selection: "Ma sélection",
     dest: "Destinations", agency: "L'agence", sell: "Vendre, estimer", private: "Collection privée", approach: "Notre approche", contact: "Contact",
     reach: "Nous joindre", about: "Villas, bastides et maisons de village, à la vente et en location saisonnière.",
-    demo: "Site de démonstration réalisé par NEXWORKS AGENCY. L'agence MAÉRIVA, ses biens et ses prix sont fictifs.",
+    demo: ["Site de démonstration réalisé par ", ". L'agence MAÉRIVA, ses biens et ses prix sont fictifs."],
     legal: "Mentions légales", privacy: "Confidentialité", credits: "Crédits photos", call: "Appeler", meet: "Rendez-vous",
   },
   en: {
     props: "Properties", buy: "Buy", rent: "Seasonal rentals", newDev: "New development", selection: "My selection",
     dest: "Destinations", agency: "The agency", sell: "Sell, valuation", private: "Private collection", approach: "Our approach", contact: "Contact",
     reach: "Get in touch", about: "Villas, bastides and village houses, for sale and for seasonal rental.",
-    demo: "Demonstration website by NEXWORKS AGENCY. The MAÉRIVA agency, its properties and its prices are fictional.",
+    demo: ["Demonstration website by ", ". The MAÉRIVA agency, its properties and its prices are fictional."],
     legal: "Legal notice", privacy: "Privacy", credits: "Photo credits", call: "Call", meet: "Appointment",
   },
 };
@@ -57,7 +57,7 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
         <BigWordmark />
         <div className="flex flex-col gap-4 border-t border-line pt-8 text-[12.5px] text-muted md:flex-row md:items-center md:justify-between">
-          <p>{LIVE ? `© ${new Date().getFullYear()} ${agency.name}` : t.demo}</p>
+          <p>{LIVE ? `© ${new Date().getFullYear()} ${agency.name}` : <>{t.demo[0]}<a href="https://www.nexworks.agency" target="_blank" rel="noopener" className="line text-ink">NEXWORKS AGENCY</a>{t.demo[1]}</>}</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             <li><Link href={L("/mentions-legales")} className="line">{t.legal}</Link></li>
             <li><Link href={L("/confidentialite")} className="line">{t.privacy}</Link></li>

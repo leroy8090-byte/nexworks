@@ -2,17 +2,21 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { projectCategories, projects } from "@/data/projects";
+import { projectCategoriesFor, projectsFor } from "@/data/localized";
+import { useLang } from "@/i18n/use-lang";
 import { cn, ease } from "@/lib/utils";
 import { ProjectCard } from "./ProjectCard";
 
 export function PortfolioGrid() {
+  const lang = useLang();
+  const projects = projectsFor(lang);
+  const projectCategories = projectCategoriesFor(lang);
   const [active, setActive] = useState("tous");
   const visible = active === "tous" ? projects : projects.filter((p) => p.category === active);
 
   return (
     <div>
-      <div role="group" aria-label="Filtrer les réalisations par catégorie" className="flex flex-wrap gap-2.5">
+      <div role="group" aria-label={lang === "en" ? "Filter projects by category" : "Filtrer les réalisations par catégorie"} className="flex flex-wrap gap-2.5">
         {projectCategories.map((c) => {
           const on = c.key === active;
           return (
@@ -40,7 +44,9 @@ export function PortfolioGrid() {
       </div>
 
       <p className="mt-6 text-sm text-mist" aria-live="polite">
-        {visible.length} projet{visible.length > 1 ? "s" : ""} affiché{visible.length > 1 ? "s" : ""}
+        {lang === "en"
+          ? `${visible.length} project${visible.length > 1 ? "s" : ""} shown`
+          : `${visible.length} projet${visible.length > 1 ? "s" : ""} affiché${visible.length > 1 ? "s" : ""}`}
       </p>
 
       <motion.div layout className="mt-8 grid gap-x-6 gap-y-14 md:grid-cols-2">
@@ -54,7 +60,7 @@ export function PortfolioGrid() {
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.5, ease }}
             >
-              <ProjectCard project={p} heading="h2" />
+              <ProjectCard project={p} heading="h2" lang={lang} />
             </motion.div>
           ))}
         </AnimatePresence>

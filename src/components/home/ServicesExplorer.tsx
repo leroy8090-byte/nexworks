@@ -3,8 +3,9 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { servicePagePath } from "@/data/service-pages";
-import { services, type Service } from "@/data/services";
+import { servicePagePathFor, servicesFor } from "@/data/localized";
+import type { Service } from "@/data/services";
+import { useLang } from "@/i18n/use-lang";
 import { Plus } from "@/components/ui/Icons";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { LiveService } from "@/components/visuals/LiveVisuals";
@@ -26,6 +27,8 @@ const AUTO_MS = 11000;
  * Sur grand écran, les services défilent seuls tant que le visiteur n'a pas choisi.
  */
 export function ServicesExplorer() {
+  const lang = useLang();
+  const services = servicesFor(lang);
   const [active, setActive] = useState(0);
   const [chosen, setChosen] = useState(false);
   const [wide, setWide] = useState(false);
@@ -50,7 +53,7 @@ export function ServicesExplorer() {
   return (
     <section id="services" className="paper scroll-mt-24 pb-20 sm:pb-32">
       <Container>
-        <SectionHeading tone="light" eyebrow="Ce qu'on fait pour vous" title="Quatre façons de *vous aider.*" />
+        <SectionHeading tone="light" eyebrow={lang === "en" ? "What we do for you" : "Ce qu'on fait pour vous"} title={lang === "en" ? "Four ways we *can help.*" : "Quatre façons de *vous aider.*"} />
 
         <div ref={zone} onPointerEnter={() => setChosen(true)} className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
           <ul className="border-t border-graphite/15">
@@ -83,10 +86,10 @@ export function ServicesExplorer() {
                           <p className="text-[17px] leading-relaxed text-fog">{s.plainText}</p>
                           {s.note && <p className="mt-3 text-sm leading-relaxed text-fog">{s.note}</p>}
                           <div className="mt-2 flex flex-wrap items-center gap-x-5">
-                            <Link href={servicePagePath(s.id)} className="inline-flex min-h-11 items-center text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
-                              Tout savoir sur ce service →
+                            <Link href={servicePagePathFor(lang, s.id)} className="inline-flex min-h-11 items-center text-[15px] font-bold text-sky-deep underline-offset-4 hover:underline">
+                              {lang === "en" ? "Learn more about this service →" : "Tout savoir sur ce service →"}
                             </Link>
-                            <span className="text-sm text-fog">Terme technique : {s.label}</span>
+                            <span className="text-sm text-fog">{lang === "en" ? `Technical term: ${s.label}` : `Terme technique : ${s.label}`}</span>
                           </div>
                           {open && (
                             <div className="mt-6 lg:hidden">

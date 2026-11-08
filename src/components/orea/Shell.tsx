@@ -132,7 +132,7 @@ export function OreaShell({ children }: { children: ReactNode }) {
               <li><Link href={`${orea.basePath}/mentions-legales`} className="transition-colors hover:text-white">Mentions légales</Link></li>
               <li><Link href={`${orea.basePath}/confidentialite`} className="transition-colors hover:text-white">Confidentialité</Link></li>
               <li><Link href={`${orea.basePath}/credits-photos`} className="transition-colors hover:text-white">Crédits photos</Link></li>
-              <li><Link href="/realisations" className="transition-colors hover:text-white">Créé par NEXWORKS AGENCY</Link></li>
+              <li><Link href="/" className="transition-colors hover:text-white">Créé par NEXWORKS AGENCY</Link></li>
             </ul>
           </div>
         </Wrap>

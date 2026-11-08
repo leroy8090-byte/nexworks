@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { services } from "@/data/services";
+import { servicesFor } from "@/data/localized";
+import { useLang } from "@/i18n/use-lang";
 import { cn } from "@/lib/utils";
 
 /** Le sommaire reste à portée pendant la lecture, et indique où l'on se trouve. */
 export function ServicesNav() {
+  const lang = useLang();
+  const services = servicesFor(lang);
   const [active, setActive] = useState<string>(services[0].id);
   useEffect(() => {
     const seen = new IntersectionObserver(
@@ -24,7 +27,7 @@ export function ServicesNav() {
   }, []);
 
   return (
-    <nav aria-label="Aller à un service" className="sticky top-[76px] z-30 -mx-5 mb-10 overflow-x-auto bg-ink/85 px-5 py-3 backdrop-blur-md no-scrollbar sm:mx-0 sm:rounded-full sm:border sm:border-white/10 sm:px-2 sm:py-2">
+    <nav aria-label={lang === "en" ? "Jump to a service" : "Aller à un service"} className="sticky top-[76px] z-30 -mx-5 mb-10 overflow-x-auto bg-ink/85 px-5 py-3 backdrop-blur-md no-scrollbar sm:mx-0 sm:rounded-full sm:border sm:border-white/10 sm:px-2 sm:py-2">
       <ul className="flex w-max gap-2 sm:w-auto sm:justify-between">
         {services.map((s) => (
           <li key={s.id} className="sm:flex-1">

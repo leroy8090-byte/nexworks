@@ -5,9 +5,11 @@ import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { Footer } from "@/components/layout/Footer";
 import { HideOnDemo, SiteScope } from "@/components/layout/HideOnDemo";
 import { MobileQuoteBar } from "@/components/layout/MobileQuoteBar";
+import { CookieNoteLazy } from "@/components/layout/CookieNoteLazy";
 import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/layout/Providers";
 import { JsonLd } from "@/components/ui/Section";
+import { LangAttr } from "@/i18n/use-lang";
 import "./globals.css";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
@@ -58,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className="min-h-dvh bg-ink font-sans text-white antialiased">
+        <LangAttr />
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <Providers>
           <SiteScope>
@@ -68,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <HideOnDemo>
               <Footer />
               <MobileQuoteBar />
+              <CookieNoteLazy />
             </HideOnDemo>
           </SiteScope>
         </Providers>

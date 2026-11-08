@@ -131,7 +131,7 @@ export function AzurShell({ children }: { children: ReactNode }) {
               <li><Link href={`${azur.basePath}/a-propos`} className="transition-colors hover:text-white">L&apos;artisan</Link></li>
               <li><Link href={`${azur.basePath}/mentions-legales`} className="transition-colors hover:text-white">Mentions légales</Link></li>
               <li><Link href={`${azur.basePath}/confidentialite`} className="transition-colors hover:text-white">Confidentialité</Link></li>
-              <li><Link href="/realisations" className="transition-colors hover:text-white">Créé par NEXWORKS AGENCY</Link></li>
+              <li><Link href="/" className="transition-colors hover:text-white">Créé par NEXWORKS AGENCY</Link></li>
             </ul>
           </div>
         </Wrap>

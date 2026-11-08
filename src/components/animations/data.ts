@@ -44,6 +44,27 @@ export const shownPhotoCredits = () => { const used = new Set(animations.flatMap
 
 export const animationBySlug = (slug: string) => animations.find((a) => a.slug === slug);
 
+/** Version anglaise (mêmes slugs : les pages plein écran /animations/<slug> restent communes) */
+export const animationsEn: AnimationEntry[] = [
+  {
+    slug: "golfe-a-travers-le-nom",
+    name: "The bay through the name",
+    pitch: "The landscape appears through the letters of the brand, then you dive into it all the way to the home page.",
+    steps: [
+      "On a white background, the letters of the name tighten and fill with the photo, one after another.",
+      "The name grows and you dive into the I until the photo fills the screen.",
+      "The photo settles into the frame of the home page while the headline appears.",
+      "It fades onto the home page photo, which comes to rest.",
+    ],
+    duration: "4 s",
+    madeFor: "MAÉRIVA, a luxury real estate agency (demonstration)",
+    fits: "Brands with a short name: real estate, hotels, fashion, wine estates.",
+    photos: ["ponche-aerien", "villa-moderne"],
+  },
+];
+
+export const animationsFor = (lang: "fr" | "en") => (lang === "en" ? animationsEn : animations);
+
 /** Photographies libres de droits (Wikimedia Commons), reprises du site de démonstration MAÉRIVA. */
 export const animationPhotoCredits = [
   { file: "ponche-aerien", title: "Aerial view of Ponche Beach, Saint-Tropez, France (52723268452)", author: "dronepicr", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0", page: "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Ponche_Beach,_Saint-Tropez,_France_(52723268452).jpg" },

@@ -7,11 +7,15 @@
 @layer components {
   .anx-stage { position: relative; height: 100svh; overflow: hidden; background: #fff; color: #141619; font-family: var(--font-manrope), system-ui, sans-serif; }
   .anx-serif { font-family: var(--font-anx-serif), Georgia, serif; font-weight: 400; letter-spacing: -0.012em; }
+  /* La scène d'une animation : ses tailles suivent son cadre (plein écran ou carte), pas la fenêtre */
+  .anx-scene { position: absolute; inset: 0; container-type: size; }
+  /* Aperçu animé dans une carte */
+  .anx-mini { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fff; color: #141619; font-family: var(--font-manrope), system-ui, sans-serif; }
   .anx-caps { text-transform: uppercase; letter-spacing: 0.24em; font-size: 10.5px; font-weight: 500; }
 }
 
 /* Les titres du site NEXWORKS imposent leur police (règle globale h1, h2) : dans les démonstrations, la police à empattements reprend la main */
-.anx-stage .anx-serif, .anx-preview .anx-serif { font-family: var(--font-anx-serif), Georgia, serif; }
+.anx-stage .anx-serif, .anx-preview .anx-serif, .anx-mini .anx-serif { font-family: var(--font-anx-serif), Georgia, serif; }
 
 /* Mots qui montent, éléments qui apparaissent : déclenchés par data-show sur un parent */
 .anx-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.1em; margin-bottom: -0.1em; }
@@ -23,12 +27,12 @@
 [data-show] .anx-drop { opacity: 1; transform: none; }
 
 /* 1. Le golfe à travers le nom : les lettres se resserrent et se remplissent de la photo, l'une après l'autre */
-.anx-word { font-size: min(15vw, 30vh); letter-spacing: 0.2em; margin-right: -0.2em; color: #000; transition: letter-spacing 1300ms cubic-bezier(0.22, 1, 0.36, 1), margin 1300ms cubic-bezier(0.22, 1, 0.36, 1); }
+.anx-word { font-size: min(15cqw, 30cqh); letter-spacing: 0.2em; margin-right: -0.2em; color: #000; transition: letter-spacing 1300ms cubic-bezier(0.22, 1, 0.36, 1), margin 1300ms cubic-bezier(0.22, 1, 0.36, 1); }
 .anx-word[data-on] { letter-spacing: 0.06em; margin-right: -0.06em; }
 .anx-letter { color: #fff; transform: translateY(0.14em); transition: color 900ms ease calc(var(--i) * 70ms), transform 900ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 70ms); }
 .anx-word[data-on] .anx-letter { color: #000; transform: none; }
-.anx-place { top: calc(50% + min(15vw, 30vh) * 0.6); }
-@media (max-width: 640px) { .anx-word { font-size: 18vw; } .anx-place { top: calc(50% + 18vw * 0.6); } }
+.anx-place { top: calc(50% + min(15cqw, 30cqh) * 0.6); }
+@container (max-width: 640px) { .anx-word { font-size: 18cqw; } .anx-place { top: calc(50% + 18cqw * 0.6); } }
 
 /* 2. Le défilé : ligne qui invite à faire défiler */
 @keyframes anx-scroll { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }

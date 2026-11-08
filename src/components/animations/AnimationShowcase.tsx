@@ -4,6 +4,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Container, SectionHeading } from "@/components/ui/Section";
 import { animations, animPhoto, shownPhotoCredits } from "./data";
 import { anxSerif } from "./font";
+import { LivePreview } from "./LivePreview";
+import { isScene } from "./scenes";
 import "./animations.css";
 
 /** Aperçu fixe, en CSS, de chaque animation (la vraie se lance en plein écran) */
@@ -37,8 +39,9 @@ export function AnimationShowcase() {
             <Reveal key={a.slug} delay={i * 0.08}>
               <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02]">
                 <Link href={`/animations/${a.slug}`} className="relative block aspect-[16/10] overflow-hidden border-b border-white/10" aria-label={`Lancer l'animation « ${a.name} » en plein écran`}>
-                  <div className="anx-preview h-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"><Preview slug={a.slug} /></div>
-                  <span className="absolute top-4 left-4 rounded-full bg-[#141619] px-3 py-1.5 text-[11px] font-medium text-white">0{i + 1}</span>
+                  <div className="anx-preview h-full">{isScene(a.slug) ? <LivePreview slug={a.slug} poster={<Preview slug={a.slug} />} /> : <Preview slug={a.slug} />}</div>
+                  <span className="absolute right-4 bottom-4 inline-flex items-center gap-1.5 rounded-full bg-[#141619]/85 px-3 py-1.5 text-[11px] font-medium text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">Plein écran <ArrowRight className="size-3.5" /></span>
+                  <span className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-[#141619] px-3 py-1.5 text-[11px] font-medium text-white">0{i + 1}<span className="inline-flex items-center gap-1.5 text-white/70"><span className="size-1.5 animate-pulse rounded-full bg-[#4fd18b]" aria-hidden />Aperçu animé</span></span>
                 </Link>
                 <div className="flex flex-1 flex-col p-6 sm:p-8">
                   <h3 className="font-display text-2xl font-semibold text-white sm:text-3xl">{a.name}</h3>
@@ -65,7 +68,7 @@ export function AnimationShowcase() {
             </div>
           </Reveal>
         </div>
-        <p className="mt-10 text-xs leading-relaxed text-white/40">
+        <p className="mt-10 text-xs leading-relaxed text-white/60">
           Exemple réalisé pour MAÉRIVA, site de démonstration d&apos;une agence fictive. Photographies libres de droits (Wikimedia Commons) :{" "}
           {shownPhotoCredits().map((c, k) => (
             <span key={c.file}>

@@ -87,9 +87,8 @@ export function Footer() {
         <p className="mt-14 border-t border-white/10 pt-6 text-sm text-mist">© {year} {siteConfig.name}. Tous droits réservés.</p>
       </Container>
 
-      <p aria-hidden className="pointer-events-none -mb-[0.2em] select-none whitespace-nowrap text-center font-display text-[18.5vw] font-extrabold leading-[0.9] tracking-[-0.05em] text-white/[0.05]">
-        NEXWORKS
-      </p>
+      {/* Filigrane décoratif : le mot est dessiné en CSS (pas de texte dans la page, rien à lire ni à contrôler) */}
+      <p aria-hidden data-word="NEXWORKS" className="pointer-events-none -mb-[0.2em] select-none whitespace-nowrap text-center font-display text-[18.5vw] font-extrabold leading-[0.9] tracking-[-0.05em] text-white/[0.05] before:content-[attr(data-word)]" />
     </footer>
   );
 }

@@ -12,14 +12,16 @@ type Props = {
   x?: number;
   /** Animation au chargement plutôt qu'au scroll (hero) */
   immediate?: boolean;
+  /** Avec immediate : pas de fondu, visible dès le premier affichage (texte principal du haut de page, pour le LCP) */
+  visible?: boolean;
 };
 
 /** Apparition progressive (fondu + léger déplacement). Respecte prefers-reduced-motion via MotionConfig. */
-export function Reveal({ children, className, delay = 0, y = 28, x = 0, immediate }: Props) {
+export function Reveal({ children, className, delay = 0, y = 28, x = 0, immediate, visible }: Props) {
   if (immediate) {
     return (
       <div
-        className={cn("rise", className)}
+        className={cn(visible ? "rise-move" : "rise", className)}
         style={{ animationDelay: `${delay}s`, ["--rise-y" as string]: `${y}px`, ["--rise-x" as string]: `${x}px` }}
       >
         {children}

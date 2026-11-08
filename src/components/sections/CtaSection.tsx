@@ -21,8 +21,8 @@ export function CtaSection({
         aria-hidden
         className="absolute -right-16 -top-12 -z-10 h-[520px] w-[470px] animate-float-slow bg-ink opacity-[0.08] sm:right-8"
         style={{
-          WebkitMaskImage: "url(/brand/nexworks-symbol.png)",
-          maskImage: "url(/brand/nexworks-symbol.png)",
+          WebkitMaskImage: "url(/brand/nexworks-symbol.webp)",
+          maskImage: "url(/brand/nexworks-symbol.webp)",
           WebkitMaskRepeat: "no-repeat",
           maskRepeat: "no-repeat",
           WebkitMaskSize: "contain",

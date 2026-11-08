@@ -50,7 +50,7 @@ export function SectionHeading({
         )}
       />
       {text && (
-        <Reveal immediate={first} delay={0.15}>
+        <Reveal immediate={first} visible={first} y={16} delay={0.1}>
           <p className={cn("mt-6 max-w-2xl text-lg leading-relaxed", light ? "text-fog" : "text-mist", align === "center" && "mx-auto")}>{text}</p>
         </Reveal>
       )}

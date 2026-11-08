@@ -31,7 +31,7 @@ export function Hero() {
           className="max-w-[1100px] font-display text-[clamp(2.9rem,7.1vw,6.9rem)] font-bold leading-[0.98] text-white"
         />
         <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
-          <Reveal immediate delay={0.6}>
+          <Reveal immediate visible y={16} delay={0.1}>
             <p className="max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
               NEXWORKS crée votre site, le rend plus facile à trouver sur Google et dans les IA, puis vous accompagne dans la durée. Vous recevez un devis clair avant de vous engager.
             </p>

@@ -2,11 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { GolfeNom } from "./GolfeNom";
+import { SCENES, type SceneSlug } from "./scenes";
 
-// « Le défilé » (Defile.tsx) est mis de côté pour l'instant
-const SCENES = { "golfe-a-travers-le-nom": GolfeNom } as const;
-export type SceneSlug = keyof typeof SCENES;
 
 /** Lance une animation en plein écran ; à la fin, une barre discrète propose de la rejouer (ou touche R). */
 export function Player({ slug, name }: { slug: SceneSlug; name: string }) {

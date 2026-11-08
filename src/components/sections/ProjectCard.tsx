@@ -5,15 +5,17 @@ import { BrowserFrame } from "@/components/ui/BrowserFrame";
 import { ArrowUpRight } from "@/components/ui/Icons";
 
 /** Au survol, la vraie page du projet défile dans la fenêtre. */
-export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640px", compact }: { project: Project; sizes?: string; compact?: boolean }) {
+export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640px", compact, heading = "h3" }: { project: Project; sizes?: string; compact?: boolean; /** Niveau du titre : h2 quand la carte suit directement le titre de la page */ heading?: "h2" | "h3" }) {
+  const Heading = heading;
   const view = (p.images.desktop.width * 10) / 16;
   const to = `${-(1 - view / p.images.desktop.height) * 100}%`;
   return (
     <article className="group relative">
-      <Link href={`/realisations/${p.slug}`} className="block transition-transform duration-500 group-hover:-translate-y-1.5" aria-label={`Découvrir le projet ${p.name}`}>
+      <Link href={`/realisations/${p.slug}`} className="block transition-transform duration-500 group-hover:-translate-y-1.5">
+        <span className="sr-only">Découvrir le projet {p.name}</span>
         <BrowserFrame url={`${p.name.toLowerCase()} · ${p.concept ? "concept de refonte" : "site de démonstration"}`}>
           <div className="relative aspect-[16/10] overflow-hidden bg-ink-3">
-            <span className="pointer-events-none absolute bottom-3 right-3 z-10 flex translate-y-2 items-center gap-1.5 rounded-full bg-sky px-3.5 py-1.5 text-sm font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            <span aria-hidden className="pointer-events-none absolute bottom-3 right-3 z-10 flex translate-y-2 items-center gap-1.5 rounded-full bg-sky px-3.5 py-1.5 text-sm font-bold text-ink opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
               Voir le projet <ArrowUpRight className="size-4" />
             </span>
             <Image
@@ -33,7 +35,7 @@ export function ProjectCard({ project: p, sizes = "(max-width: 768px) 92vw, 640p
         <p className="text-sm text-mist">
           {p.categoryLabel} · <span className="font-semibold text-sky">{p.concept ? "Concept de refonte" : "Démonstration"}</span>
         </p>
-        <h3 className="mt-1.5 font-display text-3xl font-bold text-white">{p.name}</h3>
+        <Heading className="mt-1.5 font-display text-3xl font-bold text-white">{p.name}</Heading>
         <p className="mt-2 text-base leading-relaxed text-mist">{p.summary}</p>
         {!compact && (
           <p className="mt-3 text-sm leading-relaxed text-mist/85">

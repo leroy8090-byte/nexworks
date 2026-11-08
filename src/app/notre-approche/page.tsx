@@ -124,11 +124,14 @@ export default function ApprochePage() {
             title="Quatre étapes, et vous savez *toujours où on en est.*"
             text="Voici comment se déroule concrètement un projet avec NEXWORKS AGENCY."
           />
-          <ol className="relative mt-14 space-y-5">
-            <ScrollLine className="absolute bottom-6 left-[27px] top-6 hidden w-0.5 overflow-hidden rounded-full sm:block" />
+          {/* Le trait décoratif reste hors de la liste : une liste ne doit contenir que ses étapes */}
+          <div className="relative mt-14">
+          <ScrollLine className="absolute bottom-6 left-[27px] top-6 hidden w-0.5 overflow-hidden rounded-full sm:block" />
+          <ol className="relative space-y-5">
             {processSteps.map((s, i) => (
-              <Reveal key={s.n} delay={0.05}>
-                <li className="relative grid gap-5 sm:grid-cols-[54px_1fr] sm:gap-8">
+              <li key={s.n}>
+              <Reveal delay={0.05}>
+                <div className="relative grid gap-5 sm:grid-cols-[54px_1fr] sm:gap-8">
                   <div className="relative z-10 flex size-[54px] items-center justify-center rounded-full border border-sky/50 bg-ink font-display text-sm font-semibold text-sky shadow-[0_0_30px_-4px_rgba(85,189,242,0.4)]">
                     {s.n}
                   </div>
@@ -144,10 +147,12 @@ export default function ApprochePage() {
                     </ul>
                     <span className="sr-only">Étape {i + 1} sur {processSteps.length}</span>
                   </SpotlightCard>
-                </li>
+                </div>
               </Reveal>
+              </li>
             ))}
           </ol>
+          </div>
         </Container>
       </section>
 

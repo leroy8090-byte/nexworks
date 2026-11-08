@@ -30,7 +30,8 @@ function DeckCard({ item, index, progress }: { item: DeckItem; index: number; pr
   return (
     <motion.div style={{ x, y, rotate, zIndex: l.z }} className={cn("absolute left-1/2 top-0 w-[84%] sm:w-[54%] lg:w-[47%]", l.outer && "hidden sm:block")}>
       <motion.div initial={{ opacity: 0, y: 90 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.35 + Math.abs(l.x) * 0.006, ease }}>
-        <Link href={`/realisations/${item.slug}`} aria-label={`Voir le projet ${item.name}`} className="block transition-transform duration-500 hover:-translate-y-3">
+        <Link href={`/realisations/${item.slug}`} className="block transition-transform duration-500 hover:-translate-y-3">
+          <span className="sr-only">Voir le projet {item.name}</span>
           <BrowserFrame url={`${item.name.toLowerCase()} · site de démonstration`}>
             <div className="relative aspect-[16/10] overflow-hidden bg-ink-3">
               {center ? (
@@ -39,7 +40,6 @@ function DeckCard({ item, index, progress }: { item: DeckItem; index: number; pr
                   alt=""
                   width={item.desktop.width}
                   height={item.desktop.height}
-                  preload
                   sizes="(max-width: 640px) 84vw, 640px"
                   className="shot-scroll block h-auto w-full"
                   style={{ ["--scroll" as string]: scrollTo }}

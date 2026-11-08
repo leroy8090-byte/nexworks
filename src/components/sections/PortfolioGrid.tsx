@@ -54,7 +54,7 @@ export function PortfolioGrid() {
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.5, ease }}
             >
-              <ProjectCard project={p} />
+              <ProjectCard project={p} heading="h2" />
             </motion.div>
           ))}
         </AnimatePresence>

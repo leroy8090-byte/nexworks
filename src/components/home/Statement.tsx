@@ -8,7 +8,8 @@ import { Container } from "@/components/ui/Section";
 const TEXT = "Vous êtes bon dans votre métier. Mais en ligne, vos futurs clients ne vous trouvent pas, ou ne comprennent pas assez vite ce que vous proposez. Notre travail, c'est de rendre ça simple.";
 
 function Word({ word, range, progress, accent }: { word: string; range: [number, number]; progress: MotionValue<number>; accent: boolean }) {
-  const opacity = useTransform(progress, range, [0.16, 1]);
+  // 0,48 au départ : le minimum pour que les mots pas encore éclairés restent lisibles (contraste 3:1)
+  const opacity = useTransform(progress, range, [0.48, 1]);
   return (
     <motion.span style={{ opacity }} className={accent ? "text-sky-gradient" : undefined}>
       {word}{" "}

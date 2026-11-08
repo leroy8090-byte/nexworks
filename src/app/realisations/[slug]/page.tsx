@@ -82,7 +82,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             text={p.name}
             className="mt-6 font-display text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[1.05] tracking-tight"
           />
-          <Reveal immediate delay={0.4}>
+          <Reveal immediate visible y={16} delay={0.1}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">{p.summary}</p>
           </Reveal>
         </Container>

@@ -53,7 +53,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               text="Parlons de votre *projet.*"
               className="mt-6 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.05] tracking-tight"
             />
-            <Reveal immediate delay={0.4}>
+            <Reveal immediate visible y={16} delay={0.1}>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-mist">
                 Un site à créer, un site à moderniser, ou simplement une question ? Dites-nous où vous en êtes. Vous n'avez pas besoin de tout savoir à l'avance.
               </p>

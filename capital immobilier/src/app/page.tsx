@@ -32,12 +32,12 @@ export default function Home() {
       <JsonLd data={webPageLd({ name: `Agence immobilière à Saint-Raphaël | ${agency.name}`, path: "/", description: DESC })} />
 
       {/* Ouverture : la photo reste en place, le site glisse par-dessus. La page défile normalement. */}
-      <section className="sticky top-0 isolate flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-night pb-32 pt-36 text-white sm:pb-52">
+      <section className="sticky top-0 isolate flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-night pb-32 pt-36 text-white sm:[padding-bottom:clamp(4rem,17svh,13rem)] sm:[padding-top:clamp(6.5rem,16svh,9rem)]">
         <div className="hero-away absolute inset-0 -z-20"><div className="settle absolute inset-0"><Image src="/media/massif-esterel.webp" alt="Le massif de l’Estérel, ses sommets rouges et les villas de Saint-Raphaël face à la mer" fill preload quality={85} sizes="(max-width: 640px) 120vw, 100vw" className="object-cover" /></div></div>
         <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-night/65 via-night/40 to-night/85" />
         <Container className="hero-fade">
           <p className={`rise ${eyebrowCls} text-white`}>CAPITAL IMMOBILIER — AGENCE IMMOBILIÈRE À SAINT-RAPHAËL</p>
-          <h1 className="mt-4 max-w-6xl text-[3.1rem] leading-[0.95] sm:text-[5.6rem] xl:text-[7.2rem]"><HeroWords text="Votre prochain chapitre commence ici." start={120} /></h1>
+          <h1 className="mt-4 max-w-6xl text-[3.1rem] leading-[0.95] sm:[font-size:min(5.6rem,11.5svh)] xl:[font-size:min(7.2rem,13svh)]"><HeroWords text="Votre prochain chapitre commence ici." start={120} /></h1>
           <p className="rise mt-5 max-w-2xl text-[17.5px] leading-[1.5] text-white/90 sm:text-[19px]" style={{ animationDelay: "260ms" }}>Achat, vente, location et gestion immobilière : une expertise locale pour concrétiser tous vos projets immobiliers sur la Côte d’Azur.</p>
           <div className="rise mt-7 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "360ms" }}>
             <Btn href="/biens" arrow>Découvrir nos biens</Btn>
@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       <div className="relative z-10">
-        <Container className="-mt-24 sm:-mt-40"><div className="rise pb-10 sm:pb-16" style={{ animationDelay: "440ms" }}><Search cards={cards} communes={communes} types={TYPES} /></div></Container>
+        <Container className="-mt-24 sm:[margin-top:calc(3rem-clamp(4rem,17svh,13rem))]"><div className="rise pb-10 sm:pb-16" style={{ animationDelay: "440ms" }}><Search cards={cards} communes={communes} types={TYPES} /></div></Container>
 
         <div className="bg-white">
           <GiantMarquee />

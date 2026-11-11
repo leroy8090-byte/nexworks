@@ -33,8 +33,8 @@ export function CookieBanner() {
   const [ready, setReady] = useState(false);
   const [reopened, setReopened] = useState(false);
   useEffect(() => {
-    const intro = document.documentElement.dataset.intro !== "off";
-    const t = setTimeout(() => setReady(true), intro ? 1800 : 400);
+    const intro = Boolean(document.documentElement.dataset.intro);
+    const t = setTimeout(() => setReady(true), intro ? 5200 : 400);
     const onOpen = () => { setReady(true); setReopened(true); };
     window.addEventListener(OPEN, onOpen);
     return () => { clearTimeout(t); window.removeEventListener(OPEN, onOpen); };

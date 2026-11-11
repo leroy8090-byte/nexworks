@@ -67,56 +67,23 @@ h3 { font-weight: 600; letter-spacing: -0.015em; }
 @keyframes page-in { from { opacity: 0; } }
 .page-in { animation: page-in 400ms ease-out backwards; }
 
-/* Ouverture du site, une fois par visite : le logo, puis le rideau s'écarte. Un clic la saute. */
-.intro {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  cursor: pointer;
-  animation: intro-end 1ms linear 1450ms forwards;
-}
-html[data-intro="off"] .intro { display: none; }
-.intro-top, .intro-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50.5%;
-  background: var(--color-night);
-}
-.intro-top { top: 0; animation: intro-up 700ms cubic-bezier(0.76, 0, 0.24, 1) 720ms forwards; }
-.intro-bottom { bottom: 0; animation: intro-down 700ms cubic-bezier(0.76, 0, 0.24, 1) 720ms forwards; }
-.intro-logo {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  animation: logo-in 450ms cubic-bezier(0.22, 1, 0.36, 1) backwards, logo-out 280ms ease-in 600ms forwards;
-}
-.intro-line {
-  display: block;
-  width: min(56vw, 400px);
-  height: 1px;
-  margin-top: 1.75rem;
-  background: var(--color-sea);
-  transform-origin: left;
-  animation: line-in 560ms cubic-bezier(0.65, 0, 0.35, 1) 40ms backwards;
-}
-@keyframes logo-in { from { opacity: 0; transform: scale(0.95); } }
-@keyframes logo-out { to { opacity: 0; transform: scale(1.04); } }
-@keyframes line-in { from { transform: scaleX(0); } }
-@keyframes intro-up { to { transform: translateY(-101%); } }
-@keyframes intro-down { to { transform: translateY(101%); } }
-@keyframes intro-end { to { visibility: hidden; pointer-events: none; } }
-html:not([data-intro="off"]) .rise { animation-delay: 850ms !important; }
-html:not([data-intro="off"]) .settle { animation-delay: 700ms !important; }
+/* Ouverture « le golfe à travers le nom », une fois par visite (voir components/Intro.tsx). Le site attend sous un voile blanc. */
+html[data-intro] { overflow: hidden; }
+html[data-intro="1"] body::before { content: ""; position: fixed; inset: 0; z-index: 299; background: #fff; }
+/* Les animations d'entrée de l'accueil attendent : le titre monte quand la photo s'efface (data-intro="2"), la photo se pose à la toute fin */
+html[data-intro="1"] :is(.rise, .settle, .word-rise) { animation-play-state: paused; }
+html[data-intro="2"] .settle { animation-play-state: paused; }
+.intro-word { font-size: min(15vw, 30vh); letter-spacing: 0.2em; margin-right: -0.2em; color: #000; transition: letter-spacing 1300ms cubic-bezier(0.22, 1, 0.36, 1), margin 1300ms cubic-bezier(0.22, 1, 0.36, 1); }
+.intro-word[data-on] { letter-spacing: 0.02em; margin-right: -0.02em; }
+.intro-letter { color: #fff; transform: translateY(0.14em); transition: color 900ms ease calc(var(--i) * 70ms), transform 900ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 70ms); }
+.intro-word[data-on] .intro-letter { color: #000; transform: none; }
+.intro-place { top: calc(50% + min(15vw, 30vh) * 0.62); }
+@media (max-width: 640px) { .intro-word { font-size: 16vw; } .intro-place { top: calc(50% + 16vw * 0.62); } }
 
 /* Grand titre : chaque mot monte de derrière une ligne */
 .word-mask { display: inline-block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; vertical-align: bottom; }
 .word-rise { display: inline-block; animation: word-rise 1100ms cubic-bezier(0.22, 1, 0.36, 1) backwards; animation-delay: calc(var(--intro, 0ms) + var(--d, 0ms)); }
 @keyframes word-rise { from { transform: translateY(112%); } }
-html:not([data-intro="off"]) { --intro: 750ms; }
 
 /* Bouton : la couleur monte depuis le bas */
 .fill {
@@ -268,6 +235,5 @@ body:has([data-fiche-bar]) [data-mobile-bar] { display: none; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .intro { display: none; }
   [data-reveal] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
 }
